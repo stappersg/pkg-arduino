@@ -1,6 +1,9 @@
 arduino-core for Debian
 -----------------------
 
+N.B.  This package has been tested only on my laptop, with my
+      Arduino Duemilanove -- your miliage may vary
+
 This package contains the bare minimum required to program an Arduino
 using Arduino sketches via the command line.
 
@@ -14,5 +17,44 @@ I'd suggest having packages:
   arduino-java  (the full IDE)
   arduino-gtk   (from here: http://sites.google.com/site/arduinogtkide/)
   arduino-core  (this)
+
+=-=-=-=-
+
+QuickStart
+
+  create a new directory, and change to it (its name doesn't matter):
+
+    mkdir ~/arduino-playpen ; cd ~/arduino-playpen
+
+  grab a copy of the Makefile:
+
+    cp /usr/src/arduino/Makefile .
+
+  grab an example:
+
+    cp /usr/share/doc/arduino-core/.../foo.pde .
+
+  compile and upload it:
+
+    make TARGET=foo
+
+    make TARGET=foo upload
+
+  If the upload doesn't work, try unplugging/replugging the Arduino.
+
+BTW Compared with the upstream, that Makefile has been tweaked to put
+the products of compilation in a local build/ dir, so that you can use
+the files under /usr/src while not being root.
+
+=-=-=-=-
+
+Please tell me if it fails for you, and if possible, what you did to
+the Makefile to make it work.
+
+I did consider making a script that would automate the above QuickStart,
+but I think you're going to want to do it by hand at some point, so you
+might as well do that from the start.  I'm open to persuasion that some
+sort of script is needed if only to tell people who tryto run it to read
+this file instead ;-)
 
  -- Philip Hands <phil@hands.com>  Sun, 13 Dec 2009 08:31:07 +0000
