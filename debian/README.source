@@ -1,0 +1,14 @@
+arduino-core for Debian
+-----------------------
+
+Rather than use the upstream tarball, which has loads of irrelevant
+stuff in it (from Debian's point of view) I just grabbed the bits I
+needed out of the depths of their svn, thus:
+
+  svn co http://arduino.googlecode.com/svn/trunk/hardware/cores/arduino
+
+as well as grabbing the license.txt from the top level:
+
+  svn co http://arduino.googlecode.com/svn/trunk
+
+Other than that, this is a standard source package

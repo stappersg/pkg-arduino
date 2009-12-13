@@ -1,0 +1,5 @@
+arduino-core (0017~svn802-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Philip Hands <phil@hands.com>  Sun, 13 Dec 2009 08:31:07 +0000

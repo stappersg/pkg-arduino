@@ -1,0 +1,28 @@
+This work was packaged for Debian by:
+
+    Philip Hands <phil@hands.com> on Sun, 13 Dec 2009 08:31:07 +0000
+
+It was downloaded with from: http://arduino.googlecode.com/svn/trunk/hardware/cores/arduino
+
+Upstream Author(s):
+
+    Nicholas Zambetti
+    David A. Mellis
+    Hernando Barragan
+
+Copyright:
+
+    Copyright (c) 2006 Nicholas Zambetti
+    Copyright (c) 2005-2008 David A. Mellis
+    Copyright (c) 2004-2006 Hernando Barragan
+
+License:
+
+    LGPL version 2.1
+
+The Debian packaging is:
+
+    Copyright (C) 2009 Philip Hands <phil@hands.com>
+
+and is licensed under the LGPL version 2.1 or any later version
+see `/usr/share/common-licenses/LGPL-2.1'.

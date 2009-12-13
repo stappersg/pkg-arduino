@@ -1,0 +1,18 @@
+arduino-core for Debian
+-----------------------
+
+This package contains the bare minimum required to program an Arduino
+using Arduino sketches via the command line.
+
+It DOES NOT contain the Java IDE -- if that's want you want, feel free
+to addopt this package, and base it off the upstream tarball, but if
+you do so please ensure that there's still an arduino-core package for
+the java averse amongst us.
+
+I'd suggest having packages:
+
+  arduino-java  (the full IDE)
+  arduino-gtk   (from here: http://sites.google.com/site/arduinogtkide/)
+  arduino-core  (this)
+
+ -- Philip Hands <phil@hands.com>  Sun, 13 Dec 2009 08:31:07 +0000
