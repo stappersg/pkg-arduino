@@ -48,3 +48,64 @@ one had installed it locally -- so it now refers to the installed binaries etc.
  -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) \
  -b $(UPLOAD_RATE)
  
+@@ -111,10 +115,10 @@
+ MV = mv -f
+ 
+ # Define all object files.
+-OBJ = $(SRC:.c=.o) $(CXXSRC:.cpp=.o) $(ASRC:.S=.o) 
++OBJ = $(SRC:%.c=build/%.o) $(CXXSRC:%.cpp=build/%.o) $(ASRC:%.S=build/%.o)
+ 
+ # Define all listing files.
+-LST = $(ASRC:.S=.lst) $(CXXSRC:.cpp=.lst) $(SRC:.c=.lst)
++LST = $(ASRC:%.S=build/%.lst) $(CXXSRC:%.cpp=build/%.lst) $(SRC:%.c=build/%.lst)
+ 
+ # Combine all necessary flags and optional flags.
+ # Add target processor to flags.
+@@ -205,16 +209,18 @@
+ 
+ 
+ # Compile: create object files from C++ source files.
+-.cpp.o:
++build/%.o: %.cpp
++	mkdir -p $(dir $@)
+ 	$(CXX) -c $(ALL_CXXFLAGS) $< -o $@ 
+ 
+ # Compile: create object files from C source files.
+-.c.o:
++build/%.o: %.c
++	mkdir -p $(dir $@)
+ 	$(CC) -c $(ALL_CFLAGS) $< -o $@ 
+ 
+ 
+ # Compile: create assembler files from C source files.
+-.c.s:
++build/%.s: %.c
+ 	$(CC) -S $(ALL_CFLAGS) $< -o $@
+ 
+ 
+@@ -224,10 +230,10 @@
+ 
+ 
+ # Automatic dependencies
+-%.d: %.c
++build/%.d: %.c
+ 	$(CC) -M $(ALL_CFLAGS) $< | sed "s;$(notdir $*).o:;$*.o $*.d:;" > $@
+ 
+-%.d: %.cpp
++build/%.d: %.cpp
+ 	$(CXX) -M $(ALL_CXXFLAGS) $< | sed "s;$(notdir $*).o:;$*.o $*.d:;" > $@
+ 
+ 
+@@ -235,9 +241,9 @@
+ clean:
+ 	$(REMOVE) applet/$(TARGET).hex applet/$(TARGET).eep applet/$(TARGET).cof applet/$(TARGET).elf \
+ 	applet/$(TARGET).map applet/$(TARGET).sym applet/$(TARGET).lss applet/core.a \
+-	$(OBJ) $(LST) $(SRC:.c=.s) $(SRC:.c=.d) $(CXXSRC:.cpp=.s) $(CXXSRC:.cpp=.d)
++	$(OBJ) $(LST) $(SRC:%.c=build/%.s) $(SRC:%.c=build/%.d) $(CXXSRC:%.cpp=build/%.s) $(CXXSRC:%.cpp=build/%.d)
+ 
+ .PHONY:	all build elf hex eep lss sym program coff extcoff clean applet_files sizebefore sizeafter
+ 
+--include $(SRC:.c=.d)
+--include $(CXXSRC:.cpp=.d)
++-include $(SRC:%.c=build/%.d)
++-include $(CXXSRC:%.cpp=build/%.d)
