@@ -1,13 +1,20 @@
 Source: arduino-core
-Section: unknown
+Section: electronics
 Priority: extra
 Maintainer: Philip Hands <phil@hands.com>
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.8.3
-Homepage: <insert the upstream URL, if relevant>
+Homepage: http://arduino.cc/en/Main/Software
 
 Package: arduino-core
 Architecture: all
-Depends: ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: ${misc:Depends}, python2.5, gcc-avr, avrdude, gcc
+Description: Minimal (java-free) tool to interact with an Arduino
+ Arduino is an open hardware microcrontoler platform.  This package contains
+ the minimal set of tools to allow one to program an Arduino.  It also contains
+ some examples, and a quick intro in the package's README.Debian.
+ .
+ This is NOT the Java IDE pointy-clicky thing. If that's what you want
+ you can download and install it following the instructions here:
+   http://www.arduino.cc/playground/Linux/Debian
+ or you'll want to package that yourself, or find someone who cares.
