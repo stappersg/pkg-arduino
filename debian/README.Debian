@@ -32,13 +32,17 @@ QuickStart
 
   grab an example:
 
-    cp /usr/share/doc/arduino-core/.../foo.pde .
+    cp /usr/share/doc/arduino-core/examples/Digital/Blink/Blink.pde .
 
   compile and upload it:
 
-    make TARGET=foo
+    make TARGET=Blink
 
-    make TARGET=foo upload
+    make TARGET=Blink upload
+
+  or do it all at once, thus:
+
+    make TARGET=Blink all upload
 
   If the upload doesn't work, try unplugging/replugging the Arduino.
 
