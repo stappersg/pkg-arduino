@@ -1,4 +1,4 @@
-Source: arduino-core
+Source: arduino
 Section: electronics
 Priority: extra
 Maintainer: Philip Hands <phil@hands.com>
