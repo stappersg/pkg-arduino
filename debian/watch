@@ -6,9 +6,6 @@
 # Compulsory line, this is a version 3 file
 version=3
 
-# Currently commented out, as I actually build this from SVN, and leav out all the java drivel
-# If you're wanting to make a set of packages including all the java
-# drivel, you'll need to make sure that the source of the arduino-core
-# gets found down in hardware/cores/arduino
+# Currently commented out, as I actually build this from SVN, and leave out all the java drivel
 
 #http://arduino.cc/en/Main/Software http://arduino.googlecode.com/files/arduino-(.*).tgz
