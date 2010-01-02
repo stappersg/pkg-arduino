@@ -1,0 +1,12 @@
+Index: arduino-0017.0~svn802/hardware/cores/arduino/Makefile
+===================================================================
+--- arduino-0017.0~svn802.orig/hardware/cores/arduino/Makefile	2010-01-02 13:12:01.000000000 +0000
++++ arduino-0017.0~svn802/hardware/cores/arduino/Makefile	2010-01-02 13:12:17.000000000 +0000
+@@ -153,6 +153,7 @@
+ 
+ # Program the device.  
+ upload: applet/$(TARGET).hex
++	MYPORT=$$(echo $(PORT)) ; stty -clocal < $$MYPORT > $$MYPORT ; sleep 1 ; stty clocal < $$MYPORT > $$MYPORT
+ 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
+ 
+ 
