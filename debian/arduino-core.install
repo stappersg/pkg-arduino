@@ -1,0 +1,2 @@
+examples/ hardware/ usr/share/arduino
+debian/historic/arduino usr/share/arduino/hardware/arduino/cores

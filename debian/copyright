@@ -126,6 +126,7 @@ License: other
 
 Files: debian/*
 Copyright: 2010, Scott Howard <showard314@gmail.com>
+           2010, Philip Hands <phil@hands.com>
            2009, Arduino Ubuntu Team <arduino-ubuntu-team@lists.launchpad.net>
 License: GPL-2
 
@@ -156,7 +157,7 @@ Copyright: 2005-06, Ignacio Manuel Gonzalez Moreta
            2006-08, Ben Fry and Casey Reas
 License: GPL-2
 
-Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c 
+Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c
        hardware/arduino/bootloaders/lilypad/src/ATmegaBOOT.c
        hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c
        hardware/arduino/bootloaders/bt/ATmegaBOOT_168.c

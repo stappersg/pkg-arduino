@@ -1,3 +1,9 @@
+arduino (0018+dfsg-1.hands.1) UNRELEASED; urgency=low
+
+  * Merge arduino-core into full Java package
+
+ -- Philip Hands <phil@hands.com>  Mon, 26 Apr 2010 17:38:45 +0100
+
 arduino (0018+dfsg-1) unstable; urgency=low
 
   * Initial release. (Closes: #577249)

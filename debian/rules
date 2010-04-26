@@ -54,10 +54,8 @@ get-orig-source:
 	rm -fr $(DESTDIR)/hardware/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname *.txt -or -iname makefile -or -iname key*.txt -or -iname pref*.txt | xargs chmod -x;\
-
+	
 	tar zcf $(CURDIR)/../$(TARFILE) -C $(CURDIR)/debian arduino-$(SVNTAG)+dfsg;\
 	rm -fr $(DESTDIR) $(DESTDIR)-app $(DESTDIR)-core;\
-
-
 
 PHONY: build clean binary-indep binary install get-orig-source
