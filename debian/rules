@@ -1,11 +1,63 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+# export DH_VERBOSE=1
+
+export JAVA_HOME=/usr/lib/jvm/default-java
+export CLASSPATH=/usr/share/java/RXTXcomm.jar:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar:/usr/share/java/oro.jar:/usr/share/java/antlr.jar:/usr/share/java/ecj.jar:/usr/share/java/jna.jar
 
 %:
-	dh  $@
+	dh $@ --with javahelper
 
-override_dh_auto_build:
-	:
+override_jh_build:
+	perl preproc.pl
+	jh_build --main=processing.app.Base
+
+
+override_dh_installchangelogs:
+	dh_installchangelogs -k readme.txt
+
+override_dh_compress:
+	dh_compress -X.pde
+
+override_dh_install:
+	dh_install -Xlicense -XLICENSE
+
+
+
+SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
+DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)+dfsg
+TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
+
+get-orig-source:
+	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG).tgz;\
+	wget http://arduino.googlecode.com/svn/tags/$(SVNTAG)/license.txt;\
+	tar -xf arduino-$(SVNTAG).tgz;\
+	cp -a arduino-$(SVNTAG) $(DESTDIR);\
+	mv license.txt $(DESTDIR);\
+	rm -rf arduino-$(SVNTAG).tgz arduino-$(SVNTAG);\
+	
+	svn export http://arduino.googlecode.com/svn/tags/$(SVNTAG)/app $(DESTDIR)-app/;\
+	svn export http://arduino.googlecode.com/svn/tags/$(SVNTAG)/core $(DESTDIR)-core/;\
+	
+	mkdir -p $(DESTDIR)/src/processing/;\
+	cp -a $(DESTDIR)-app/src/processing/* $(DESTDIR)/src/processing/;\
+	cp -a $(DESTDIR)-core/src/processing/* $(DESTDIR)/src/processing/;\
+	mv $(DESTDIR)-core/preproc.pl $(DESTDIR);\
+	#remove junk
+	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so | xargs -n1 rm -f;\
+	find $(DESTDIR) -type d -empty -delete;\
+	rm -f $(DESTDIR)/src/processing/app/preproc/.cvsignore;\
+	rm -f $(DESTDIR)/.project;\
+	rm -fr $(DESTDIR)/.[a-z]*;\
+	rm -fr $(DESTDIR)/app/.[a-z]*;\
+	rm -fr $(DESTDIR)/hardware/tools;\
+	#upstream set a bunch of files as execultable that should not be. remove the -x bit
+	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname *.txt -or -iname makefile -or -iname key*.txt -or -iname pref*.txt | xargs chmod -x;\
+
+	tar zcf $(CURDIR)/../$(TARFILE) -C $(CURDIR)/debian arduino-$(SVNTAG)+dfsg;\
+	rm -fr $(DESTDIR) $(DESTDIR)-app $(DESTDIR)-core;\
+
+
+
+PHONY: build clean binary-indep binary install get-orig-source

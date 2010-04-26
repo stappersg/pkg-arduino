@@ -1,1 +1,2 @@
-cxa_pure_virtual
+wrapper_for_deb.patch
+convert_to_debian_oro.patch

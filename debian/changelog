@@ -1,5 +1,5 @@
-arduino (0018~hands-1) UNRELEASED; urgency=low
+arduino (0018+dfsg-1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release. (Closes: #577249)
 
- -- Philip Hands <phil@hands.com>  Sun, 13 Dec 2009 08:31:07 +0000
+ -- Scott Howard <showard314@gmail.com>  Tue, 13 Apr 2010 22:32:24 -0400

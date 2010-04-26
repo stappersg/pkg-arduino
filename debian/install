@@ -1,0 +1,4 @@
+arduino		usr/bin
+examples/ hardware/ lib/ libraries/ reference/ tools/			usr/share/arduino
+debian/*.xpm usr/share/pixmaps
+debian/*.desktop usr/share/applications/

@@ -1,11 +1,4 @@
-# Example watch control file for uscan
-# Rename this file to "watch" and then you can run the "uscan" command
-# to check for upstream updates and more.
-# See uscan(1) for format
-
-# Compulsory line, this is a version 3 file
 version=3
-
-# Currently commented out, as I actually build this from SVN, and leave out all the java drivel
-
-#http://arduino.cc/en/Main/Software http://arduino.googlecode.com/files/arduino-(.*).tgz
+opts=dversionmangle=s/\.dfsg// \
+http://code.google.com/p/arduino/downloads/list \
+http://arduino.googlecode.com/files/arduino-(.*)\.zip

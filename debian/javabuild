@@ -1,0 +1,1 @@
+arduino.jar src/processing/core/*.java src/processing/xml/*.java src/processing/app/*.java src/processing/app/debug/*.java src/processing/app/linux/*.java src/processing/app/preproc/*.java src/processing/app/syntax/*.java src/processing/app/tools/*.java

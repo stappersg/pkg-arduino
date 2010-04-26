@@ -1,14 +1,7 @@
-arduino for Debian
------------------------
+This package gets its source from a combination of the upstream SVN and
+upstream released tarball, please inspect the rules file's get-orig-source
+target. Both are found at http://arduino.cc/en/Main/Software. This package
+follows what would happen in the make.sh and dist.sh scripts in a Debian
+compliant way.
 
-Rather than use the upstream tarball, which has loads of irrelevant
-stuff in it (from Debian's point of view) I just grabbed the bits I
-needed out of the depths of their svn, thus:
-
-  svn co http://arduino.googlecode.com/svn/trunk/hardware/cores/arduino
-
-as well as grabbing the license.txt from the top level:
-
-  svn co http://arduino.googlecode.com/svn/trunk
-
-Other than that, this is a standard source package
+Patches are described in debian/patches directly.
