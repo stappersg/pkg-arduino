@@ -1,5 +1,5 @@
---- a/hardware/cores/arduino/WProgram.h
-+++ b/hardware/cores/arduino/WProgram.h
+--- a/hardware/arduino/cores/arduino/WProgram.h
++++ b/hardware/arduino/cores/arduino/WProgram.h
 @@ -26,4 +26,10 @@
  long map(long, long, long, long, long);
  #endif
