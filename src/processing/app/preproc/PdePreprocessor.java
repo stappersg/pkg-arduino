@@ -35,7 +35,7 @@ import processing.core.*;
 import java.io.*;
 import java.util.*;
 
-import com.oroinc.text.regex.*;
+import org.apache.oro.text.regex.*;
 
 
 /**

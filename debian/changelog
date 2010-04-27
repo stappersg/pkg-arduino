@@ -6,8 +6,12 @@ arduino (0018+dfsg-1.hands.1) UNRELEASED; urgency=low
   [ Scott Howard ]
   * Added a arduino.README.Debian for users with non-reparenting WMs
   * Added Philip Hands as an uploader and Vcs info to debian/control
+  * Installs reference/ and examples/ to /usr/share/doc and links from
+    /usr/share/arduino
+  * added prefixes to files in a debian directory for arduino and
+    arduino-core package files
 
- -- Scott Howard <showard314@gmail.com>  Tue, 27 Apr 2010 18:08:47 -0400
+ -- Scott Howard <showard314@gmail.com>  Tue, 27 Apr 2010 19:19:21 -0400
 
 arduino (0018+dfsg-1) unstable; urgency=low
 
