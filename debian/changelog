@@ -1,8 +1,12 @@
 arduino (0018+dfsg-1.hands.1) UNRELEASED; urgency=low
 
+  [ Philip Hands ]
   * Merge arduino-core into full Java package
 
- -- Philip Hands <phil@hands.com>  Mon, 26 Apr 2010 17:38:45 +0100
+  [ Scott Howard ]
+  * Added a arduino.README.Debian for users with non-reparenting WMs
+
+ -- Scott Howard <showard314@gmail.com>  Tue, 27 Apr 2010 09:35:42 -0400
 
 arduino (0018+dfsg-1) unstable; urgency=low
 
