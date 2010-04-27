@@ -25,7 +25,7 @@ Description: AVR development board IDE and built-in libraries
 
 Package: arduino-core
 Architecture: all
-Depends: ${misc:Depends}, python2.5, gcc-avr, avrdude, gcc, avr-libc
+Depends: ${misc:Depends}, gcc-avr, avrdude, gcc, avr-libc
 Description: Minimal (java-free) tool to interact with an Arduino
  Arduino is an open hardware microcrontoler platform.  This package contains
  the minimal set of tools to allow one to program an Arduino.  It also contains
