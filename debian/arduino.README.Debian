@@ -14,6 +14,4 @@ There are two solutions to work around this issue:
   $ export _JAVA_AWT_WM_NONREPARENTING=true
 
 You can automate these tasks by writing them to your ~/.xsessionrc:
-$ cat >> ~/.xsessionrc <<EOF
-export _JAVA_AWT_WM_NONREPARENTING=true
-EOF
+$ echo export _JAVA_AWT_WM_NONREPARENTING=true >> ~/.xsessionrc
