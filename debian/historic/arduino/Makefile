@@ -153,7 +153,7 @@ sym: applet/$(TARGET).sym
 
 # Program the device.  
 upload: applet/$(TARGET).hex
-	MYPORT=$$(echo $(PORT)) ; stty -clocal < $$MYPORT > $$MYPORT ; sleep 1 ; stty clocal < $$MYPORT > $$MYPORT
+	stty -F $(AVRDUDE_PORT) hupcl ; sleep 0.1 ; stty -F $(AVRDUDE_PORT) -hupcl
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH)
 
 
