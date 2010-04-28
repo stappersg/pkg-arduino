@@ -24,7 +24,7 @@
 #
 # For example:
 #
-#       ARDUINO_DIR  = /Applications/arduino-0013
+#       ARDUINO_DIR  = /usr/share/arduino
 #
 #       TARGET       = CLItest
 #       ARDUINO_LIBS = LiquidCrystal
@@ -104,11 +104,11 @@
 ifneq (ARDUINO_DIR,)
 
 ifndef AVR_TOOLS_PATH
-AVR_TOOLS_PATH    = $(ARDUINO_DIR)/hardware/tools/avr/bin
+AVR_TOOLS_PATH    = /usr/bin
 endif
 
 ifndef ARDUINO_ETC_PATH
-ARDUINO_ETC_PATH  = $(ARDUINO_DIR)/hardware/tools/avr/etc
+ARDUINO_ETC_PATH  = /etc
 endif
 
 ifndef AVRDUDE_CONF
@@ -116,7 +116,7 @@ AVRDUDE_CONF     = $(ARDUINO_ETC_PATH)/avrdude.conf
 endif
 
 ARDUINO_LIB_PATH  = $(ARDUINO_DIR)/hardware/libraries
-ARDUINO_CORE_PATH = $(ARDUINO_DIR)/hardware/cores/arduino
+ARDUINO_CORE_PATH = $(ARDUINO_DIR)/hardware/arduino/cores/arduino
 
 endif
 
@@ -194,7 +194,7 @@ LDFLAGS       = -mmcu=$(MCU) -lm -Wl,--gc-sections -Os
 
 # Rules for making a CPP file from the main sketch (.cpe)
 PDEHEADER      = \\\#include \"WProgram.h\"
-PDEFOOTER_FILE = $(ARDUINO_CORE_PATH)/main.cxx
+#PDEFOOTER_FILE = $(ARDUINO_CORE_PATH)/main.cxx
 
 # Implicit rules for building everything (needed to get everything in
 # the right directory)
@@ -277,12 +277,12 @@ ifndef AVRDUDE
 AVRDUDE          = $(AVR_TOOLS_PATH)/avrdude
 endif
 
-AVRDUDE_COM_OPTS = -q -V -p $(MCU)
+AVRDUDE_COM_OPTS = -q -F -V -p $(MCU)
 ifdef AVRDUDE_CONF
 AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
 endif
 
-AVRDUDE_ARD_OPTS = -c stk500v1 -b 19200 -P $(ARDUINO_PORT)
+AVRDUDE_ARD_OPTS = -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE) -P $(ARDUINO_PORT)
 
 ifndef ISP_LOCK_FUSE_PRE
 ISP_LOCK_FUSE_PRE  = 0x3f
@@ -328,6 +328,7 @@ $(DEP_FILE):	$(OBJDIR) $(DEPS)
 		cat $(DEPS) > $(DEP_FILE)
 
 upload:		$(TARGET_HEX)
+		stty -F /dev/ttyUSB0 hupcl ; sleep 0.1 ; stty -F /dev/ttyUSB0 -hupcl
 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
 			-U flash:w:$(TARGET_HEX):i
 
