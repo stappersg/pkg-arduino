@@ -328,7 +328,7 @@ $(DEP_FILE):	$(OBJDIR) $(DEPS)
 		cat $(DEPS) > $(DEP_FILE)
 
 upload:		$(TARGET_HEX)
-		stty -F /dev/ttyUSB0 hupcl ; sleep 0.1 ; stty -F /dev/ttyUSB0 -hupcl
+		stty -F $(ARDUINO_PORT) hupcl ; sleep 0.1 ; stty -F $(ARDUINO_PORT) -hupcl
 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
 			-U flash:w:$(TARGET_HEX):i
 
