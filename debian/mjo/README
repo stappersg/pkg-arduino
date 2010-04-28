@@ -1,0 +1,5 @@
+This makefile was found via: http://mjo.tc/atelier/2009/02/arduino-cli.html
+and was downloaded from this link: http://mjo.tc/atelier/2009/02/acli/Arduino.mk
+
+It is derived from the Arduino 0013 Makefile, and as such appears to be
+distributable under the LGPL 2.1, but this needs to be confirmed.
