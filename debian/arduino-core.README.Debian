@@ -12,7 +12,60 @@ install the main arduino package as well (which depends on this one)
 
 =-=-=-=-
 
-QuickStart
+QuickStart:
+
+[This is based on http://mjo.tc/atelier/2009/02/arduino-cli.html]
+
+  create a new directory, and change to it (the name doesn't matter)
+
+    mkdir ~/arduino-playpen ; cd ~/arduino-playpen
+
+  Create a Makefile:
+
+cat > Makefile <<'!====EOF====!'
+ARDUINO_DIR = /usr/share/arduino
+
+#TARGET       = CLItest
+#ARDUINO_LIBS = LiquidCrystal
+
+MCU          = atmega168
+F_CPU        = 16000000
+ARDUINO_PORT = /dev/ttyUSB*
+
+AVRDUDE_PROGRAMMER = arduino
+UPLOAD_RATE = 57600
+
+include /usr/share/arduino/Arduino.mk
+!====EOF====!
+
+  grab an example:
+
+    cp /usr/share/arduino/examples/Digital/Blink/Blink.pde .
+
+  compile and upload it:
+
+    make TARGET=Blink
+
+    make TARGET=Blink upload
+
+  or do it all at once, thus:
+
+    make TARGET=Blink all upload
+
+  If you set the TARGET= string in the makefile, you obviously don't
+  need to keep specifying it.
+
+  If the upload doesn't work, try unplugging/replugging the Arduino.
+
+BTW Compared with the upstream, that Makefile has been tweaked to put
+the products of compilation in a local build/ dir, so that you can use
+the files under /usr/share/arduino while not being root.
+
+=-=-=-=-
+
+QuickStart (Upstream makefile -- old approach);
+
+[I'll almost certainly drop this if people tell me that the above stuff works for them]
 
   create a new directory, and change to it (its name doesn't matter):
 
@@ -44,13 +97,13 @@ the files under /usr/share/arduino while not being root.
 
 =-=-=-=-
 
-Please tell me if it fails for you, and if possible, what you did to
-the Makefile to make it work.
+Please tell me if either of these fails for you, and if possible, what
+you did to the Makefile to make it work.
 
-I did consider making a script that would automate the above QuickStart,
-but I think you're going to want to do it by hand at some point, so you
-might as well do that from the start.  I'm open to persuasion that some
-sort of script is needed if only to tell people who try to run it to read
-this file instead ;-)
+I did consider making a script that would automate one or other of the
+above QuickStarts, but I think you're going to want to do it by hand
+at some point, so you might as well do that from the start.  I'm open
+to persuasion that some sort of script is needed if only to tell people
+who try to run it to read this file instead ;-)
 
- -- Philip Hands <phil@hands.com>  Sun, 13 Dec 2009 08:31:07 +0000
+ -- Philip Hands <phil@hands.com>  Wed, 28 Apr 2010 09:46:10 +0100
