@@ -3,6 +3,14 @@
 # Arduino command line tools Makefile
 # System part (i.e. project independent)
 #
+# Copyright (C) 2010 Martin Oldfield <m@mjo.tc>, based on work that is
+# Copyright Nicholas Zambetti, David A. Mellis & Hernando Barragan
+# 
+# This file is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation; either version 2.1 of the
+# License, or (at your option) any later version.
+#
 # Adapted from Arduino 0011 Makefile by M J Oldfield
 #
 # Original Arduino adaptation by mellis, eighthave, oli.keller
@@ -15,6 +23,14 @@
 #                          - orthogonal choices of using the Arduino for
 #                            tools, libraries and uploading
 #
+#         0.3  21.v.2010   M J Oldfield
+#                          - added proper license statement
+#                          - added code from Philip Hands to reset
+#                            Arduino prior to upload
+#
+#         0.4  25.v.2010   M J Oldfield
+#                          - tweaked reset target on Philip Hands' advice
+#
 ########################################################################
 #
 # STANDARD ARDUINO WORKFLOW
@@ -24,7 +40,7 @@
 #
 # For example:
 #
-#       ARDUINO_DIR  = /usr/share/arduino
+#       ARDUINO_DIR  = /Applications/arduino-0013
 #
 #       TARGET       = CLItest
 #       ARDUINO_LIBS = LiquidCrystal
@@ -59,9 +75,11 @@
 #
 #
 # Besides make upload you can also
-#   make          - no upload
-#   make clean    - remove all our dependencies
-#   make depends  - update dependencies
+#   make            - no upload
+#   make clean      - remove all our dependencies
+#   make depends    - update dependencies
+#   make reset      - reset the Arduino by tickling DTR on the serial port
+#   make raw_upload - upload without first resetting
 #
 ########################################################################
 #
@@ -104,11 +122,11 @@
 ifneq (ARDUINO_DIR,)
 
 ifndef AVR_TOOLS_PATH
-AVR_TOOLS_PATH    = /usr/bin
+AVR_TOOLS_PATH    = $(ARDUINO_DIR)/hardware/tools/avr/bin
 endif
 
 ifndef ARDUINO_ETC_PATH
-ARDUINO_ETC_PATH  = /etc
+ARDUINO_ETC_PATH  = $(ARDUINO_DIR)/hardware/tools/avr/etc
 endif
 
 ifndef AVRDUDE_CONF
@@ -193,8 +211,10 @@ ASFLAGS       = -mmcu=$(MCU) -I. -x assembler-with-cpp
 LDFLAGS       = -mmcu=$(MCU) -lm -Wl,--gc-sections -Os
 
 # Rules for making a CPP file from the main sketch (.cpe)
-PDEHEADER      = \\\#include \"WProgram.h\"
-#PDEFOOTER_FILE = $(ARDUINO_CORE_PATH)/main.cxx
+PDEHEADER     = \\\#include \"WProgram.h\"
+
+# Expand and pick the first port
+ARD_PORT      = $(firstword $(wildcard $(ARDUINO_PORT)))
 
 # Implicit rules for building everything (needed to get everything in
 # the right directory)
@@ -240,7 +260,7 @@ $(OBJDIR)/%.d: %.s
 # the pde -> cpp -> o file
 $(OBJDIR)/%.cpp: %.pde
 	$(ECHO) $(PDEHEADER) > $@
-	$(CAT)  $< $(PDEFOOTER_FILE) >> $@
+	$(CAT)  $< >> $@
 
 $(OBJDIR)/%.o: $(OBJDIR)/%.cpp
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
@@ -277,12 +297,12 @@ ifndef AVRDUDE
 AVRDUDE          = $(AVR_TOOLS_PATH)/avrdude
 endif
 
-AVRDUDE_COM_OPTS = -q -F -V -p $(MCU)
+AVRDUDE_COM_OPTS = -q -V -p $(MCU)
 ifdef AVRDUDE_CONF
 AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
 endif
 
-AVRDUDE_ARD_OPTS = -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE) -P $(ARDUINO_PORT)
+AVRDUDE_ARD_OPTS = -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE) -P $(ARD_PORT)
 
 ifndef ISP_LOCK_FUSE_PRE
 ISP_LOCK_FUSE_PRE  = 0x3f
@@ -327,10 +347,22 @@ $(TARGET_ELF): 	$(OBJS)
 $(DEP_FILE):	$(OBJDIR) $(DEPS)
 		cat $(DEPS) > $(DEP_FILE)
 
-upload:		$(TARGET_HEX)
-		stty -F $(ARDUINO_PORT) hupcl ; sleep 0.1 ; stty -F $(ARDUINO_PORT) -hupcl
+upload:		reset raw_upload
+
+raw_upload:	$(TARGET_HEX)
 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
 			-U flash:w:$(TARGET_HEX):i
+
+# BSD stty likes -F, but GNU stty likes -f/--file.  Redirecting
+# stdin/out appears to work but generates a spurious error on MacOS at
+# least. Perhaps it would be better to just do it in perl ?
+reset:		
+		for STTYF in 'stty --file' 'stty -f' 'stty <' ;\
+		  do $$STTYF /dev/tty >/dev/null 2>&1 && break ;\
+		done ;\
+		$$STTYF $(ARD_PORT)  hupcl ;\
+		(sleep 0.1 2>/dev/null || sleep 1) ;\
+		$$STTYF $(ARD_PORT) -hupcl 
 
 ispload:	$(TARGET_HEX)
 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) -e \
@@ -349,6 +381,6 @@ clean:
 depends:	$(DEPS)
 		cat $(DEPS) > $(DEP_FILE)
 
-.PHONY:	all clean depends upload
+.PHONY:	all clean depends upload raw_upload reset
 
 include $(DEP_FILE)
