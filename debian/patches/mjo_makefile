@@ -6,16 +6,16 @@ Description: Unpack Martin Oldfield's arduino-mk tarball into mjo/
  package.
 Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 
---- /dev/null
-+++ arduino-0018+dfsg/mjo/README
-@@ -0,0 +1,5 @@
-+This makefile was found via: http://mjo.tc/atelier/2009/02/arduino-cli.html
-+and was downloaded from this link: http://mjo.tc/atelier/2009/02/acli/Arduino.mk
-+
-+It is derived from the Arduino 0013 Makefile, and as such appears to be
-+distributable under the LGPL 2.1, but this needs to be confirmed.
---- /dev/null
-+++ arduino-0018+dfsg/mjo/Arduino.mk
+Index: arduino/mjo/README
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/README	2010-05-29 11:37:16.000000000 +0100
+@@ -0,0 +1 @@
++The contents of this directory originate from: http://mjo.tc/atelier/2009/02/arduino-cli.html
+Index: arduino/mjo/Arduino.mk
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/Arduino.mk	2010-05-29 11:22:19.000000000 +0100
 @@ -0,0 +1,386 @@
 +########################################################################
 +#
@@ -403,8 +403,10 @@ Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 +.PHONY:	all clean depends upload raw_upload reset
 +
 +include $(DEP_FILE)
---- /dev/null
-+++ arduino-0018+dfsg/mjo/arduino-cli.html
+Index: arduino/mjo/arduino-cli.html
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/arduino-cli.html	2010-05-29 11:22:19.000000000 +0100
 @@ -0,0 +1,333 @@
 +<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 +<html xmlns="http://www.w3.org/1999/xhtml">

@@ -81,6 +81,13 @@ Files: lib/*
 Copyright: 2009, Arduino Developers
 License: LGPL-2.1
 
+Files: mjo/*
+Copyright: 2010, Martin Oldfield <m@mjo.tc>
+           2006, Nicholas Zambetti
+           2005-08, David A. Mellis
+           2004-05, Hernando Barragan
+License: LGPL-2.1
+
 License: LGPL-2.1
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
