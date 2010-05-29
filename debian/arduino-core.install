@@ -1,3 +1,3 @@
 hardware/ usr/share/arduino
 debian/historic/arduino usr/share/arduino/hardware/arduino/cores
-debian/mjo/Arduino.mk usr/share/arduino
+mjo/Arduino.mk usr/share/arduino

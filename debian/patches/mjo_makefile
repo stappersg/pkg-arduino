@@ -1,0 +1,741 @@
+From: Martin Oldfield <ex-atelier@mjo.tc>
+Description: Unpack Martin Oldfield's arduino-mk tarball into mjo/
+ This patch populates the mjo/ directory with the contents of the
+ tarball published by Martin Oldfield.  Effectively this is
+ upstream source, but from a different upstream than the main
+ package.
+Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
+
+--- /dev/null
++++ arduino-0018+dfsg/mjo/README
+@@ -0,0 +1,5 @@
++This makefile was found via: http://mjo.tc/atelier/2009/02/arduino-cli.html
++and was downloaded from this link: http://mjo.tc/atelier/2009/02/acli/Arduino.mk
++
++It is derived from the Arduino 0013 Makefile, and as such appears to be
++distributable under the LGPL 2.1, but this needs to be confirmed.
+--- /dev/null
++++ arduino-0018+dfsg/mjo/Arduino.mk
+@@ -0,0 +1,386 @@
++########################################################################
++#
++# Arduino command line tools Makefile
++# System part (i.e. project independent)
++#
++# Copyright (C) 2010 Martin Oldfield <m@mjo.tc>, based on work that is
++# Copyright Nicholas Zambetti, David A. Mellis & Hernando Barragan
++# 
++# This file is free software; you can redistribute it and/or modify it
++# under the terms of the GNU Lesser General Public License as
++# published by the Free Software Foundation; either version 2.1 of the
++# License, or (at your option) any later version.
++#
++# Adapted from Arduino 0011 Makefile by M J Oldfield
++#
++# Original Arduino adaptation by mellis, eighthave, oli.keller
++#
++# Version 0.1  17.ii.2009  M J Oldfield
++#
++#         0.2  22.ii.2009  M J Oldfield
++#                          - fixes so that the Makefile actually works!
++#                          - support for uploading via ISP
++#                          - orthogonal choices of using the Arduino for
++#                            tools, libraries and uploading
++#
++#         0.3  21.v.2010   M J Oldfield
++#                          - added proper license statement
++#                          - added code from Philip Hands to reset
++#                            Arduino prior to upload
++#
++#         0.4  25.v.2010   M J Oldfield
++#                          - tweaked reset target on Philip Hands' advice
++#
++########################################################################
++#
++# STANDARD ARDUINO WORKFLOW
++#
++# Given a normal sketch directory, all you need to do is to create
++# a small Makefile which defines a few things, and then includes this one.
++#
++# For example:
++#
++#       ARDUINO_DIR  = /Applications/arduino-0013
++#
++#       TARGET       = CLItest
++#       ARDUINO_LIBS = LiquidCrystal
++#
++#       MCU          = atmega168
++#       F_CPU        = 16000000
++#       ARDUINO_PORT = /dev/cu.usb*
++#
++#       include /usr/local/share/Arduino.mk
++#
++# Hopefully these will be self-explanatory but in case they're not:
++#
++#    ARDUINO_DIR  - Where the Arduino software has been unpacked
++#    TARGET       - The basename used for the final files. Canonically
++#                   this would match the .pde file, but it's not needed
++#                   here: you could always set it to xx if you wanted!
++#    ARDUINO_LIBS - A list of any libraries used by the sketch (we assume
++#                   these are in $(ARDUINO_DIR)/hardware/libraries
++#    MCU,F_CPU    - The target processor description
++#    ARDUINO_PORT - The port where the Arduino can be found (only needed
++#                   when uploading
++#
++# Once this file has been created the typical workflow is just
++#
++#   $ make upload
++#
++# All of the object files are created in the build-cli subdirectory
++# All sources should be in the current directory and can include:
++#  - at most one .pde file which will be treated as C++ after the standard
++#    Arduino header and footer have been affixed.
++#  - any number of .c, .cpp, .s and .h files
++#
++#
++# Besides make upload you can also
++#   make            - no upload
++#   make clean      - remove all our dependencies
++#   make depends    - update dependencies
++#   make reset      - reset the Arduino by tickling DTR on the serial port
++#   make raw_upload - upload without first resetting
++#
++########################################################################
++#
++# ARDUINO WITH OTHER TOOLS
++#
++# If the tools aren't in the Arduino distribution, then you need to 
++# specify their location:
++#
++#    AVR_TOOLS_PATH = /usr/bin
++#    AVRDUDE_CONF   = /etc/avrdude/avrdude.conf
++#
++########################################################################
++#
++# ARDUINO WITH ISP
++#
++# You need to specify some details of your ISP programmer and might
++# also need to specify the fuse values:
++#
++#     ISP_PROG	   = -c stk500v2
++#     ISP_PORT     = /dev/ttyACM0
++#     
++#     ISP_LOCK_FUSE_PRE  = 0x3f
++#     ISP_LOCK_FUSE_POST = 0xcf
++#     ISP_HIGH_FUSE      = 0xdf
++#     ISP_LOW_FUSE       = 0xff
++#     ISP_EXT_FUSE       = 0x01
++#
++# I think the fuses here are fine for uploading to the ATmega168
++# without bootloader.
++# 
++# To actually do this upload use the ispload target:
++#
++#    make ispload
++#
++#
++########################################################################
++# Some paths
++#
++
++ifneq (ARDUINO_DIR,)
++
++ifndef AVR_TOOLS_PATH
++AVR_TOOLS_PATH    = $(ARDUINO_DIR)/hardware/tools/avr/bin
++endif
++
++ifndef ARDUINO_ETC_PATH
++ARDUINO_ETC_PATH  = $(ARDUINO_DIR)/hardware/tools/avr/etc
++endif
++
++ifndef AVRDUDE_CONF
++AVRDUDE_CONF     = $(ARDUINO_ETC_PATH)/avrdude.conf
++endif
++
++ARDUINO_LIB_PATH  = $(ARDUINO_DIR)/hardware/libraries
++ARDUINO_CORE_PATH = $(ARDUINO_DIR)/hardware/arduino/cores/arduino
++
++endif
++
++# Everything gets built in here
++OBJDIR  	  = build-cli
++
++########################################################################
++# Local sources
++#
++LOCAL_C_SRCS    = $(wildcard *.c)
++LOCAL_CPP_SRCS  = $(wildcard *.cpp)
++LOCAL_CC_SRCS   = $(wildcard *.cc)
++LOCAL_PDE_SRCS  = $(wildcard *.pde)
++LOCAL_AS_SRCS   = $(wildcard *.S)
++LOCAL_OBJ_FILES = $(LOCAL_C_SRCS:.c=.o) $(LOCAL_CPP_SRCS:.cpp=.o) \
++		$(LOCAL_CC_SRCS:.cc=.o) $(LOCAL_PDE_SRCS:.pde=.o) \
++		$(LOCAL_AS_SRCS:.S=.o)
++LOCAL_OBJS      = $(patsubst %,$(OBJDIR)/%,$(LOCAL_OBJ_FILES))
++
++# Dependency files
++DEPS            = $(LOCAL_OBJS:.o=.d)
++
++# core sources
++ifeq ($(strip $(NO_CORE)),)
++ifdef ARDUINO_CORE_PATH
++CORE_C_SRCS     = $(wildcard $(ARDUINO_CORE_PATH)/*.c)
++CORE_CPP_SRCS   = $(wildcard $(ARDUINO_CORE_PATH)/*.cpp)
++CORE_OBJ_FILES  = $(CORE_C_SRCS:.c=.o) $(CORE_CPP_SRCS:.cpp=.o)
++CORE_OBJS       = $(patsubst $(ARDUINO_CORE_PATH)/%,  \
++			$(OBJDIR)/%,$(CORE_OBJ_FILES))
++endif
++endif
++
++# all the objects!
++OBJS            = $(LOCAL_OBJS) $(CORE_OBJS)
++
++########################################################################
++# Rules for making stuff
++#
++
++# The name of the main targets
++TARGET_HEX = $(OBJDIR)/$(TARGET).hex
++TARGET_ELF = $(OBJDIR)/$(TARGET).elf
++TARGETS    = $(OBJDIR)/$(TARGET).*
++
++# A list of dependencies
++DEP_FILE   = $(OBJDIR)/depends.mk
++
++# Names of executables
++CC      = $(AVR_TOOLS_PATH)/avr-gcc
++CXX     = $(AVR_TOOLS_PATH)/avr-g++
++OBJCOPY = $(AVR_TOOLS_PATH)/avr-objcopy
++OBJDUMP = $(AVR_TOOLS_PATH)/avr-objdump
++AR      = $(AVR_TOOLS_PATH)/avr-ar
++SIZE    = $(AVR_TOOLS_PATH)/avr-size
++NM      = $(AVR_TOOLS_PATH)/avr-nm
++REMOVE  = rm -f
++MV      = mv -f
++CAT     = cat
++ECHO    = echo
++
++# General arguments
++SYS_LIBS      = $(patsubst %,$(ARDUINO_LIB_PATH)/%,$(ARDUINO_LIBS))
++SYS_INCLUDES  = $(patsubst %,-I%,$(SYS_LIBS))
++SYS_OBJS      = $(wildcard $(patsubst %,%/*.o,$(SYS_LIBS)))
++
++CPPFLAGS      = -mmcu=$(MCU) -DF_CPU=$(F_CPU) \
++			-I. -I$(ARDUINO_CORE_PATH) \
++			$(SYS_INCLUDES) -g -Os -w -Wall \
++			-ffunction-sections -fdata-sections
++CFLAGS        = -std=gnu99
++CXXFLAGS      = -fno-exceptions
++ASFLAGS       = -mmcu=$(MCU) -I. -x assembler-with-cpp
++LDFLAGS       = -mmcu=$(MCU) -lm -Wl,--gc-sections -Os
++
++# Rules for making a CPP file from the main sketch (.cpe)
++PDEHEADER     = \\\#include \"WProgram.h\"
++
++# Expand and pick the first port
++ARD_PORT      = $(firstword $(wildcard $(ARDUINO_PORT)))
++
++# Implicit rules for building everything (needed to get everything in
++# the right directory)
++#
++# Rather than mess around with VPATH there are quasi-duplicate rules
++# here for building e.g. a system C++ file and a local C++
++# file. Besides making things simpler now, this would also make it
++# easy to change the build options in future
++
++# normal local sources
++# .o rules are for objects, .d for dependency tracking
++# there seems to be an awful lot of duplication here!!!
++$(OBJDIR)/%.o: %.c
++	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
++
++$(OBJDIR)/%.o: %.cc
++	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
++
++$(OBJDIR)/%.o: %.cpp
++	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
++
++$(OBJDIR)/%.o: %.S
++	$(CC) -c $(CPPFLAGS) $(ASFLAGS) $< -o $@
++
++$(OBJDIR)/%.o: %.s
++	$(CC) -c $(CPPFLAGS) $(ASFLAGS) $< -o $@
++
++$(OBJDIR)/%.d: %.c
++	$(CC) -MM $(CPPFLAGS) $(CFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++$(OBJDIR)/%.d: %.cc
++	$(CXX) -MM $(CPPFLAGS) $(CXXFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++$(OBJDIR)/%.d: %.cpp
++	$(CXX) -MM $(CPPFLAGS) $(CXXFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++$(OBJDIR)/%.d: %.S
++	$(CC) -MM $(CPPFLAGS) $(ASFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++$(OBJDIR)/%.d: %.s
++	$(CC) -MM $(CPPFLAGS) $(ASFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++# the pde -> cpp -> o file
++$(OBJDIR)/%.cpp: %.pde
++	$(ECHO) $(PDEHEADER) > $@
++	$(CAT)  $< >> $@
++
++$(OBJDIR)/%.o: $(OBJDIR)/%.cpp
++	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
++
++$(OBJDIR)/%.d: $(OBJDIR)/%.cpp
++	$(CXX) -MM $(CPPFLAGS) $(CXXFLAGS) $< -MF $@ -MT $(@:.d=.o)
++
++# core files
++$(OBJDIR)/%.o: $(ARDUINO_CORE_PATH)/%.c
++	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
++
++$(OBJDIR)/%.o: $(ARDUINO_CORE_PATH)/%.cpp
++	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
++
++# various object conversions
++$(OBJDIR)/%.hex: $(OBJDIR)/%.elf
++	$(OBJCOPY) -O ihex -R .eeprom $< $@
++
++$(OBJDIR)/%.eep: $(OBJDIR)/%.elf
++	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
++		--change-section-lma .eeprom=0 -O ihex $< $@
++
++$(OBJDIR)/%.lss: $(OBJDIR)/%.elf
++	$(OBJDUMP) -h -S $< > $@
++
++$(OBJDIR)/%.sym: $(OBJDIR)/%.elf
++	$(NM) -n $< > $@
++
++########################################################################
++#
++# Avrdude
++#
++ifndef AVRDUDE
++AVRDUDE          = $(AVR_TOOLS_PATH)/avrdude
++endif
++
++AVRDUDE_COM_OPTS = -q -V -p $(MCU)
++ifdef AVRDUDE_CONF
++AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
++endif
++
++AVRDUDE_ARD_OPTS = -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE) -P $(ARD_PORT)
++
++ifndef ISP_LOCK_FUSE_PRE
++ISP_LOCK_FUSE_PRE  = 0x3f
++endif
++
++ifndef ISP_LOCK_FUSE_POST
++ISP_LOCK_FUSE_POST = 0xcf
++endif
++
++ifndef ISP_HIGH_FUSE
++ISP_HIGH_FUSE      = 0xdf
++endif
++
++ifndef ISP_LOW_FUSE
++ISP_LOW_FUSE       = 0xff
++endif
++
++ifndef ISP_EXT_FUSE
++ISP_EXT_FUSE       = 0x01
++endif
++
++ifndef ISP_PROG
++ISP_PROG	   = -c stk500v2
++endif
++
++AVRDUDE_ISP_OPTS = -P $(ISP_PORT) $(ISP_PROG)
++
++
++########################################################################
++#
++# Explicit targets start here
++#
++
++all: 		$(OBJDIR) $(TARGET_HEX)
++
++$(OBJDIR):
++		mkdir $(OBJDIR)
++
++$(TARGET_ELF): 	$(OBJS)
++		$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SYS_OBJS)
++
++$(DEP_FILE):	$(OBJDIR) $(DEPS)
++		cat $(DEPS) > $(DEP_FILE)
++
++upload:		reset raw_upload
++
++raw_upload:	$(TARGET_HEX)
++		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
++			-U flash:w:$(TARGET_HEX):i
++
++# BSD stty likes -F, but GNU stty likes -f/--file.  Redirecting
++# stdin/out appears to work but generates a spurious error on MacOS at
++# least. Perhaps it would be better to just do it in perl ?
++reset:		
++		for STTYF in 'stty --file' 'stty -f' 'stty <' ;\
++		  do $$STTYF /dev/tty >/dev/null 2>&1 && break ;\
++		done ;\
++		$$STTYF $(ARD_PORT)  hupcl ;\
++		(sleep 0.1 2>/dev/null || sleep 1) ;\
++		$$STTYF $(ARD_PORT) -hupcl 
++
++ispload:	$(TARGET_HEX)
++		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) -e \
++			-U lock:w:$(ISP_LOCK_FUSE_PRE):m \
++			-U hfuse:w:$(ISP_HIGH_FUSE):m \
++			-U lfuse:w:$(ISP_LOW_FUSE):m \
++			-U efuse:w:$(ISP_EXT_FUSE):m
++		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) -D \
++			-U flash:w:$(TARGET_HEX):i
++		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) \
++			-U lock:w:$(ISP_LOCK_FUSE_POST):m
++
++clean:
++		$(REMOVE) $(OBJS) $(TARGETS) $(DEP_FILE) $(DEPS)
++
++depends:	$(DEPS)
++		cat $(DEPS) > $(DEP_FILE)
++
++.PHONY:	all clean depends upload raw_upload reset
++
++include $(DEP_FILE)
+--- /dev/null
++++ arduino-0018+dfsg/mjo/arduino-cli.html
+@@ -0,0 +1,333 @@
++<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml">
++  <head>
++    <title>Martin's Atelier: Arduino from the command line</title>
++    <link rel="alternate" type="application/atom+xml" href="../../feed.atom" />   
++    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
++    <meta name="robots"      content="all" />
++    <meta name="author"      content="Martin Oldfield" />
++    <meta name="keywords"    content="Arduino command line Makefile" />
++    <meta name="description" content="" />    
++    <style type="text/css" media="all">@import "../../std.css";</style>
++    <style type="text/css" media="print">@import "../../print.css";</style>
++</head>
++
++  <body>
++    <div id="wrapper">
++      <div id="header">
++        <img id="logo_col" src="../../gears.png"/>
++        <img id="logo_bw"  src="../../gears_bw.png"/>
++        <h1>Arduino from the command line</h1>
++      </div>
++      <div id="main">
++        <h2>Update News</h2>
++
++<p>The current version of this software (0.3) won&#39;t work with versions of the Arduino software before 0018.</p>
++
++<h2>Introduction</h2>
++
++<p>The <a href="http://www.arduino.cc/">Arduino</a><span class="link_list"><sup>1</sup></span> has done much to popularize microcontrollers for the casual tinkerer. Its success suggests that there&#39;s considerable value in combining a standard microcontroller (the ATmega) and a <span class="caps">GCC </span>based toolchain into an easily digesible package. For myself, it&#39;s certainly easier to just install the latest release of the Arduino software than worry about building my own cross-compilers, particularly when it&#39;s all new to me and consequently somewhat confusing.</p>
++
++<p>After working through the toy tutorials though, I found myself wishing that writing code for the Arduino were more like writing other C programs. In my case, that means editing it with emacs then building it with make. I must emphasize that I&#39;m not criticizing the Arduino <span class="caps">IDE</span>: there&#39;s nothing wrong with it beyond it not being emacs...</p>
++
++<p>It turns out that others have been along this path before: the Arduino website has a hopeful sounding <a href="http://www.arduino.cc/en/Hacking/CommandLine">Arduino from the Command Line</a><span class="link_list"><sup>2</sup></span> article. In turn this points you at the Makefile shipped as part of the Arduino software distribution: hardware/cores/arduino/Makefile.</p>
++
++<p>This didn&#39;t really fit quite what I wanted to do though, so I wrote my own Makefile. You might wonder why I should embark on such a task. Well:</p>
++
++<ul>
++<li>I was keen that all of my objects and random other files were   completely separate from the main Arduino stuff in the applet   directory.</li>
++<li>Although I wanted to be able to build Arduino sketches, I also   wanted a suitable jumping-off point for code which didn&#39;t use   wiring. In other words, to regard the Arduino software as a   convenient way to get the <span class="caps">AVR GCC </span>toolchain.</li>
++<li>Rather than dumping a big Makefile in each sketch directory, I   wanted to have a few definitions in the directory which then   included a large project-independent file from elsewhere.</li>
++</ul>
++
++<p>Finally, one of the things I enjoy about writing code for microcontrollers is the sense of continuity between the hardware datasheets published by the chip manufacturer and the code I write (by contrast if you&#39;re writing code on Linux there&#39;s a vast gulf between the code executing printf and stuff appearing on the screen). Writing my own Makefile seemed a good way to make sure I understood what was going on.</p>
++
++<p>So to the Makefile. Obviously it owes a great debt to the people who wrote the Makefile shipped with the Arduino <span class="caps">IDE </span>and here&#39;s the credit list from that file:</p>
++
++<pre><code># Arduino 0011 Makefile                                  
++# Arduino adaptation by mellis, eighthave, oli.keller    </code></pre>
++
++<p>Thanks then to mellis, eighthavem and oli.keller.</p>
++
++<h2>Installation instructions</h2>
++
++<p>You&#39;ll need to download <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz">the tarball containing the Makefile,</a><span class="link_list"><sup>3</sup></span>, unpack it, and then copy the Makefile somewhere sensible:</p>
++
++<pre><code>$ wget http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz 
++$ tar xzvf arduino-mk_0.3.tar.gz 
++$ cp arduino-mk-0.3/Arduino.mk /path/to/my/arduino/stuff/Arduino.mk </code></pre>
++
++<p>The next step is to create a small Makefile for the sketch you actually want to build. The typical Arduino sketch directory looks like this:</p>
++
++<pre><code>$ ls -ltr  
++total 8    
++drwxr-xr-x   4 mjo  staff  136 15 Feb 19:53 applet        
++-rw-r--r--@  1 mjo  staff  384 17 Feb 16:11 CLItest.pde</code></pre>
++
++<p>To this we&#39;ll add a Makefile:</p>
++
++<pre><code>ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java 
++                                            
++TARGET       = CLItest                            
++MCU          = atmega168                          
++F_CPU        = 16000000                           
++ARDUINO_PORT = /dev/cu.usb*                       
++                                            
++ARDUINO_LIBS = LiquidCrystal              
++                                            
++include /path/to/my/arduino/stuff/Arduino.mk</code></pre>
++
++<p>Hopefully these will be self-explanatory but in case they&#39;re not:</p>
++
++<dl>
++<dt><span class="caps">ARDUINO</span>_DIR</dt>
++<dd>Where you installed the Arduino software. On the Mac this has to point deep inside the Arduino installation /Applications.  </dd>
++<dt><span class="caps">TARGET</span></dt>
++<dd>The basename used for the final files. Canonically            this would match the .pde file, but you can choose anything!        </dd>
++<dt><span class="caps">ARDUINO</span>_LIBS</dt>
++<dd>A list of any libraries used by the sketch&mdash;we assume  these are in $(ARDUINO_DIR)/hardware/libraries.                     </dd>
++<dt><span class="caps">MCU</span></dt>
++<dd>The target processor (atmega168 for the Duemilanove).           </dd>
++<dt>F_CPU</dt>
++<dd>The target&#39;s clock speed (16000000 for the Duemilanove).      </dd>
++<dt><span class="caps">ARDUINO</span>_PORT</dt>
++<dd>The port where the Arduino can be found (only needed when  uploading) If this expands to several ports, the first will be used.</dd>
++</dl>
++
++
++<p>If you&#39;re using the toolchain provided by the system rather than bundled with the Arduino software (as I think is the case on Linux) then you&#39;ll have to add some more paths:</p>
++
++<pre><code>AVR_TOOLS_PATH   = /usr/bin  
++AVRDUDE_CONF     = /etc/avrdude.conf</code></pre>
++
++<h2>Building</h2>
++
++<p>If you&#39;re used to Unix then this is easy:</p>
++
++<pre><code>$ make 
++...</code></pre>
++
++<p>The output is pretty verbose, but I think it should be obvious if it worked. After building you&#39;ll see a new directory has been created which contains all the object files: build-cli.</p>
++
++<pre><code>$ ls -l  
++total 32 
++-rw-r--r--@  1 mjo  staff  384 17 Feb 16:11 CLItest.pde  
++-rw-r--r--@  1 mjo  staff  202 17 Feb 16:39 Makefile     
++drwxr-xr-x   4 mjo  staff  136 15 Feb 19:53 applet       
++drwxr-xr-x  21 mjo  staff  714 17 Feb 17:52 build-cli    </code></pre>
++
++<h3>build-cli</h3>
++
++<p>Let&#39;s peek inside the build-cli directory:</p>
++
++<pre><code>$ ls -l build-cli 
++total 392 
++-rw-r--r--  1 mjo  staff    491 17 Feb 17:52 CLItest.cpp          
++-rw-r--r--  1 mjo  staff    583 17 Feb 17:52 CLItest.d            
++-rwxr-xr-x  1 mjo  staff  60971 17 Feb 17:52 CLItest.elf          
++-rw-r--r--  1 mjo  staff   3994 17 Feb 17:52 CLItest.hex          
++-rw-r--r--  1 mjo  staff   5932 17 Feb 17:52 CLItest.o            
++-rw-r--r--  1 mjo  staff   6920 17 Feb 17:52 HardwareSerial.o     
++-rw-r--r--  1 mjo  staff  12708 17 Feb 17:52 Print.o              
++-rw-r--r--  1 mjo  staff   6852 17 Feb 17:52 WInterrupts.o        
++-rw-r--r--  1 mjo  staff   4680 17 Feb 17:52 WMath.o              
++-rw-r--r--  1 mjo  staff    611 17 Feb 17:52 depends.mk           
++-rw-r--r--  1 mjo  staff   5900 17 Feb 17:52 pins_arduino.o       
++-rw-r--r--  1 mjo  staff   8476 17 Feb 17:52 wiring.o             
++-rw-r--r--  1 mjo  staff   7224 17 Feb 17:52 wiring_analog.o      
++-rw-r--r--  1 mjo  staff   8244 17 Feb 17:52 wiring_digital.o     
++-rw-r--r--  1 mjo  staff   6544 17 Feb 17:52 wiring_pulse.o       
++-rw-r--r--  1 mjo  staff   7424 17 Feb 17:52 wiring_serial.o      
++-rw-r--r--  1 mjo  staff   5308 17 Feb 17:52 wiring_shift.o       </code></pre>
++
++<p>Most of the files in here are object files for the wiring library. What about the others ?</p>
++
++<dl>
++<dt><span class="caps">CLI</span>test.cpp</dt>
++<dd>This is the .pde sketch file with a small main program prepended and a suitable #include prepended. </dd>
++<dt><span class="caps">CLI</span>test.d</dt>
++<dd>This tracks the dependencies used by <span class="caps">CLI</span>test.pde </dd>
++<dt><span class="caps">CLI</span>test.elf</dt>
++<dd>This is executable produced by the linker </dd>
++<dt><span class="caps">CLI</span>test.hex</dt>
++<dd>This is a hex dump of (the code part) of the executable  in a format understood by the Arduino&#39;s bootloader. </dd>
++<dt><span class="caps">CLI</span>test.o</dt>
++<dd>The object file we got by compiling <span class="caps">CLI</span>test.cpp. </dd>
++<dt>depends.mk</dt>
++<dd>A single file containing all the dependency relations  (it&#39;s the concatentation of all the .d files).</dd>
++</dl>
++
++
++<p>You may recall the <span class="caps">TARGET </span>variable we specified in the Makefile above: it&#39;s that which sets the base name for e.g. <span class="caps">CLI</span>test.elf. However <span class="caps">CLI</span>test.cpp, <span class="caps">CLI</span>test.o and <span class="caps">CLI</span>test.d take their name from the .pde sketch file.</p>
++
++<h2>Uploading code</h2>
++
++<p>This is easy:</p>
++
++<pre><code>$ make upload</code></pre>
++
++<h2>Uploading via <span class="caps">ISP</span></h2>
++
++<p>If you&#39;re using target hardware which doesn&#39;t have a bootloader then you might want to use <span class="caps">ISP </span>to upload the code. Though you&#39;ll obviously need some extra hardware to do this.</p>
++
++<p>Assuming that avrdude supports your programmer though, you&#39;ll only need to make a few changes to the Makefile to tell avrdude where it can find the programmer and how to talk to it:</p>
++
++<pre><code>ISP_PORT         = /dev/ttyACM0 
++ISP_PROG         = -c stk500v2</code></pre>
++
++<p>Then to upload:</p>
++
++<pre><code>$ make ispload</code></pre>
++
++<h3>Fuses</h3>
++
++<p>You might need to change the fuse settings when programming, though some care needs to be taken here or you might irreversibly change the chip. You can set the fuse settings thus (the values below are the defaults):</p>
++
++<pre><code>ISP_LOCK_FUSE_PRE  = 0x3f 
++ISP_LOCK_FUSE_POST = 0xcf 
++ISP_HIGH_FUSE      = 0xdf 
++ISP_LOW_FUSE       = 0xff 
++ISP_EXT_FUSE       = 0x01
++</code></pre>
++
++<h2>Growing the project</h2>
++
++<p>There a couple of obvious things to do now. You might want to edit the sketch. That&#39;s easy: just edit the .pde file and run make again.</p>
++
++<p>Alternatively you might want to add some more source files to the project. That&#39;s easy too: the Makefile understands C, C++ and assembler files in the source directory (with .c, .cpp, and .s extensions). Everything <strong>should</strong> just work.</p>
++
++
++
++<h2>Wiring-less development</h2>
++
++<p>Finally you might want to develop code which isn&#39;t linked against the Wiring library. There&#39;s some scope for this: just set NO_CORE in the Makefile e.g.</p>
++
++<pre><code>NO_CORE = 1</code></pre>
++
++<h2>Bugs and problems</h2>
++
++<ul>
++<li>The Makefile isn&#39;t very elegant.</li>
++<li>Handling Arduino libraries isn&#39;t very clean. For one thing I&#39;m   relying on them being compiled in a compatible way by the Arduino   environment which is probably a bit risky. Secondly it&#39;s a bit lazy   to get the user to specify which libraries are being used manually.</li>
++<li>When compiling the sketch file, the compiler actually sees the .cpp   file derived from it. Accordingly the line numbers of any errors   will be wrong (but not by that much).</li>
++<li>I fear that the Makefile makes unwarranted assumptions about the   hardware: for example, all my Arduino experience has been ATmega 168   related.</li>
++<li>The Makefile doesn&#39;t do some of the things that the Makefile   distributed with the Arduino software does e.g. generating <span class="caps">COFF   </span>files. I worry that some of these might be important.</li>
++<li>This hasn&#39;t been used very much yet, even by me. I&#39;m writing this   now as much for my benefit as anyone else&#39;s, though I&#39;d be delighted   to know if anyone else finds it useful.</li>
++</ul>
++
++
++<h2>Changelog</h2>
++
++<h3>2010-05-21, version 0.3</h3>
++
++<ul>
++<li>Tidied up the licensing, making it clear that it&#39;s released under <span class="caps">LGPL</span> 2.1.</li>
++<li><a href="mailto:phil@hands.com">Philip Hands</a><span class="link_list"><sup>4</sup></span> sent me some code to reset the   Arduino by dropping <span class="caps">DTR </span>for 100ms, and I added it.</li>
++<li>Tweaked the Makefile to handle version 0018 of the Arduino software   which now includes main.cpp. Accordingly we don&#39;t need to&mdash;and   indeed must not&mdash;add main.cxx to the .pde sketch file. The paths   seem to have changed a bit too. </li>
++</ul>
++        <div id="link_list">
++          <h2>References</h2>
++          <ul><li>1. http://www.arduino.cc/</li><li>2. http://www.arduino.cc/en/Hacking/CommandLine</li><li>3. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz</li><li>4. phil@hands.com</li></ul>
++        </div>      </div>
++           
++      <div id="sidebar">
++        <div class="listcontainer">
++          <h2><a href="../../index/index.html">Martin's Atelier</a></h2>
++          <div id="subscribe"><p><a href="../../feed.atom"><img src="../../atom.png" alt="[ Atom Feed ]" title="Atom Feed" /></a></p></div>
++        </div>
++        
++        
++        <div class="listcontainer">        
++          <h3>Related Articles</h3>
++          <ul>
++            
++            <li><a href="../03/aarduino.html">The AArduino</a><br/>Martin Oldfield, 16 Jun 2009</li>
++            
++            <li><a href="avrdude-cookbook.html">Avrdude Cookbook</a><br/>Martin Oldfield, 23 Feb 2009</li>
++            
++            <li><a href="olimex-avrdude-mac.html">MacOS X and the Olimex AVR-ISP500</a><br/>Martin Oldfield, 17 Feb 2009</li>
++            
++          </ul>
++        </div>
++        
++  
++        
++        <div class="listcontainer">        
++          <h3><a href="../../index/st_subject.html">Related Subjects</a></h3>
++          <ul>
++            
++            <li><a href="../../index/t_Arduino.html">Arduino</a></li>
++            
++            <li><a href="../../index/t_command line.html">command line</a></li>
++            
++            <li><a href="../../index/t_Makefile.html">Makefile</a></li>
++            
++          </ul>
++        </div>
++        
++
++        
++        <div class="listcontainer">        
++          <h3><a href="../../index/index.html">Other Articles</a></h3>
++          <ul>
++            
++            <li><a href="../../2010/04/perl-unicode.html">Unicode games with perl, MySQL, and XML</a><br/>Martin Oldfield, 17 Apr 2010</li>
++            
++            <li><a href="../../2010/01/gps-track-filter.html">Filtering GPS tracks</a><br/>Martin Oldfield, 04 Jan 2010</li>
++            
++            <li><a href="../01/paris_drink.html">Places to drink in Paris</a><br/>Martin Oldfield, 15 Dec 2009</li>
++            
++            <li><a href="../01/paris_food.html">Places to eat in Paris</a><br/>Martin Oldfield, 15 Dec 2009</li>
++            
++            <li><a href="../11/sons-and-daughters.html">Sons and Daughters</a><br/>Martin Oldfield, 06 Dec 2009</li>
++            
++            <li><a href="../12/garmin-gpx.html">Faking geocaches in Garmin GPX files</a><br/>Martin Oldfield, 06 Dec 2009</li>
++            
++            <li><a href="../08/macos-pic.html">Playing with PICs on MacOS X</a><br/>Martin Oldfield, 18 Aug 2009</li>
++            
++            <li><a href="../03/etch_to_lenny_on_xen.html">Etch to lenny upgrades on Xen</a><br/>Martin Oldfield, 08 Jun 2009</li>
++            
++            <li>...</li>
++          </ul>
++        </div>
++        
++
++        
++        <div class="lastlistcontainer">
++          <h3>Bookmark this article</h3>
++        <ul class="social">
++          
++          <li><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html" title="Facebook"><img src="../../social/facebook.png" alt="[ facebook ]"/></a></li>
++          
++          <li><a href="http://del.icio.us/post?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Delicious"><img src="../../social/delicious.png" alt="[ delicious ]"/></a></li>
++          
++          <li><a href="http://digg.com/submit?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Digg"><img src="../../social/digg.png" alt="[ digg ]"/></a></li>
++          
++          <li><a href="http://reddit.com/submit?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Reddit"><img src="../../social/reddit.png" alt="[ reddit ]"/></a></li>
++          
++          <li><a href="http://www.stumbleupon.com?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Stumbleupon"><img src="../../social/stumbleupon.png" alt="[ stumbleupon ]"/></a></li>
++          
++        </ul>
++        </div>
++        
++
++        </div>
++
++        <div id="footer">
++          Revised by Martin Oldfield on 24 May 2010, original version 17 Feb 2009.<br/>
++          Contact: Martin Oldfield, ex-atelier@mjo.tc<br/>
++          This work is available under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>, or qqthe <a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">CC-GNU LGPL</a> version 2.1 or later.
++       </div>
++
++        </div>
++        
++    </div>
++    <script src="http://www.google-analytics.com/urchin.js"
++    type="text/javascript">
++    </script>
++    <script type="text/javascript">
++    _uacct = "UA-567180-1";
++    urchinTracker();
++    </script>
++  </body>
++</html>

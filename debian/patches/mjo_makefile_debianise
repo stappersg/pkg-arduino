@@ -1,0 +1,30 @@
+Description: Set paths in mjo's Makefile to match Debian defaults
+Author: Philip Hands <phil@hands.com>
+Origin: vendor
+Forwarded: not-needed
+
+--- arduino-0018+dfsg.orig/mjo/Arduino.mk
++++ arduino-0018+dfsg/mjo/Arduino.mk
+@@ -40,7 +40,7 @@
+ #
+ # For example:
+ #
+-#       ARDUINO_DIR  = /Applications/arduino-0013
++#       ARDUINO_DIR  = /usr/share/arduino
+ #
+ #       TARGET       = CLItest
+ #       ARDUINO_LIBS = LiquidCrystal
+@@ -122,11 +122,11 @@
+ ifneq (ARDUINO_DIR,)
+ 
+ ifndef AVR_TOOLS_PATH
+-AVR_TOOLS_PATH    = $(ARDUINO_DIR)/hardware/tools/avr/bin
++AVR_TOOLS_PATH    = /usr/bin
+ endif
+ 
+ ifndef ARDUINO_ETC_PATH
+-ARDUINO_ETC_PATH  = $(ARDUINO_DIR)/hardware/tools/avr/etc
++ARDUINO_ETC_PATH  = /etc
+ endif
+ 
+ ifndef AVRDUDE_CONF
