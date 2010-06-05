@@ -1,4 +1,6 @@
 version=3
-opts=dversionmangle=s/\.dfsg// \
-http://code.google.com/p/arduino/downloads/list \
-http://arduino.googlecode.com/files/arduino-(.*)\.zip
+opts=\
+dversionmangle=s/.dfsg//,\
+downloadurlmangle=s|.*[?]name=(.*?)&.*|http://arduino.googlecode.com/files/$1|,\
+filenamemangle=s|[^/]+[?]name=(.*?)&.*|$1| \
+http://code.google.com/p/arduino/downloads/detail[?]name=arduino-([0-9]+).tgz&.*
