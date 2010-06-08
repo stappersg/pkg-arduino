@@ -6,17 +6,13 @@ Description: Unpack Martin Oldfield's arduino-mk tarball into mjo/
  package.
 Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 
-Index: arduino/mjo/README
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/README	2010-05-29 11:37:16.000000000 +0100
+--- /dev/null
++++ b/mjo/README
 @@ -0,0 +1 @@
 +The contents of this directory originate from: http://mjo.tc/atelier/2009/02/arduino-cli.html
-Index: arduino/mjo/Arduino.mk
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/Arduino.mk	2010-05-29 11:22:19.000000000 +0100
-@@ -0,0 +1,386 @@
+--- /dev/null
++++ b/mjo/Arduino.mk
+@@ -0,0 +1,394 @@
 +########################################################################
 +#
 +# Arduino command line tools Makefile
@@ -321,7 +317,15 @@ Index: arduino/mjo/Arduino.mk
 +AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
 +endif
 +
-+AVRDUDE_ARD_OPTS = -c $(AVRDUDE_PROGRAMMER) -b $(UPLOAD_RATE) -P $(ARD_PORT)
++ifndef AVRDUDE_ARD_PROGRAMMER
++AVRDUDE_ARD_PROGRAMMER = stk500v1
++endif
++
++ifndef AVRDUDE_ARD_BAUDRATE
++AVRDUDE_ARD_BAUDRATE   = 19200
++endif
++
++AVRDUDE_ARD_OPTS = -c $(AVRDUDE_ARD_PROGRAMMER) -b $(AVRDUDE_ARD_BAUDRATE) -P $(ARD_PORT)
 +
 +ifndef ISP_LOCK_FUSE_PRE
 +ISP_LOCK_FUSE_PRE  = 0x3f
@@ -372,15 +376,15 @@ Index: arduino/mjo/Arduino.mk
 +		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
 +			-U flash:w:$(TARGET_HEX):i
 +
-+# BSD stty likes -F, but GNU stty likes -f/--file.  Redirecting
++# stty on MacOS likes -F, but on Debian it likes -f redirecting
 +# stdin/out appears to work but generates a spurious error on MacOS at
 +# least. Perhaps it would be better to just do it in perl ?
 +reset:		
-+		for STTYF in 'stty --file' 'stty -f' 'stty <' ;\
-+		  do $$STTYF /dev/tty >/dev/null 2>&1 && break ;\
++		for STTYF in 'stty --file' 'stty -f' 'stty <' ; \
++		  do $$STTYF /dev/tty >/dev/null 2>/dev/null && break ; \
 +		done ;\
 +		$$STTYF $(ARD_PORT)  hupcl ;\
-+		(sleep 0.1 2>/dev/null || sleep 1) ;\
++		(sleep 0.1 || sleep 1)     ;\
 +		$$STTYF $(ARD_PORT) -hupcl 
 +
 +ispload:	$(TARGET_HEX)
@@ -403,11 +407,9 @@ Index: arduino/mjo/Arduino.mk
 +.PHONY:	all clean depends upload raw_upload reset
 +
 +include $(DEP_FILE)
-Index: arduino/mjo/arduino-cli.html
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/arduino-cli.html	2010-05-29 11:22:19.000000000 +0100
-@@ -0,0 +1,333 @@
+--- /dev/null
++++ b/mjo/arduino-cli.html
+@@ -0,0 +1,350 @@
 +<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 +<html xmlns="http://www.w3.org/1999/xhtml">
 +  <head>
@@ -432,7 +434,7 @@ Index: arduino/mjo/arduino-cli.html
 +      <div id="main">
 +        <h2>Update News</h2>
 +
-+<p>The current version of this software (0.3) won&#39;t work with versions of the Arduino software before 0018.</p>
++<p>The current version of this software (0.4) won&#39;t work with versions of the Arduino software before 0018.</p>
 +
 +<h2>Introduction</h2>
 +
@@ -461,11 +463,11 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<h2>Installation instructions</h2>
 +
-+<p>You&#39;ll need to download <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz">the tarball containing the Makefile,</a><span class="link_list"><sup>3</sup></span>, unpack it, and then copy the Makefile somewhere sensible:</p>
++<p>You&#39;ll need to download <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz">the tarball containing the Makefile,</a><span class="link_list"><sup>3</sup></span>, unpack it, and then copy the Makefile somewhere sensible:</p>
 +
-+<pre><code>$ wget http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz 
-+$ tar xzvf arduino-mk_0.3.tar.gz 
-+$ cp arduino-mk-0.3/Arduino.mk /path/to/my/arduino/stuff/Arduino.mk </code></pre>
++<pre><code>$ wget http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz 
++$ tar xzvf arduino-mk_0.4.tar.gz 
++$ cp arduino-mk-0.4/Arduino.mk /path/to/my/arduino/stuff/Arduino.mk </code></pre>
 +
 +<p>The next step is to create a small Makefile for the sketch you actually want to build. The typical Arduino sketch directory looks like this:</p>
 +
@@ -502,6 +504,16 @@ Index: arduino/mjo/arduino-cli.html
 +<dd>The target&#39;s clock speed (16000000 for the Duemilanove).      </dd>
 +<dt><span class="caps">ARDUINO</span>_PORT</dt>
 +<dd>The port where the Arduino can be found (only needed when  uploading) If this expands to several ports, the first will be used.</dd>
++</dl>
++
++
++<p>A couple of other options might be useful:</p>
++
++<dl>
++<dt><span class="caps">AVRDUDE</span>_ARD_PROGRAMMER</dt>
++<dd>The protocol avrdude speaks&mdash;defaults to stk500v1.           </dd>
++<dt><span class="caps">AVRDUDE</span>_ARD_BAUDRATE</dt>
++<dd>The rate at which we talk to the board&mdash;defaults to 19,200.</dd>
 +</dl>
 +
 +
@@ -625,19 +637,24 @@ Index: arduino/mjo/arduino-cli.html
 +<li>This hasn&#39;t been used very much yet, even by me. I&#39;m writing this   now as much for my benefit as anyone else&#39;s, though I&#39;d be delighted   to know if anyone else finds it useful.</li>
 +</ul>
 +
-+
 +<h2>Changelog</h2>
 +
 +<h3>2010-05-21, version 0.3</h3>
 +
 +<ul>
 +<li>Tidied up the licensing, making it clear that it&#39;s released under <span class="caps">LGPL</span> 2.1.</li>
-+<li><a href="mailto:phil@hands.com">Philip Hands</a><span class="link_list"><sup>4</sup></span> sent me some code to reset the   Arduino by dropping <span class="caps">DTR </span>for 100ms, and I added it.</li>
-+<li>Tweaked the Makefile to handle version 0018 of the Arduino software   which now includes main.cpp. Accordingly we don&#39;t need to&mdash;and   indeed must not&mdash;add main.cxx to the .pde sketch file. The paths   seem to have changed a bit too. </li>
++<li><a href="http://hands.com/~phil/">Philip Hands</a><span class="link_list"><sup>4</sup></span> sent me some code to reset the   Arduino by dropping <span class="caps">DTR </span>for 100ms, and I added it.</li>
++<li>Tweaked the Makefile to handle version 0018 of the Arduino software   which now includes main.cpp. Accordingly we don&#39;t need to&mdash;and   indeed must not&mdash;add main.cxx to the .pde sketch file. The paths   seem to have changed a bit too.</li>
++</ul>
++
++<h3>2010-05-24, version 0.4</h3>
++
++<ul>
++<li>Tweaked rules for the reset target on Philip Hands&#39; advice. </li>
 +</ul>
 +        <div id="link_list">
 +          <h2>References</h2>
-+          <ul><li>1. http://www.arduino.cc/</li><li>2. http://www.arduino.cc/en/Hacking/CommandLine</li><li>3. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz</li><li>4. phil@hands.com</li></ul>
++          <ul><li>1. http://www.arduino.cc/</li><li>2. http://www.arduino.cc/en/Hacking/CommandLine</li><li>3. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz</li><li>4. http://hands.com/~phil/</li></ul>
 +        </div>      </div>
 +           
 +      <div id="sidebar">
@@ -681,6 +698,10 @@ Index: arduino/mjo/arduino-cli.html
 +          <h3><a href="../../index/index.html">Other Articles</a></h3>
 +          <ul>
 +            
++            <li><a href="../../2010/06/arm-toolchain.html">Getting an ARM toolchain on MacOS 10.6</a><br/>Martin Oldfield, 06 Jun 2010</li>
++            
++            <li><a href="../../2010/05/bus-pirate.html">The Bus Pirate on MacOS</a><br/>Martin Oldfield, 26 May 2010</li>
++            
 +            <li><a href="../../2010/04/perl-unicode.html">Unicode games with perl, MySQL, and XML</a><br/>Martin Oldfield, 17 Apr 2010</li>
 +            
 +            <li><a href="../../2010/01/gps-track-filter.html">Filtering GPS tracks</a><br/>Martin Oldfield, 04 Jan 2010</li>
@@ -694,8 +715,6 @@ Index: arduino/mjo/arduino-cli.html
 +            <li><a href="../12/garmin-gpx.html">Faking geocaches in Garmin GPX files</a><br/>Martin Oldfield, 06 Dec 2009</li>
 +            
 +            <li><a href="../08/macos-pic.html">Playing with PICs on MacOS X</a><br/>Martin Oldfield, 18 Aug 2009</li>
-+            
-+            <li><a href="../03/etch_to_lenny_on_xen.html">Etch to lenny upgrades on Xen</a><br/>Martin Oldfield, 08 Jun 2009</li>
 +            
 +            <li>...</li>
 +          </ul>
@@ -724,9 +743,9 @@ Index: arduino/mjo/arduino-cli.html
 +        </div>
 +
 +        <div id="footer">
-+          Revised by Martin Oldfield on 24 May 2010, original version 17 Feb 2009.<br/>
++          Revised by Martin Oldfield on 07 Jun 2010, original version 17 Feb 2009.<br/>
 +          Contact: Martin Oldfield, ex-atelier@mjo.tc<br/>
-+          This work is available under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>, or qqthe <a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">CC-GNU LGPL</a> version 2.1 or later.
++          This work is available under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>, or the <a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">LGPL</a> version 2.1 or later.
 +       </div>
 +
 +        </div>

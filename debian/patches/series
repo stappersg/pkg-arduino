@@ -2,3 +2,4 @@ wrapper_for_deb.patch
 convert_to_debian_oro.patch
 mjo_makefile
 mjo_makefile_debianise
+mjo_makefile_tweaks

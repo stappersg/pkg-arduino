@@ -32,11 +32,13 @@ MCU          = atmega168
 F_CPU        = 16000000
 ARDUINO_PORT = /dev/ttyUSB*
 
-AVRDUDE_PROGRAMMER = arduino
-UPLOAD_RATE = 57600
+AVRDUDE_ARD_PROGRAMMER = arduino
+AVRDUDE_ARD_BAUDRATE   = 57600
 
 include /usr/share/arduino/Arduino.mk
 !====EOF====!
+
+  (obviously, set things to match the device you are trying to program)
 
   grab an example:
 

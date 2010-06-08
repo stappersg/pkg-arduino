@@ -1,0 +1,23 @@
+--- a/mjo/Arduino.mk
++++ b/mjo/Arduino.mk
+@@ -361,15 +361,15 @@
+ 		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
+ 			-U flash:w:$(TARGET_HEX):i
+ 
+-# stty on MacOS likes -F, but on Debian it likes -f redirecting
++# BSD stty likes -F, but GNU stty likes -f/--file.  Redirecting
+ # stdin/out appears to work but generates a spurious error on MacOS at
+ # least. Perhaps it would be better to just do it in perl ?
+ reset:		
+ 		for STTYF in 'stty --file' 'stty -f' 'stty <' ; \
+-		  do $$STTYF /dev/tty >/dev/null 2>/dev/null && break ; \
+-		done ;\
+-		$$STTYF $(ARD_PORT)  hupcl ;\
+-		(sleep 0.1 || sleep 1)     ;\
++		  do $$STTYF /dev/tty >/dev/null 2>&1 && break ; \
++		done ; \
++		$$STTYF $(ARD_PORT)  hupcl ; \
++		(sleep 0.1 2>/dev/null || sleep 1) ; \
+ 		$$STTYF $(ARD_PORT) -hupcl 
+ 
+ ispload:	$(TARGET_HEX)
