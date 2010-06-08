@@ -1,8 +1,8 @@
 arduino-core for Debian
 -----------------------
 
-N.B.  This package has been tested only on my laptop, with my
-      Arduino Duemilanove -- your miliage may vary
+N.B.  This package has not been widely tested -- your miliage may vary
+      Bug reports welcome :-)
 
 This package contains the bare minimum required to program an Arduino
 using Arduino sketches via the command line.
@@ -59,53 +59,14 @@ include /usr/share/arduino/Arduino.mk
 
   If the upload doesn't work, try unplugging/replugging the Arduino.
 
-BTW Compared with the upstream, that Makefile has been tweaked to put
-the products of compilation in a local build/ dir, so that you can use
-the files under /usr/share/arduino while not being root.
-
 =-=-=-=-
+Please tell me if this fails for you, and if possible, what you did to
+the Makefile to make it work.
 
-QuickStart (Upstream makefile -- old approach);
-
-[I'll almost certainly drop this if people tell me that the above stuff works for them]
-
-  create a new directory, and change to it (its name doesn't matter):
-
-    mkdir ~/arduino-playpen ; cd ~/arduino-playpen
-
-  grab a copy of the Makefile:
-
-    cp /usr/share/arduino/hardware/arduino/cores/arduino/Makefile .
-
-  grab an example:
-
-    cp /usr/share/arduino/examples/Digital/Blink/Blink.pde .
-
-  compile and upload it:
-
-    make TARGET=Blink
-
-    make TARGET=Blink upload
-
-  or do it all at once, thus:
-
-    make TARGET=Blink all upload
-
-  If the upload doesn't work, try unplugging/replugging the Arduino.
-
-BTW Compared with the upstream, that Makefile has been tweaked to put
-the products of compilation in a local build/ dir, so that you can use
-the files under /usr/share/arduino while not being root.
-
-=-=-=-=-
-
-Please tell me if either of these fails for you, and if possible, what
-you did to the Makefile to make it work.
-
-I did consider making a script that would automate one or other of the
-above QuickStarts, but I think you're going to want to do it by hand
-at some point, so you might as well do that from the start.  I'm open
-to persuasion that some sort of script is needed if only to tell people
-who try to run it to read this file instead ;-)
+I did consider making a script that would automate the above QuickStart,
+but I think you're going to want to do it by hand at some point, so you
+might as well do that from the start.  I'm open to persuasion that some
+sort of script is needed if only to tell people who try to run it to
+read this file instead ;-)
 
  -- Philip Hands <phil@hands.com>  Wed, 28 Apr 2010 09:46:10 +0100
