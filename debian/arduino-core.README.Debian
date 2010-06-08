@@ -34,6 +34,7 @@ ARDUINO_PORT = /dev/ttyUSB*
 
 AVRDUDE_ARD_PROGRAMMER = arduino
 AVRDUDE_ARD_BAUDRATE   = 57600
+#AVRDUDE_ARD_EXTRAOPTS  = -F
 
 include /usr/share/arduino/Arduino.mk
 !====EOF====!
@@ -58,6 +59,9 @@ include /usr/share/arduino/Arduino.mk
   need to keep specifying it.
 
   If the upload doesn't work, try unplugging/replugging the Arduino.
+
+  If avrdude complains about mismatching signatures, and suggests setting -F,
+  try uncommenting the AVRDUDE_ARD_EXTRAOPTS line
 
 =-=-=-=-
 Please tell me if this fails for you, and if possible, what you did to
