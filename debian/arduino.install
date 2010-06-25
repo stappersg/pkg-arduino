@@ -2,3 +2,4 @@ arduino		usr/bin
 lib/ libraries/ tools/		usr/share/arduino
 debian/*.xpm usr/share/pixmaps
 debian/*.desktop usr/share/applications/
+arduino.jar usr/share/arduino

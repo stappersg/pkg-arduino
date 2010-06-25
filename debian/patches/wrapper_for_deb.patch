@@ -29,4 +29,4 @@ Index: arduino-0018+dfsg/arduino
 -export PATH="${APPDIR}/java/bin:${PATH}"
 -
 -java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel processing.app.Base
-+java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -jar /usr/share/java/arduino.jar
++java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -jar /usr/share/arduino/arduino.jar
