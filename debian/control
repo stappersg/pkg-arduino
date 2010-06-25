@@ -1,6 +1,6 @@
 Source: arduino
 Section: electronics
-Priority: optional
+Priority: extra
 Maintainer: Scott Howard <showard314@gmail.com>
 Uploaders: Philip Hands <phil@hands.com>
 DM-Upload-Allowed: yes
