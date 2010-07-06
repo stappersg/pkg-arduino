@@ -1,3 +1,12 @@
+arduino (0018+dfsg-4) UNRELEASED; urgency=low
+
+  * Corrected and added stanzas to debian/copyright for
+    - libraries/Ethernet/utility/w5100.* (GPL-2)
+    - examples/ArduinoISP/ArduinoISP.pde (BSD)
+    Thanks to Eberhard Fahle.
+
+ -- Scott Howard <showard314@gmail.com>  Tue, 06 Jul 2010 09:32:49 -0400
+
 arduino (0018+dfsg-3) unstable; urgency=low
 
   * Removed unneeded javadoc and arduino.jar to usr/share/arduino/
