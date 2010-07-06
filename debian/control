@@ -14,7 +14,8 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
 
 Package: arduino
 Architecture: all
-Depends: ${java:Depends}, ${misc:Depends}, arduino-core (= ${binary:Version})
+Depends: ${java:Depends}, ${misc:Depends}, arduino-core (= ${binary:Version}),
+ openjdk-6-jdk | sun-java6-jdk
 Recommends: extra-xdg-menus
 Description: AVR development board IDE and built-in libraries
  Arduino is an open-source electronics prototyping platform based on
