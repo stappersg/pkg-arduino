@@ -5,8 +5,10 @@ arduino (0018+dfsg-4) UNRELEASED; urgency=low
     - examples/ArduinoISP/ArduinoISP.pde (BSD)
     Thanks to Eberhard Fahle.
   * Depends on openjdk-6-jdk OR sun-java6-jdk. Thanks to Guillermo Reisch
+  * Added support for Debian's avrdude upload protocol in
+    hardware/arduino/boards.txt, thanks to Ami Chayun (Closes: 588083)
 
- -- Scott Howard <showard314@gmail.com>  Tue, 06 Jul 2010 09:44:24 -0400
+ -- Scott Howard <showard314@gmail.com>  Tue, 06 Jul 2010 10:16:22 -0400
 
 arduino (0018+dfsg-3) unstable; urgency=low
 
