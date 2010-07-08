@@ -6,7 +6,7 @@ Uploaders: Philip Hands <phil@hands.com>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7.0.50~), javahelper, default-jdk, librxtx-java,
  liboro-java, libantlr-java, libecj-java, libjna-java, perl
-Standards-Version: 3.8.4
+Standards-Version: 3.9.0
 Homepage: http://www.arduino.cc
 Vcs-Git: git://git.debian.org/collab-maint/arduino.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git

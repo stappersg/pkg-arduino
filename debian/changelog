@@ -7,8 +7,9 @@ arduino (0018+dfsg-4) unstable; urgency=low
   * Depends on openjdk-6-jdk OR sun-java6-jdk. Thanks to Guillermo Reisch
   * Added support for Debian's avrdude upload protocol in
     hardware/arduino/boards.txt, thanks to Ami Chayun (Closes: 588083)
+  * Debian policy 3.9.0 (no changes)
 
- -- Scott Howard <showard314@gmail.com>  Wed, 07 Jul 2010 21:41:40 -0400
+ -- Scott Howard <showard314@gmail.com>  Wed, 07 Jul 2010 21:50:09 -0400
 
 arduino (0018+dfsg-3) unstable; urgency=low
 
