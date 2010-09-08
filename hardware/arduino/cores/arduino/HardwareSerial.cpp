@@ -19,6 +19,7 @@
   Modified 23 November 2006 by David A. Mellis
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -172,9 +173,18 @@ void HardwareSerial::end()
   cbi(*_ucsrb, _rxcie);  
 }
 
-uint8_t HardwareSerial::available(void)
+int HardwareSerial::available(void)
 {
   return (RX_BUFFER_SIZE + _rx_buffer->head - _rx_buffer->tail) % RX_BUFFER_SIZE;
+}
+
+int HardwareSerial::peek(void)
+{
+  if (_rx_buffer->head == _rx_buffer->tail) {
+    return -1;
+  } else {
+    return _rx_buffer->buffer[_rx_buffer->tail];
+  }
 }
 
 int HardwareSerial::read(void)
