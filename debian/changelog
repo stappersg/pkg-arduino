@@ -1,9 +1,11 @@
-arduino (0019+dfsg-1) UNRELEASED; urgency=low
+arduino (0019+dfsg-1) experimental; urgency=low
 
   * New upstream release
     - switch to ant build system
+    - refreshed patches
+  * Debian policy 3.9.1
 
- -- Scott Howard <showard314@gmail.com>  Wed, 08 Sep 2010 08:38:37 -0400
+ -- Scott Howard <showard314@gmail.com>  Wed, 08 Sep 2010 18:54:10 -0400
 
 arduino (0018+dfsg-4) unstable; urgency=low
 
