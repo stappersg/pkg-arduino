@@ -1,3 +1,6 @@
+Description: Tells the wrapper where to look for things in debian.
+Author: Scott Howard <showard314@gmail.com>
+
 Index: arduino-0019+dfsg/build/linux/dist/arduino
 ===================================================================
 --- arduino-0019+dfsg.orig/build/linux/dist/arduino	2010-09-07 22:15:40.231465496 -0400

@@ -32,7 +32,8 @@ override_dh_compress:
 	dh_compress -X.pde
 
 override_dh_install:
-	dh_install -Xlicense -XLICENSE
+	find build/linux/work -type d -empty -delete
+	dh_install -Xlicense -XLICENSE -Xmake.sh
 
 
 
