@@ -9,13 +9,21 @@ export CLASSPATH=/usr/share/java/RXTXcomm.jar:/usr/lib/jvm/default-java/lib/tool
 %:
 	dh $@ --with javahelper
 
+override_dh_clean:
+	rm -rf build/linux/work/hardware/tools
+	cd core/methods && ant clean
+	cd build && ant clean
+	dh_clean
+
 override_jh_build:
-	perl preproc.pl
-	jh_build --main=processing.app.Base
+	jh_linkjars
+	mkdir -p build/linux/work/hardware/tools	
+	cd core/methods && ant
+	cd build && ant
 
 
 override_dh_installchangelogs:
-	dh_installchangelogs -k readme.txt
+	dh_installchangelogs -k build/linux/work/revisions.txt
 
 override_dh_compress:
 	dh_compress -X.pde
@@ -30,32 +38,22 @@ DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)+dfsg
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
 get-orig-source:
-	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG).tgz;\
-	wget http://arduino.googlecode.com/svn/tags/$(SVNTAG)/license.txt;\
-	tar -xf arduino-$(SVNTAG).tgz;\
-	cp -a arduino-$(SVNTAG) $(DESTDIR);\
-	mv license.txt $(DESTDIR);\
-	rm -rf arduino-$(SVNTAG).tgz arduino-$(SVNTAG);\
-	
-	svn export http://arduino.googlecode.com/svn/tags/$(SVNTAG)/app $(DESTDIR)-app/;\
-	svn export http://arduino.googlecode.com/svn/tags/$(SVNTAG)/core $(DESTDIR)-core/;\
-	
-	mkdir -p $(DESTDIR)/src/processing/;\
-	cp -a $(DESTDIR)-app/src/processing/* $(DESTDIR)/src/processing/;\
-	cp -a $(DESTDIR)-core/src/processing/* $(DESTDIR)/src/processing/;\
-	mv $(DESTDIR)-core/preproc.pl $(DESTDIR);\
+	svn export http://arduino.googlecode.com/svn/tags/$(SVNTAG) $(DESTDIR);\
 	#remove junk
-	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so | xargs -n1 rm -f;\
+	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore | xargs -n1 rm -f;\
 	find $(DESTDIR) -type d -empty -delete;\
+	find $(DESTDIR) -type d -iname macosx -or -iname windows | xargs -n1 rm -fr;\
 	rm -f $(DESTDIR)/src/processing/app/preproc/.cvsignore;\
+	rm -rf $(DESTDIR)/build/linux/dist/lib;\
+	rm -rf $(DESTDIR)/build/linux/dist/tools;\
 	rm -f $(DESTDIR)/.project;\
 	rm -fr $(DESTDIR)/.[a-z]*;\
 	rm -fr $(DESTDIR)/app/.[a-z]*;\
 	rm -fr $(DESTDIR)/hardware/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
-	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname *.txt -or -iname makefile -or -iname key*.txt -or -iname pref*.txt | xargs chmod -x;\
+	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname pref*.txt -or -iname '*.txt' | xargs chmod -x;\
 	
 	tar zcf $(CURDIR)/../$(TARFILE) -C $(CURDIR)/debian arduino-$(SVNTAG)+dfsg;\
-	rm -fr $(DESTDIR) $(DESTDIR)-app $(DESTDIR)-core;\
+	rm -fr $(DESTDIR);\
 
 PHONY: build clean binary-indep binary install get-orig-source

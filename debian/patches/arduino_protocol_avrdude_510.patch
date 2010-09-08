@@ -4,10 +4,10 @@ Description: Debian's version of avrdude has a built-in support for Arduino as a
 Author: Scott Howard <showard314@gmail.com>
 Bug 588083
 
-Index: arduino/hardware/arduino/boards.txt
+Index: arduino-0019+dfsg/hardware/arduino/boards.txt
 ===================================================================
---- arduino.orig/hardware/arduino/boards.txt	2010-07-06 09:50:24.505614543 -0400
-+++ arduino/hardware/arduino/boards.txt	2010-07-06 10:11:03.005613606 -0400
+--- arduino-0019+dfsg.orig/hardware/arduino/boards.txt	2010-09-07 20:45:44.037908524 -0400
++++ arduino-0019+dfsg/hardware/arduino/boards.txt	2010-09-07 20:47:27.761494025 -0400
 @@ -2,7 +2,7 @@
  
  atmega328.name=Arduino Duemilanove or Nano w/ ATmega328
@@ -46,14 +46,32 @@ Index: arduino/hardware/arduino/boards.txt
  
 @@ -82,7 +82,7 @@
  
- bt.name=Arduino BT
+ fio.name=Arduino Fio
+ 
+-fio.upload.protocol=stk500
++fio.upload.protocol=arduino
+ fio.upload.maximum_size=30720
+ fio.upload.speed=57600
+ 
+@@ -102,7 +102,7 @@
+ 
+ bt328.name=Arduino BT w/ ATmega328
+ 
+-bt328.upload.protocol=stk500
++bt328.upload.protocol=arduino
+ bt328.upload.maximum_size=28672
+ bt328.upload.speed=19200
+ bt328.upload.disable_flushing=true
+@@ -123,7 +123,7 @@
+ 
+ bt.name=Arduino BT w/ ATmega168
  
 -bt.upload.protocol=stk500
 +bt.upload.protocol=arduino
  bt.upload.maximum_size=14336
  bt.upload.speed=19200
  bt.upload.disable_flushing=true
-@@ -103,7 +103,7 @@
+@@ -144,7 +144,7 @@
  
  lilypad328.name=LilyPad Arduino w/ ATmega328
  
@@ -62,7 +80,7 @@ Index: arduino/hardware/arduino/boards.txt
  lilypad328.upload.maximum_size=30720
  lilypad328.upload.speed=57600
  
-@@ -123,7 +123,7 @@
+@@ -164,7 +164,7 @@
  
  lilypad.name=LilyPad Arduino w/ ATmega168
  
@@ -71,7 +89,25 @@ Index: arduino/hardware/arduino/boards.txt
  lilypad.upload.maximum_size=14336
  lilypad.upload.speed=19200
  
-@@ -143,7 +143,7 @@
+@@ -184,7 +184,7 @@
+ 
+ pro5v328.name=Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328
+ 
+-pro5v328.upload.protocol=stk500
++pro5v328.upload.protocol=arduino
+ pro5v328.upload.maximum_size=30720
+ pro5v328.upload.speed=57600
+ 
+@@ -204,7 +204,7 @@
+ 
+ pro5v.name=Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168
+ 
+-pro5v.upload.protocol=stk500
++pro5v.upload.protocol=arduino
+ pro5v.upload.maximum_size=14336
+ pro5v.upload.speed=19200
+ 
+@@ -224,7 +224,7 @@
  
  pro328.name=Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328
  
@@ -80,7 +116,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro328.upload.maximum_size=30720
  pro328.upload.speed=57600
  
-@@ -163,7 +163,7 @@
+@@ -244,7 +244,7 @@
  
  pro.name=Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega168
  
@@ -89,7 +125,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro.upload.maximum_size=14336
  pro.upload.speed=19200
  
-@@ -183,7 +183,7 @@
+@@ -264,7 +264,7 @@
  
  atmega168.name=Arduino NG or older w/ ATmega168
  
@@ -98,7 +134,7 @@ Index: arduino/hardware/arduino/boards.txt
  atmega168.upload.maximum_size=14336
  atmega168.upload.speed=19200
  
-@@ -203,7 +203,7 @@
+@@ -284,7 +284,7 @@
  
  atmega8.name=Arduino NG or older w/ ATmega8
  

@@ -1,5 +1,4 @@
-arduino		usr/bin
-lib/ libraries/ tools/		usr/share/arduino
+build/linux/work/arduino		usr/bin
+build/linux/work/lib/ build/linux/work/libraries/ build/linux/work/tools/		usr/share/arduino
 debian/*.xpm usr/share/pixmaps
 debian/*.desktop usr/share/applications/
-arduino.jar usr/share/arduino

@@ -3,8 +3,8 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino-0018+dfsg/src/processing/app/preproc/PdePreprocessor.java
 ===================================================================
---- arduino-0018+dfsg.orig/src/processing/app/preproc/PdePreprocessor.java	2010-04-09 23:50:58.588879697 -0400
-+++ arduino-0018+dfsg/src/processing/app/preproc/PdePreprocessor.java	2010-04-10 10:48:28.458510257 -0400
+--- arduino-0018+dfsg.orig/app/src/processing/app/preproc/PdePreprocessor.java	2010-04-09 23:50:58.588879697 -0400
++++ arduino-0018+dfsg/app/src/processing/app/preproc/PdePreprocessor.java	2010-04-10 10:48:28.458510257 -0400
 @@ -35,7 +35,7 @@
  import java.io.*;
  import java.util.*;

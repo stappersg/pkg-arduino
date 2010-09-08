@@ -1,5 +1,5 @@
-arduino_protocol_avrdude_510.patch
 wrapper_for_deb.patch
+arduino_protocol_avrdude_510.patch
 convert_to_debian_oro.patch
 mjo_makefile
 mjo_makefile_debianise

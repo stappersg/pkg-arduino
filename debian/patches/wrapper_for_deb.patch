@@ -1,32 +1,30 @@
-Description: Simple wrapper since classpath and LD library are already properly
- assigned at build time. Must be exucted in /usr/share/arduino
-Author: Scott Howard <showard314@gmail.com>
-Index: arduino-0018+dfsg/arduino
+Index: arduino-0019+dfsg/build/linux/dist/arduino
 ===================================================================
---- arduino-0018+dfsg.orig/arduino	2010-04-10 10:49:20.048511096 -0400
-+++ arduino-0018+dfsg/arduino	2010-04-10 10:49:43.908511616 -0400
-@@ -1,22 +1,5 @@
+--- arduino-0019+dfsg.orig/build/linux/dist/arduino	2010-09-07 22:15:40.231465496 -0400
++++ arduino-0019+dfsg/build/linux/dist/arduino	2010-09-07 22:16:59.186533908 -0400
+@@ -1,22 +1,17 @@
  #!/bin/sh
   
 -APPDIR="$(dirname -- "${0}")"
-+cd /usr/share/arduino
++APPDIR=/usr/share/arduino
  
--cd $APPDIR
-- 
--for LIB in \
+ cd $APPDIR
+  
+ for LIB in \
 -    java/lib/rt.jar \
 -    java/lib/tools.jar \
--    lib/*.jar \
--    ;
--do
--    CLASSPATH="${CLASSPATH}:${APPDIR}/${LIB}"
--done
+     lib/*.jar \
+     ;
+ do
+     CLASSPATH="${CLASSPATH}:${APPDIR}/${LIB}"
+ done
 -export CLASSPATH
 -
 -LD_LIBRARY_PATH=`pwd`/lib:${LD_LIBRARY_PATH}
 -export LD_LIBRARY_PATH
--
++CLASSPATH="${CLASSPATH}:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar"
+ 
 -export PATH="${APPDIR}/java/bin:${PATH}"
--
--java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel processing.app.Base
-+java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -jar /usr/share/arduino/arduino.jar
++export CLASSPATH
+ 
+ java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel processing.app.Base
