@@ -1,3 +1,9 @@
+arduino (0021+dfsg-1) UNRELEASED; urgency=low
+
+  * New upstream release (debian/rules get-orig-source target updated)
+
+ -- Scott Howard <showard314@gmail.com>  Tue, 05 Oct 2010 19:41:38 -0400
+
 arduino (0019+dfsg-1) experimental; urgency=low
 
   * New upstream release
