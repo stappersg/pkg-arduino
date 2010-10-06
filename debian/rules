@@ -46,7 +46,7 @@ get-orig-source:
 	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz
 	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/
 	#remove junk
-	#find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore | xargs -n1 rm -f;\
+	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore | xargs -n1 rm -f;\
 	#find $(DESTDIR) -type d -empty -delete;\
 	#find $(DESTDIR) -type d -iname macosx -or -iname windows | xargs -n1 rm -fr;\
 	#rm -f $(DESTDIR)/src/processing/app/preproc/.cvsignore;\
