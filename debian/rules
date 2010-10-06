@@ -33,7 +33,7 @@ override_dh_compress:
 
 override_dh_install:
 	find build/linux/work -type d -empty -delete
-	dh_install -Xlicense -XLICENSE -Xmake.sh
+	dh_install -Xlicense -XLICENSE -XLicense
 
 
 

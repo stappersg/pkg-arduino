@@ -173,6 +173,10 @@ Copyright: 2003, Jason P. Kyle
            2009, D. Cuartielles
 License: GPL-2
 
+Files: hardware/arduino/bootloaders/stk500v2/*
+Copyright: 2010, Arduino Developers
+License: GPL-2
+
 Files: libraries/Ethernet/utility/w5100.*
 Copyright: 2008, WIZnet Co.Ltd 
 License: GPL-2
