@@ -1,3 +1,10 @@
+arduino (0021+dfsg-2) experimental; urgency=low
+
+  * updates wrapper_for_deb.patch to set the LD_LIBRARY_PATH for sun-java
+    jre. (LP: #664309)
+
+ -- Scott Howard <showard314@gmail.com>  Thu, 21 Oct 2010 13:48:34 -0400
+
 arduino (0021+dfsg-1) experimental; urgency=low
 
   * New upstream release (debian/rules get-orig-source target updated)
