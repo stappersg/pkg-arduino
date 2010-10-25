@@ -35,6 +35,8 @@ override_dh_install:
 	find build/linux/work -type d -empty -delete
 	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh
 
+override_jh_depends:
+	#jh_depends can't resolve symlinks
 
 
 #SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')

@@ -2,8 +2,10 @@ arduino (0021+dfsg-2) experimental; urgency=low
 
   * updates wrapper_for_deb.patch to set the LD_LIBRARY_PATH for sun-java
     jre. (LP: #664309)
+  * debian/patches/install_jar_links.patch
+    - Added patch to install symlinks for Debian java library packages.
 
- -- Scott Howard <showard314@gmail.com>  Thu, 21 Oct 2010 13:48:34 -0400
+ -- Scott Howard <showard314@gmail.com>  Sun, 24 Oct 2010 22:27:17 -0400
 
 arduino (0021+dfsg-1) experimental; urgency=low
 

@@ -1,3 +1,10 @@
 /etc/avrdude.conf /usr/share/arduino/hardware/tools/avrdude.conf
 /usr/bin/avrdude /usr/share/arduino/hardware/tools/avrdude
+/usr/share/doc/arduino-core/examples /usr/share/arduino/examples
 /usr/share/doc/arduino/reference /usr/share/arduino/reference
+/usr/share/java/ecj.jar /usr/share/arduino/lib/ecj.jar
+/usr/share/java/jna.jar /usr/share/arduino/lib/jna.jar
+/usr/share/java/RXTXcomm.jar /usr/share/arduino/lib/RXTXcomm.jar
+/usr/share/java/ant.jar /usr/share/arduino/lib/ant.jar
+/usr/share/java/oro.jar /usr/share/arduino/lib/oro.jar
+/usr/share/java/ant-launcher.jar /usr/share/arduino/lib/ant-launcher.jar
