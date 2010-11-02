@@ -3,9 +3,9 @@ Description: Simple wrapper since classpath and LD library are already properly
 Author: Scott Howard <showard314@gmail.com>
 Index: arduino-0018+dfsg/arduino
 ===================================================================
---- arduino-0018+dfsg.orig/arduino	2010-04-10 10:49:20.048511096 -0400
-+++ arduino-0018+dfsg/arduino	2010-04-10 10:49:43.908511616 -0400
-@@ -1,22 +1,5 @@
+--- arduino-0018+dfsg.orig/arduino	2010-10-30 11:23:40.667327687 -0400
++++ arduino-0018+dfsg/arduino	2010-10-30 11:25:36.590115827 -0400
+@@ -1,22 +1,8 @@
  #!/bin/sh
   
 -APPDIR="$(dirname -- "${0}")"
@@ -24,8 +24,9 @@ Index: arduino-0018+dfsg/arduino
 -export CLASSPATH
 -
 -LD_LIBRARY_PATH=`pwd`/lib:${LD_LIBRARY_PATH}
--export LD_LIBRARY_PATH
--
++LD_LIBRARY_PATH="/usr/lib/jni:${LD_LIBRARY_PATH}"
+ export LD_LIBRARY_PATH
+ 
 -export PATH="${APPDIR}/java/bin:${PATH}"
 -
 -java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel processing.app.Base
