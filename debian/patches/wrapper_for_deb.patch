@@ -1,10 +1,10 @@
 Description: Simple wrapper since classpath and LD library are already properly
  assigned at build time. Must be exucted in /usr/share/arduino
 Author: Scott Howard <showard314@gmail.com>
-Index: arduino-0018+dfsg/arduino
+Index: arduino/arduino
 ===================================================================
---- arduino-0018+dfsg.orig/arduino	2010-10-30 11:23:40.667327687 -0400
-+++ arduino-0018+dfsg/arduino	2010-10-30 11:25:36.590115827 -0400
+--- arduino.orig/arduino	2010-11-01 20:45:44.979883976 -0400
++++ arduino/arduino	2010-11-01 20:46:27.837148080 -0400
 @@ -1,22 +1,8 @@
  #!/bin/sh
   
@@ -24,7 +24,7 @@ Index: arduino-0018+dfsg/arduino
 -export CLASSPATH
 -
 -LD_LIBRARY_PATH=`pwd`/lib:${LD_LIBRARY_PATH}
-+LD_LIBRARY_PATH="/usr/lib/jni:${LD_LIBRARY_PATH}"
++LD_LIBRARY_PATH="/usr/lib/jni${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
  export LD_LIBRARY_PATH
  
 -export PATH="${APPDIR}/java/bin:${PATH}"

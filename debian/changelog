@@ -1,6 +1,16 @@
+arduino (0018+dfsg-6) unstable; urgency=low
+
+  * Properly sets LD_LIBRARY_PATH in the arduino wrapper if it has not
+    be previously defined or empty. See Debian bug 602041.
+  * Corrected typo in arduino (0018+dfsg-5) debian/changelog entry
+    /usr/lib/jni is correct (used to be /usr/lib/java, which is 
+    incorrect)
+
+ -- Scott Howard <showard314@gmail.com>  Mon, 01 Nov 2010 20:47:30 -0400
+
 arduino (0018+dfsg-5) unstable; urgency=low
 
-  * Sets LD_LIBRARY_PATH in the arduino wrapper to look in /usr/lib/java.
+  * Sets LD_LIBRARY_PATH in the arduino wrapper to look in /usr/lib/jni.
     This allows arduino to start when using a sun-java jre. See Debian
     bug 382686.
 
