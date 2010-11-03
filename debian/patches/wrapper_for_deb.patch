@@ -3,8 +3,8 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2010-10-21 13:44:52.003055765 -0400
-+++ arduino/build/linux/dist/arduino	2010-10-21 13:46:24.907220306 -0400
+--- arduino.orig/build/linux/dist/arduino	2010-11-01 21:13:39.085095848 -0400
++++ arduino/build/linux/dist/arduino	2010-11-03 00:50:36.208007902 -0400
 @@ -1,22 +1,20 @@
  #!/bin/sh
   
@@ -25,7 +25,7 @@ Index: arduino/build/linux/dist/arduino
  export CLASSPATH
  
 -LD_LIBRARY_PATH=`pwd`/lib:${LD_LIBRARY_PATH}
-+LD_LIBRARY_PATH="/usr/lib/jni:${LD_LIBRARY_PATH}"
++LD_LIBRARY_PATH="/usr/lib/jni${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
  export LD_LIBRARY_PATH
  
 -export PATH="${APPDIR}/java/bin:${PATH}"

@@ -1,3 +1,28 @@
+arduino (0021+dfsg-3) UNRELEASED; urgency=low
+
+  * Corrected wrapper LD_LIBRARY_PATH variable in case it is not set
+    debian/patches/wrapper_for_deb.patch
+
+ -- Scott Howard <showard314@gmail.com>  Wed, 03 Nov 2010 00:52:58 -0400
+
+arduino (0018+dfsg-6) unstable; urgency=low
+
+   * Properly sets LD_LIBRARY_PATH in the arduino wrapper if it has not
+     be previously defined or empty. See Debian bug 602041.
+   * Corrected typo in arduino (0018+dfsg-5) debian/changelog entry
+     /usr/lib/jni is correct (used to be /usr/lib/java, which is
+     incorrect)
+
+ -- Scott Howard <showard314@gmail.com>  Mon, 01 Nov 2010 20:47:30 -0400
+
+arduino (0018+dfsg-5) unstable; urgency=low
+
+   * Sets LD_LIBRARY_PATH in the arduino wrapper to look in /usr/lib/jni.
+     This allows arduino to start when using a sun-java jre. See Debian
+     bug 382686.
+
+ -- Scott Howard <showard314@gmail.com>  Sat, 30 Oct 2010 11:26:53 -0400 
+
 arduino (0021+dfsg-2) experimental; urgency=low
 
   * updates wrapper_for_deb.patch to set the LD_LIBRARY_PATH for sun-java
