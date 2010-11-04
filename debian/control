@@ -1,12 +1,12 @@
 Source: arduino
 Section: electronics
-Priority: optional
+Priority: extra
 Maintainer: Scott Howard <showard314@gmail.com>
 Uploaders: Philip Hands <phil@hands.com>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7.0.50~), javahelper, default-jdk, librxtx-java,
- liboro-java, libantlr-java, libecj-java, libjna-java, perl
-Standards-Version: 3.8.4
+ liboro-java, libecj-java, libjna-java, ant
+Standards-Version: 3.9.1
 Homepage: http://www.arduino.cc
 Vcs-Git: git://git.debian.org/collab-maint/arduino.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
@@ -14,7 +14,9 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
 
 Package: arduino
 Architecture: all
-Depends: ${java:Depends}, ${misc:Depends}, arduino-core (= ${binary:Version})
+Depends: default-jre | java6-runtime, libecj-java,
+ libjna-java, liboro-java, librxtx-java, openjdk-6-jdk | sun-java6-jdk,
+ ${misc:Depends}, arduino-core (= ${binary:Version}), ant
 Recommends: extra-xdg-menus
 Description: AVR development board IDE and built-in libraries
  Arduino is an open-source electronics prototyping platform based on

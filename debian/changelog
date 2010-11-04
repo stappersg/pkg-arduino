@@ -1,3 +1,72 @@
+arduino (0021+dfsg-3) UNRELEASED; urgency=low
+
+  * Corrected wrapper LD_LIBRARY_PATH variable in case it is not set
+    debian/patches/wrapper_for_deb.patch
+
+ -- Scott Howard <showard314@gmail.com>  Wed, 03 Nov 2010 00:52:58 -0400
+
+arduino (0018+dfsg-6) unstable; urgency=low
+
+   * Properly sets LD_LIBRARY_PATH in the arduino wrapper if it has not
+     be previously defined or empty. See Debian bug 602041.
+   * Corrected typo in arduino (0018+dfsg-5) debian/changelog entry
+     /usr/lib/jni is correct (used to be /usr/lib/java, which is
+     incorrect)
+
+ -- Scott Howard <showard314@gmail.com>  Mon, 01 Nov 2010 20:47:30 -0400
+
+arduino (0018+dfsg-5) unstable; urgency=low
+
+   * Sets LD_LIBRARY_PATH in the arduino wrapper to look in /usr/lib/jni.
+     This allows arduino to start when using a sun-java jre. See Debian
+     bug 382686.
+
+ -- Scott Howard <showard314@gmail.com>  Sat, 30 Oct 2010 11:26:53 -0400 
+
+arduino (0021+dfsg-2) experimental; urgency=low
+
+  * updates wrapper_for_deb.patch to set the LD_LIBRARY_PATH for sun-java
+    jre. (LP: #664309)
+  * debian/patches/install_jar_links.patch
+    - Added patch to install symlinks for Debian java library packages.
+
+ -- Scott Howard <showard314@gmail.com>  Sun, 24 Oct 2010 22:27:17 -0400
+
+arduino (0021+dfsg-1) experimental; urgency=low
+
+  * New upstream release (debian/rules get-orig-source target updated)
+
+ -- Scott Howard <showard314@gmail.com>  Tue, 05 Oct 2010 22:10:54 -0400
+
+arduino (0019+dfsg-1) experimental; urgency=low
+
+  * New upstream release
+    - switch to ant build system
+    - refreshed patches
+  * Debian policy 3.9.1
+
+ -- Scott Howard <showard314@gmail.com>  Wed, 08 Sep 2010 18:54:10 -0400
+
+arduino (0018+dfsg-4) unstable; urgency=low
+
+  * Corrected and added stanzas to debian/copyright for
+    - libraries/Ethernet/utility/w5100.* (GPL-2)
+    - examples/ArduinoISP/ArduinoISP.pde (BSD)
+    Thanks to Eberhard Fahle.
+  * Depends on openjdk-6-jdk OR sun-java6-jdk. Thanks to Guillermo Reisch
+  * Added support for Debian's avrdude upload protocol in
+    hardware/arduino/boards.txt, thanks to Ami Chayun (Closes: 588083)
+  * Debian policy 3.9.0 (no changes)
+
+ -- Scott Howard <showard314@gmail.com>  Wed, 07 Jul 2010 21:50:09 -0400
+
+arduino (0018+dfsg-3) unstable; urgency=low
+
+  * Removed unneeded javadoc and arduino.jar to usr/share/arduino/
+  * Changed Priority to extra (Closses: #586782)
+
+ -- Scott Howard <showard314@gmail.com>  Fri, 25 Jun 2010 18:36:16 -0400
+
 arduino (0018+dfsg-2) unstable; urgency=low
 
   [ Philip Hands ]
