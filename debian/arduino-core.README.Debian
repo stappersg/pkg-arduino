@@ -1,7 +1,7 @@
 arduino-core for Debian
 -----------------------
 
-N.B.  This package has not been widely tested -- your miliage may vary
+N.B.  This package has not been widely tested -- your mileage may vary
       Bug reports welcome :-)
 
 This package contains the bare minimum required to program an Arduino
@@ -39,7 +39,12 @@ AVRDUDE_ARD_BAUDRATE   = 57600
 include /usr/share/arduino/Arduino.mk
 !====EOF====!
 
-  (obviously, set things to match the device you are trying to program)
+  Edit any settings that need to be different if you've got something other than
+  an atmega168, or if your serial port turns out not to be /dev/ttyUSB0.
+  There is more information about the varieties of boards here:
+     /usr/share/arduino/hardware/arduino/boards.txt
+  although it's perhaps best to check the state of the art, here:
+     https://github.com/arduino/Arduino/raw/master/hardware/arduino/boards.txt
 
   grab an example:
 
@@ -63,6 +68,9 @@ include /usr/share/arduino/Arduino.mk
   If avrdude complains about mismatching signatures, and suggests setting -F,
   try uncommenting the AVRDUDE_ARD_EXTRAOPTS line
 
+  If avrdude tells you "programmer is not responding" it could well be
+  a baud-rate mismatch.  Refer to the boards.txt file(s) mentioned above.
+
 =-=-=-=-
 Please tell me if this fails for you, and if possible, what you did to
 the Makefile to make it work.
@@ -70,7 +78,7 @@ the Makefile to make it work.
 I did consider making a script that would automate the above QuickStart,
 but I think you're going to want to do it by hand at some point, so you
 might as well do that from the start.  I'm open to persuasion that some
-sort of script is needed if only to tell people who try to run it to
-read this file instead ;-)
+sort of script is needed, if only to tell anyone that runs it to read
+this file instead ;-)
 
  -- Philip Hands <phil@hands.com>  Wed, 28 Apr 2010 09:46:10 +0100
