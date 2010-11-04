@@ -1,3 +1,8 @@
+Description: Minor tweaks for mjo's Makefile
+Author: Philip Hands <phil@hands.com>
+Origin: vendor
+Forwarded: yes
+
 --- a/mjo/Arduino.mk
 +++ b/mjo/Arduino.mk
 @@ -310,7 +310,7 @@
