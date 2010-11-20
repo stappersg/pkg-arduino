@@ -1,0 +1,36 @@
+Description: Remove the notification if a new upstream version is available
+Author: Scott Howard <showard314@gmail.com>
+Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603818
+
+Index: arduino/app/src/processing/app/UpdateCheck.java
+===================================================================
+--- arduino.orig/app/src/processing/app/UpdateCheck.java	2010-11-20 10:39:43.205429039 -0500
++++ arduino/app/src/processing/app/UpdateCheck.java	2010-11-20 10:42:31.807145245 -0500
+@@ -97,27 +97,6 @@
+         }
+       }
+       Preferences.set("update.last", String.valueOf(now));
+-
+-      String prompt =
+-        "A new version of Arduino is available,\n" +
+-        "would you like to visit the Arduino download page?";
+-        
+-      if (base.activeEditor != null) {
+-        if (latest > Base.REVISION) {
+-          Object[] options = { "Yes", "No" };
+-          int result = JOptionPane.showOptionDialog(base.activeEditor,
+-                                                    prompt,
+-                                                    "Update",
+-                                                    JOptionPane.YES_NO_OPTION,
+-                                                    JOptionPane.QUESTION_MESSAGE,
+-                                                    null,
+-                                                    options,
+-                                                    options[0]);
+-          if (result == JOptionPane.YES_OPTION) {
+-            Base.openURL("http://www.arduino.cc/en/Main/Software");
+-          }
+-        }
+-      }
+     } catch (Exception e) {
+       //e.printStackTrace();
+       //System.err.println("Error while trying to check for an update.");
