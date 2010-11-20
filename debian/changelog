@@ -1,4 +1,4 @@
-arduino (0021+dfsg-3) UNRELEASED; urgency=low
+arduino (0021+dfsg-3) experimental; urgency=low
 
   * Corrected wrapper LD_LIBRARY_PATH variable in case it is not set
     debian/patches/wrapper_for_deb.patch
@@ -6,7 +6,7 @@ arduino (0021+dfsg-3) UNRELEASED; urgency=low
     -Removed notification of new upstream versions (Closes: #603818)
   * Dependency pruning: no need to depend on a jdk or ant
 
- -- Scott Howard <showard314@gmail.com>  Sat, 20 Nov 2010 11:11:07 -0500
+ -- Scott Howard <showard314@gmail.com>  Sat, 20 Nov 2010 11:25:00 -0500
 
 arduino (0018+dfsg-6) unstable; urgency=low
 
