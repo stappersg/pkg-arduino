@@ -15,8 +15,8 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
 Package: arduino
 Architecture: all
 Depends: default-jre | java6-runtime, libecj-java,
- libjna-java, liboro-java, librxtx-java, openjdk-6-jdk | sun-java6-jdk,
- ${misc:Depends}, arduino-core (= ${binary:Version}), ant
+ libjna-java, liboro-java, librxtx-java,
+ ${misc:Depends}, arduino-core (= ${binary:Version})
 Recommends: extra-xdg-menus
 Description: AVR development board IDE and built-in libraries
  Arduino is an open-source electronics prototyping platform based on

@@ -4,8 +4,9 @@ arduino (0021+dfsg-3) UNRELEASED; urgency=low
     debian/patches/wrapper_for_deb.patch
   * debian/patches/remove_update_warning.patch
     -Removed notification of new upstream versions (Closes: #603818)
+  * Dependency pruning: no need to depend on a jdk or ant
 
- -- Scott Howard <showard314@gmail.com>  Sat, 20 Nov 2010 10:43:17 -0500
+ -- Scott Howard <showard314@gmail.com>  Sat, 20 Nov 2010 11:11:07 -0500
 
 arduino (0018+dfsg-6) unstable; urgency=low
 

@@ -3,9 +3,9 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2010-11-01 21:13:39.085095848 -0400
-+++ arduino/build/linux/dist/arduino	2010-11-03 00:50:36.208007902 -0400
-@@ -1,22 +1,20 @@
+--- arduino.orig/build/linux/dist/arduino	2010-11-20 11:08:15.673469440 -0500
++++ arduino/build/linux/dist/arduino	2010-11-20 11:08:37.542157043 -0500
+@@ -1,12 +1,10 @@
  #!/bin/sh
   
 -APPDIR="$(dirname -- "${0}")"
@@ -19,9 +19,8 @@ Index: arduino/build/linux/dist/arduino
      lib/*.jar \
      ;
  do
-     CLASSPATH="${CLASSPATH}:${APPDIR}/${LIB}"
+@@ -14,9 +12,8 @@
  done
-+CLASSPATH="${CLASSPATH}:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar"
  export CLASSPATH
  
 -LD_LIBRARY_PATH=`pwd`/lib:${LD_LIBRARY_PATH}
