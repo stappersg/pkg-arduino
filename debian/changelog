@@ -1,3 +1,9 @@
+arduino (0021+dfsg-4) UNRELEASED; urgency=low
+
+  * Dependency pruning: no need to depend on libecj-java
+
+ -- Scott Howard <showard314@gmail.com>  Sat, 27 Nov 2010 23:31:14 -0500
+
 arduino (0021+dfsg-3) experimental; urgency=low
 
   * Corrected wrapper LD_LIBRARY_PATH variable in case it is not set

@@ -14,7 +14,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
 
 Package: arduino
 Architecture: all
-Depends: default-jre | java6-runtime, libecj-java,
+Depends: default-jre | java6-runtime,
  libjna-java, liboro-java, librxtx-java,
  ${misc:Depends}, arduino-core (= ${binary:Version})
 Recommends: extra-xdg-menus
