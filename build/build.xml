@@ -19,7 +19,6 @@
     <include name="app/pde.jar" />
     <include name="app/lib/ecj.jar" />
     <include name="app/lib/jna.jar" />
-    <include name="app/lib/oro.jar" />
     <include name="app/lib/RXTXcomm.jar" />
     <include name="app/lib/ant.jar" />
     <include name="app/lib/ant-launcher.jar" />
@@ -199,6 +198,10 @@
       <arg value="macosx/dist/tools-universal.zip" />
     </exec>
 
+    <copy todir="macosx/work/Arduino.app/Contents/Resources/Java/hardware/tools/avr/avr/include/avr">    
+      <fileset file="macosx/dist/eeprom.h" />
+    </copy>
+
     <antcall target="assemble">
       <param name="target.path" value="macosx/work/Arduino.app/Contents/Resources/Java" />
     </antcall>
@@ -219,7 +222,9 @@
     </exec>
     
     <copy todir="macosx/working_dir">
-      <fileset dir="macosx/work" />
+      <fileset dir="macosx/work">
+        <exclude name="**/ArduinoTestSuite/**" />
+      </fileset>
     </copy>
 
     <!-- The ant copy command does not preserve permissions. -->
@@ -315,7 +320,7 @@
   
   <target name="linux-run" depends="linux-build" 
 	  description="Run Linux version">
-    <exec executable="./arduino" dir="linux/work" spawn="false"/>
+    <exec executable="./linux/work/arduino" spawn="false"/>
   </target>
   
   <target name="linux-dist" depends="linux-build" 
@@ -403,6 +408,10 @@
     <!-- Unzip AVR tools -->
     <unzip dest="windows/work/hardware" src="windows/avr_tools.zip" overwrite="false"/>
 
+    <copy todir="windows/work/hardware/tools/avr/avr/include/avr">
+      <fileset file="windows/eeprom.h" />
+    </copy>
+
     <antcall target="assemble">
       <param name="target.path" value="windows/work" />
     </antcall>
@@ -483,7 +492,7 @@
 	   addproperty="version"
 	   defaultvalue="${revision}" />
 
-    <tar compression="gzip" destfile="arduino_${version}.tar.gz">
+    <tar compression="gzip" destfile="arduino-${version}-src.tar.gz">
       <tarfileset dir="../" 
 		  prefix="arduino-${version}" 
 		  excludes="**/*.tgz,
@@ -499,7 +508,7 @@
       =======================================================
       Arduino source distribution was built. Grab the archive from   
       
-      arduino_${version}.tar.gz
+      arduino-${version}-src.tar.gz
       =======================================================
     </echo>
   </target>
