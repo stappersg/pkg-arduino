@@ -1,4 +1,4 @@
-arduino (0022+dfsg-1) UNRELEASED; urgency=low
+arduino (0022+dfsg-1) experimental; urgency=low
 
   * New upstream release.
   * Dependency pruning: no need to depend on libecj-java, liboro-java
@@ -6,7 +6,7 @@ arduino (0022+dfsg-1) UNRELEASED; urgency=low
     needed)
   * Fixed typo in description (Closes: #608334, LP: #695481)
 
- -- Scott Howard <showard314@gmail.com>  Sat, 08 Jan 2011 10:59:49 -0500
+ -- Scott Howard <showard314@gmail.com>  Sat, 08 Jan 2011 11:02:17 -0500
 
 arduino (0021+dfsg-3) experimental; urgency=low
 
