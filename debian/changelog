@@ -1,9 +1,12 @@
 arduino (0022+dfsg-1) UNRELEASED; urgency=low
 
   * New upstream release.
-  * Dependency pruning: no need to depend on libecj-java
+  * Dependency pruning: no need to depend on libecj-java, liboro-java,
+    libjna-java
+  * Refreshed patches, removed convet_to_debian_oro.patch (no longer
+    needed)
 
- -- Scott Howard <showard314@gmail.com>  Sat, 08 Jan 2011 10:27:05 -0500
+ -- Scott Howard <showard314@gmail.com>  Sat, 08 Jan 2011 10:38:40 -0500
 
 arduino (0021+dfsg-3) experimental; urgency=low
 

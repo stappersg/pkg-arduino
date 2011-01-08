@@ -5,7 +5,7 @@ Maintainer: Scott Howard <showard314@gmail.com>
 Uploaders: Philip Hands <phil@hands.com>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7.0.50~), javahelper, default-jdk, librxtx-java,
- liboro-java, libecj-java, libjna-java, ant
+ ant
 Standards-Version: 3.9.1
 Homepage: http://www.arduino.cc
 Vcs-Git: git://git.debian.org/collab-maint/arduino.git
@@ -14,8 +14,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
 
 Package: arduino
 Architecture: all
-Depends: default-jre | java6-runtime,
- libjna-java, liboro-java, librxtx-java,
+Depends: default-jre | java6-runtime, librxtx-java,
  ${misc:Depends}, arduino-core (= ${binary:Version})
 Recommends: extra-xdg-menus
 Description: AVR development board IDE and built-in libraries
