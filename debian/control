@@ -1,11 +1,10 @@
 Source: arduino
 Section: electronics
 Priority: extra
-Maintainer: Scott Howard <showard314@gmail.com>
+Maintainer: Scott Howard <showard@debian.org>
 Uploaders: Philip Hands <phil@hands.com>
-DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 7.0.50~), javahelper, default-jdk, librxtx-java,
- libjna-java, ant
+Build-Depends: debhelper (>= 8), javahelper, default-jdk,
+ librxtx-java (>= 2.2pre2-3), libjna-java, ant
 Standards-Version: 3.9.1
 Homepage: http://www.arduino.cc
 Vcs-Git: git://git.debian.org/collab-maint/arduino.git

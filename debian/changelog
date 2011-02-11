@@ -1,8 +1,12 @@
 arduino (0022+dfsg-2) unstable; urgency=low
 
   * Updated debian/watch (Closes: #611745)
+  * debian/control
+    - DM-U-A removed, changed maintainer to @debian.org
+    - versioned depends on rxtx (>=2.2pre2-3) for Arduino Uno support
+  * debhelper 8 and debian/compat 8
 
- -- Scott Howard <showard@debian.org>  Thu, 10 Feb 2011 22:44:17 -0500
+ -- Scott Howard <showard@debian.org>  Thu, 10 Feb 2011 22:50:33 -0500
 
 arduino (0022+dfsg-1) experimental; urgency=low
 
