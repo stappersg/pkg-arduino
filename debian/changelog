@@ -1,3 +1,9 @@
+arduino (0022+dfsg-2) unstable; urgency=low
+
+  * Updated debian/watch (Closes: #611745)
+
+ -- Scott Howard <showard@debian.org>  Thu, 10 Feb 2011 22:44:17 -0500
+
 arduino (0022+dfsg-1) experimental; urgency=low
 
   * New upstream release.

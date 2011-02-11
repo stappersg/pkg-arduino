@@ -1,5 +1,5 @@
 version=3
 opts=\
 dversionmangle=s/.dfsg// \
-http://arduino.cc/en/Main/Software \
-http://files.arduino.cc/downloads/arduino-([\d\.]*)-src\.tar\.gz debian jh_repack
+http://googlecode.debian.net/p/arduino/arduino-([\d\.]*)-src\.tar\.gz debian jh_repack
+
