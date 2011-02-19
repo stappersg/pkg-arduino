@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # Uncomment this to turn on verbose mode.
-# export DH_VERBOSE=1
+export DH_VERBOSE=1
 
 export JAVA_HOME=/usr/lib/jvm/default-java
 #export CLASSPATH=/usr/share/java/RXTXcomm.jar:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar:/usr/share/java/oro.jar:/usr/share/java/antlr.jar:/usr/share/java/ecj.jar:/usr/share/java/jna.jar
@@ -34,9 +34,12 @@ override_dh_compress:
 override_dh_install:
 	find build/linux/work -type d -empty -delete
 	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh
+	mkdir -p debian/arduino-core/usr/share/arduino/lib
+	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
 
 override_jh_depends:
-	#jh_depends can't resolve symlinks
+#jh_depends can't resolve symlinks
+    
 
 
 #SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')

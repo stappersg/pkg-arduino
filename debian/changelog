@@ -1,3 +1,9 @@
+arduino (0022+dfsg-3) UNRELEASED; urgency=low
+
+  * Moved all non-java bits to arduino-core (Closes: #613812)
+
+ -- Scott Howard <showard@debian.org>  Sat, 19 Feb 2011 10:14:37 -0500
+
 arduino (0022+dfsg-2) unstable; urgency=low
 
   * Updated debian/watch (Closes: #611745)
