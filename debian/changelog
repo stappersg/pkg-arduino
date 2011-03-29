@@ -4,8 +4,9 @@ arduino (0022+dfsg-3) UNRELEASED; urgency=low
   * Edited Makefile to compile libraries during Makefile builds.
     - debian/patches/makefile_libraries.diff (Closes: #594191)
       Thanks to Stefan Tomanek
+  * debian/icons/* debian/arduino.xpm  New icons, thanks to Peter Oliver.
 
- -- Scott Howard <showard@debian.org>  Tue, 29 Mar 2011 09:31:25 -0400
+ -- Scott Howard <showard@debian.org>  Tue, 29 Mar 2011 09:40:51 -0400
 
 arduino (0022+dfsg-2) unstable; urgency=low
 
