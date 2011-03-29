@@ -1,4 +1,4 @@
-arduino (0022+dfsg-3) UNRELEASED; urgency=low
+arduino (0022+dfsg-3) unstable; urgency=low
 
   * Moved all non-java bits to arduino-core (Closes: #613812)
   * Edited Makefile to compile libraries during Makefile builds.
@@ -6,7 +6,7 @@ arduino (0022+dfsg-3) UNRELEASED; urgency=low
       Thanks to Stefan Tomanek
   * debian/icons/* debian/arduino.xpm  New icons, thanks to Peter Oliver.
 
- -- Scott Howard <showard@debian.org>  Tue, 29 Mar 2011 09:40:51 -0400
+ -- Scott Howard <showard@debian.org>  Tue, 29 Mar 2011 11:01:22 -0400
 
 arduino (0022+dfsg-2) unstable; urgency=low
 
