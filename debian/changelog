@@ -1,8 +1,11 @@
 arduino (0022+dfsg-3) UNRELEASED; urgency=low
 
   * Moved all non-java bits to arduino-core (Closes: #613812)
+  * Edited Makefile to compile libraries during Makefile builds.
+    - debian/patches/makefile_libraries.diff (Closes: #594191)
+      Thanks to Stefan Tomanek
 
- -- Scott Howard <showard@debian.org>  Sat, 19 Feb 2011 10:14:37 -0500
+ -- Scott Howard <showard@debian.org>  Tue, 29 Mar 2011 09:31:25 -0400
 
 arduino (0022+dfsg-2) unstable; urgency=low
 
