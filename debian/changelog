@@ -1,3 +1,9 @@
+arduino (0022+dfsg-4) UNRELEASED; urgency=low
+
+  * Added new icons for hicolor theme
+
+ -- Scott Howard <showard@debian.org>  Sun, 03 Apr 2011 21:55:47 -0400
+
 arduino (0022+dfsg-3) unstable; urgency=low
 
   * Moved all non-java bits to arduino-core (Closes: #613812)

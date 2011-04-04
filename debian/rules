@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+# export DH_VERBOSE=1
 
 export JAVA_HOME=/usr/lib/jvm/default-java
 #export CLASSPATH=/usr/share/java/RXTXcomm.jar:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar:/usr/share/java/oro.jar:/usr/share/java/antlr.jar:/usr/share/java/ecj.jar:/usr/share/java/jna.jar
