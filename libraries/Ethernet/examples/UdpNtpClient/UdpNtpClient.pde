@@ -20,30 +20,34 @@
 #include <Ethernet.h>
 #include <Udp.h>
 
-// Enter a MAC address and IP address for your controller below.
-// The IP address will be dependent on your local network:
+// Enter a MAC address for your controller below.
+// Newer Ethernet shields have a MAC address printed on a sticker on the shield
 byte mac[] = {  
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-byte ip[] = { 
-  192,168,1,177 };
-
 
 unsigned int localPort = 8888;      // local port to listen for UDP packets
 
-byte timeServer[] = { 
-  192, 43, 244, 18}; // time.nist.gov NTP server
+IPAddress timeServer(192, 43, 244, 18); // time.nist.gov NTP server
 
 const int NTP_PACKET_SIZE= 48; // NTP time stamp is in the first 48 bytes of the message
 
 byte packetBuffer[ NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packets 
 
+// A UDP instance to let us send and receive packets over UDP
+UDP Udp;
+
 void setup() 
 {
-  // start Ethernet and UDP
-  Ethernet.begin(mac,ip);
-  Udp.begin(localPort);
-
   Serial.begin(9600);
+
+  // start Ethernet and UDP
+  if (Ethernet.begin(mac) == 0) {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // no point in carrying on, so do nothing forevermore:
+    for(;;)
+      ;
+  }
+  Udp.begin(localPort);
 }
 
 void loop()
@@ -52,8 +56,9 @@ void loop()
 
     // wait to see if a reply is available
   delay(1000);  
-  if ( Udp.available() ) {  
-    Udp.readPacket(packetBuffer,NTP_PACKET_SIZE);  // read the packet into the buffer
+  if ( Udp.parsePacket() ) {  
+    // We've received a packet, read the data from it
+    Udp.read(packetBuffer,NTP_PACKET_SIZE);  // read the packet into the buffer
 
     //the timestamp starts at byte 40 of the received packet and is four bytes,
     // or two words, long. First, esxtract the two words:
@@ -80,8 +85,16 @@ void loop()
     Serial.print("The UTC time is ");       // UTC is the time at Greenwich Meridian (GMT)
     Serial.print((epoch  % 86400L) / 3600); // print the hour (86400 equals secs per day)
     Serial.print(':');  
+    if ( ((epoch % 3600) / 60) < 10 ) {
+      // In the first 10 minutes of each hour, we'll want a leading '0'
+      Serial.print('0');
+    }
     Serial.print((epoch  % 3600) / 60); // print the minute (3600 equals secs per minute)
     Serial.print(':'); 
+    if ( (epoch % 60) < 10 ) {
+      // In the first 10 seconds of each minute, we'll want a leading '0'
+      Serial.print('0');
+    }
     Serial.println(epoch %60); // print the second
   }
   // wait ten seconds before asking for the time again
@@ -89,7 +102,7 @@ void loop()
 }
 
 // send an NTP request to the time server at the given address 
-unsigned long sendNTPpacket(byte *address)
+unsigned long sendNTPpacket(IPAddress& address)
 {
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE); 
@@ -107,7 +120,9 @@ unsigned long sendNTPpacket(byte *address)
 
   // all NTP fields have been given values, now
   // you can send a packet requesting a timestamp: 		   
-  Udp.sendPacket( packetBuffer,NTP_PACKET_SIZE,  address, 123); //NTP requests are to port 123
+  Udp.beginPacket(address, 123); //NTP requests are to port 123
+  Udp.write(packetBuffer,NTP_PACKET_SIZE);
+  Udp.endPacket(); 
 }
 
 
