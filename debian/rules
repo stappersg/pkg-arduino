@@ -39,7 +39,7 @@ override_jh_depends:
     
 
 #SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
-SVNTAG=arduino-1.0~beta1#remove after beta
+SVNTAG=1.0~beta1#remove after beta
 DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
