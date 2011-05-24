@@ -6,8 +6,8 @@ Bug 588083
 
 Index: arduino/hardware/arduino/boards.txt
 ===================================================================
---- arduino.orig/hardware/arduino/boards.txt	2010-10-05 21:18:07.920844504 -0400
-+++ arduino/hardware/arduino/boards.txt	2010-10-05 21:22:39.123222472 -0400
+--- arduino.orig/hardware/arduino/boards.txt	2011-05-24 09:57:28.593173500 -0400
++++ arduino/hardware/arduino/boards.txt	2011-05-24 10:01:37.800230155 -0400
 @@ -1,7 +1,7 @@
  ##############################################################
  
@@ -17,7 +17,7 @@ Index: arduino/hardware/arduino/boards.txt
  uno.upload.maximum_size=32256
  uno.upload.speed=115200
  uno.bootloader.low_fuses=0xff
-@@ -19,7 +19,7 @@
+@@ -20,7 +20,7 @@
  
  atmega328.name=Arduino Duemilanove or Nano w/ ATmega328
  
@@ -26,7 +26,7 @@ Index: arduino/hardware/arduino/boards.txt
  atmega328.upload.maximum_size=30720
  atmega328.upload.speed=57600
  
-@@ -39,7 +39,7 @@
+@@ -41,7 +41,7 @@
  
  diecimila.name=Arduino Diecimila, Duemilanove, or Nano w/ ATmega168
  
@@ -35,7 +35,7 @@ Index: arduino/hardware/arduino/boards.txt
  diecimila.upload.maximum_size=14336
  diecimila.upload.speed=19200
  
-@@ -79,7 +79,7 @@
+@@ -83,7 +83,7 @@
  
  mega.name=Arduino Mega (ATmega1280)
  
@@ -44,7 +44,7 @@ Index: arduino/hardware/arduino/boards.txt
  mega.upload.maximum_size=126976
  mega.upload.speed=57600
  
-@@ -99,7 +99,7 @@
+@@ -104,7 +104,7 @@
  
  mini.name=Arduino Mini
  
@@ -53,7 +53,7 @@ Index: arduino/hardware/arduino/boards.txt
  mini.upload.maximum_size=14336
  mini.upload.speed=19200
  
-@@ -119,7 +119,7 @@
+@@ -125,7 +125,7 @@
  
  fio.name=Arduino Fio
  
@@ -62,7 +62,7 @@ Index: arduino/hardware/arduino/boards.txt
  fio.upload.maximum_size=30720
  fio.upload.speed=57600
  
-@@ -139,7 +139,7 @@
+@@ -146,7 +146,7 @@
  
  bt328.name=Arduino BT w/ ATmega328
  
@@ -71,7 +71,7 @@ Index: arduino/hardware/arduino/boards.txt
  bt328.upload.maximum_size=28672
  bt328.upload.speed=19200
  bt328.upload.disable_flushing=true
-@@ -160,7 +160,7 @@
+@@ -168,7 +168,7 @@
  
  bt.name=Arduino BT w/ ATmega168
  
@@ -80,7 +80,7 @@ Index: arduino/hardware/arduino/boards.txt
  bt.upload.maximum_size=14336
  bt.upload.speed=19200
  bt.upload.disable_flushing=true
-@@ -181,7 +181,7 @@
+@@ -190,7 +190,7 @@
  
  lilypad328.name=LilyPad Arduino w/ ATmega328
  
@@ -89,7 +89,7 @@ Index: arduino/hardware/arduino/boards.txt
  lilypad328.upload.maximum_size=30720
  lilypad328.upload.speed=57600
  
-@@ -201,7 +201,7 @@
+@@ -211,7 +211,7 @@
  
  lilypad.name=LilyPad Arduino w/ ATmega168
  
@@ -98,7 +98,7 @@ Index: arduino/hardware/arduino/boards.txt
  lilypad.upload.maximum_size=14336
  lilypad.upload.speed=19200
  
-@@ -221,7 +221,7 @@
+@@ -232,7 +232,7 @@
  
  pro5v328.name=Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328
  
@@ -107,7 +107,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro5v328.upload.maximum_size=30720
  pro5v328.upload.speed=57600
  
-@@ -241,7 +241,7 @@
+@@ -253,7 +253,7 @@
  
  pro5v.name=Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168
  
@@ -116,7 +116,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro5v.upload.maximum_size=14336
  pro5v.upload.speed=19200
  
-@@ -261,7 +261,7 @@
+@@ -274,7 +274,7 @@
  
  pro328.name=Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328
  
@@ -125,7 +125,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro328.upload.maximum_size=30720
  pro328.upload.speed=57600
  
-@@ -281,7 +281,7 @@
+@@ -295,7 +295,7 @@
  
  pro.name=Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega168
  
@@ -134,7 +134,7 @@ Index: arduino/hardware/arduino/boards.txt
  pro.upload.maximum_size=14336
  pro.upload.speed=19200
  
-@@ -301,7 +301,7 @@
+@@ -316,7 +316,7 @@
  
  atmega168.name=Arduino NG or older w/ ATmega168
  
@@ -143,7 +143,7 @@ Index: arduino/hardware/arduino/boards.txt
  atmega168.upload.maximum_size=14336
  atmega168.upload.speed=19200
  
-@@ -321,7 +321,7 @@
+@@ -337,7 +337,7 @@
  
  atmega8.name=Arduino NG or older w/ ATmega8
  

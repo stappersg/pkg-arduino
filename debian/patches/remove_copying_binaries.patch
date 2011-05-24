@@ -1,0 +1,16 @@
+Description: Arduino copies precompiled binaries into the build tree,
+ stop that
+Author: Scott Howard <showard@debian.org>
+Index: arduino/build/build.xml
+===================================================================
+--- arduino.orig/build/build.xml	2011-05-24 10:11:25.841885504 -0400
++++ arduino/build/build.xml	2011-05-24 10:11:47.418425809 -0400
+@@ -325,8 +325,6 @@
+   </target>
+ 
+   <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
+-    <copy tofile="linux/work/hardware/tools/avrdude" file="linux/dist/tools/avrdude64" overwrite="true" />
+-    <copy tofile="linux/work/lib/librxtxSerial.so" file="linux/dist/lib/librxtxSerial64.so" overwrite="true" />
+   </target>
+   
+   <target name="linux-run" depends="linux-build" 

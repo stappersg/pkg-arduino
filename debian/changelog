@@ -1,14 +1,10 @@
-arduino (1.0~beta1-1) UNRELEASED; urgency=low
+arduino (1:1.0~beta1+dfsg-1) UNRELEASED; urgency=low
 
   * New upstream beta release
-
- -- Scott Howard <showard@debian.org>  Tue, 24 May 2011 09:44:40 -0400
-
-arduino (0022+dfsg-4) UNRELEASED; urgency=low
-
   * Added new icons for hicolor theme
+  * refreshed patches
 
- -- Scott Howard <showard@debian.org>  Sun, 03 Apr 2011 21:55:47 -0400
+ -- Scott Howard <showard@debian.org>  Tue, 24 May 2011 11:34:41 -0400
 
 arduino (0022+dfsg-3) unstable; urgency=low
 

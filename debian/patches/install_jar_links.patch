@@ -4,10 +4,10 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2010-10-24 22:05:12.251509769 -0400
-+++ arduino/build/build.xml	2010-10-24 22:13:29.880348168 -0400
-@@ -14,7 +14,7 @@
- 	     value="linux"><os family="unix" /></condition>
+--- arduino.orig/build/build.xml	2011-05-24 09:57:28.573175983 -0400
++++ arduino/build/build.xml	2011-05-24 10:01:27.352232742 -0400
+@@ -20,7 +20,7 @@
+ 	     value="linux64"><os family="unix" arch="amd64" /></condition>
  
    <!-- Libraries required for running arduino -->
 -  <fileset dir=".." id="runtime.jars">
