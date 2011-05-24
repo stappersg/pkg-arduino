@@ -4,9 +4,6 @@
 # export DH_VERBOSE=1
 
 export JAVA_HOME=/usr/lib/jvm/default-java
-#export CLASSPATH=/usr/share/java/RXTXcomm.jar:/usr/lib/jvm/default-java/lib/tools.jar:/usr/lib/jvm/default-java/lib/rt.jar:/usr/share/java/oro.jar:/usr/share/java/antlr.jar:/usr/share/java/ecj.jar:/usr/share/java/jna.jar
-
-SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
 
 %:
 	dh $@ --with javahelper
@@ -22,7 +19,7 @@ override_jh_build:
 	mkdir -p build/linux/work/hardware/tools	
 	cd core/methods && ant
 	cd build && ant
-	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt
+	#rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt
 
 
 override_dh_installchangelogs:
@@ -41,15 +38,19 @@ override_jh_depends:
 #jh_depends can't resolve symlinks
     
 
-
 #SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
+SVNTAG=arduino-1.0~beta1#remove after beta
 DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
 get-orig-source:
-	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz
+	#During beta we can manually set the downlod file	
+	#wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz
+	wget http://files.arduino.cc/downloads/arduino-1.0-beta1-src.tar.gz #remove after beta
+	mv arduino-1.0-beta1-src.tar.gz arduino-$(SVNTAG)-src.tar.gz #remove after beta
 	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz
 	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/
+	mv debian/arduino-1.0-beta1 debian/arduino-$(SVNTAG) #remove after beta
 	#remove junk
 	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore | xargs -n1 rm -f;\
 	#find $(DESTDIR) -type d -empty -delete;\
