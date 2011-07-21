@@ -6,6 +6,9 @@
 export JAVA_HOME=/usr/lib/jvm/default-java
 export CLASSPATH=/usr/share/java/jna.jar:/usr/share/java/RXTXcomm.jar
 
+#SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
+SVNTAG=1.0~beta1#remove after beta
+
 %:
 	dh $@ --with javahelper
 
@@ -20,7 +23,7 @@ override_jh_build:
 	mkdir -p build/linux/work/hardware/tools	
 	cd core/methods && ant
 	cd build && ant
-	#rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt
+	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
 
 
 override_dh_installchangelogs:
@@ -39,8 +42,7 @@ override_jh_depends:
 #jh_depends can't resolve symlinks
     
 
-#SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/\([0-9].*\)+dfsg-[0-9]/\1/')
-SVNTAG=1.0~beta1#remove after beta
+
 DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
