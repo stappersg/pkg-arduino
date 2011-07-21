@@ -1,6 +1,2 @@
-/etc/avrdude.conf /usr/share/arduino/hardware/tools/avrdude.conf
-/usr/bin/avrdude /usr/share/arduino/hardware/tools/avrdude
-/usr/share/doc/arduino-core/examples /usr/share/arduino/examples
-/usr/share/doc/arduino/reference /usr/share/arduino/reference
 /usr/share/java/jna.jar /usr/share/arduino/lib/jna.jar
 /usr/share/java/RXTXcomm.jar /usr/share/arduino/lib/RXTXcomm.jar

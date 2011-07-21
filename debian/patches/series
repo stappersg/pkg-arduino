@@ -6,3 +6,4 @@ mjo_makefile
 mjo_makefile_debianise
 mjo_makefile_tweaks
 libc_1.7.1.patch
+makefile_libraries.diff

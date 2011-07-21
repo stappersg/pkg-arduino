@@ -5,7 +5,9 @@ N.B.  This package has not been widely tested -- your mileage may vary
       Bug reports welcome :-)
 
 This package contains the bare minimum required to program an Arduino
-using Arduino sketches via the command line.
+using Arduino sketches via the command line by using the included Makefile
+in this Debian package, an external Makefile, or other build system (e.g.
+http://code.google.com/p/arscons/)
 
 It DOES NOT contain the Java IDE -- if that's want you want you need to
 install the main arduino package as well (which depends on this one)
