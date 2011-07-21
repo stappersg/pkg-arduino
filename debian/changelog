@@ -3,10 +3,10 @@ arduino (0022+dfsg-4) unstable; urgency=low
   * debian/patches/libc_1.7.1.patch
     - Comment out definition of round, which conflicts with math.h
       declaration (Closes: #633659)
-  * debian/control: arduino-core depend on avr-libc (>> 1:1.7.1) for
+  * debian/control: arduino-core depend on avr-libc (>> 1:1.7.1-2) for
     above patch
 
- -- Scott Howard <showard@debian.org>  Thu, 21 Jul 2011 13:57:12 -0400
+ -- Scott Howard <showard@debian.org>  Thu, 21 Jul 2011 14:16:53 -0400
 
 arduino (0022+dfsg-3) unstable; urgency=low
 
