@@ -1,0 +1,22 @@
+Description: Using the Ubuntu version of arduino-core and avr-gcc makes it
+ impossible to get the example Arduino Webserver working.
+Author: Christian Lins
+Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=645321
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/arduino/+bug/865266
+
+Index: arduino/libraries/Ethernet/utility/w5100.h
+===================================================================
+--- arduino.orig/libraries/Ethernet/utility/w5100.h	2011-10-15 23:10:12.425924788 -0400
++++ arduino/libraries/Ethernet/utility/w5100.h	2011-10-15 23:11:29.917926630 -0400
+@@ -270,7 +270,10 @@
+   }                                                          \
+   static uint16_t read##name(SOCKET _s) {                    \
+     uint16_t res = readSn(_s, address);                      \
+-    res = (res << 8) + readSn(_s, address + 1);              \
++    uint16_t res2 = readSn(_s,address + 1);                  \
++    res = res << 8;                                          \
++    res2 = res2 & 0xFF;                                      \
++    res = res | res2;                                        \
+     return res;                                              \
+   }
+ #define __SOCKET_REGISTER_N(name, address, size)             \
