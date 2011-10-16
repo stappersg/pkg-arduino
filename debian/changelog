@@ -1,15 +1,10 @@
-arduino (1:1.0~beta1+dfsg-1~ppa1) oneiric; urgency=low
-
-  * Fix for Ethernet library with gcc-avr 4.5.3 (Closes: #645321,
-    LP: #865266)
-
- -- Scott Howard <showard@debian.org>  Sat, 15 Oct 2011 23:17:24 -0400
-
 arduino (1:1.0~beta1+dfsg-1) UNRELEASED; urgency=low
 
   * New upstream beta release
   * Added new icons for hicolor theme
   * refreshed patches
+  * Fix for Ethernet library with gcc-avr 4.5.3 (Closes: #645321,
+    LP: #865266)
 
  -- Scott Howard <showard@debian.org>  Tue, 24 May 2011 11:34:41 -0400
 
