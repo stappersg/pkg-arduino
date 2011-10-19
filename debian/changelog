@@ -1,4 +1,4 @@
-arduino (1:1.0~beta1+dfsg-1) UNRELEASED; urgency=low
+arduino (1:1.0~beta1+dfsg-1) experimental; urgency=low
 
   * New upstream beta release
   * Added new icons for hicolor theme
@@ -6,7 +6,7 @@ arduino (1:1.0~beta1+dfsg-1) UNRELEASED; urgency=low
   * Fix for Ethernet library with gcc-avr 4.5.3 (Closes: #645321,
     LP: #865266)
 
- -- Scott Howard <showard@debian.org>  Tue, 24 May 2011 11:34:41 -0400
+ -- Scott Howard <showard@debian.org>  Wed, 19 Oct 2011 10:01:21 -0400
 
 arduino (0022+dfsg-3) unstable; urgency=low
 
