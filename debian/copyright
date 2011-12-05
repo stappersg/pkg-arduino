@@ -4,7 +4,7 @@ Maintainer: Arduino Developers <developers@arduino.cc>
 Source: svn branch at http://arduino.googlecode.com/svn/
  and .tgz from www.arduino.cc
 
-Files: src/processing/xml/*
+Files: core/src/processing/xml
 Copyright: 2000-2002, Marc De Scheemaecker
 License: ZLIB
  This software is provided 'as-is', without any express or implied warranty.
@@ -25,12 +25,12 @@ License: ZLIB
  .
  3. This notice may not be removed or altered from any source distribution.
 
-Files: src/processing/core/*
+Files: core/src/processing/core/*
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
 License: LGPL-2.1
 
-Files: src/processing/core/PVector.java
+Files: core/src/processing/core/PVector.java
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
            2008, Dan Shiffman
@@ -99,9 +99,8 @@ License: LGPL-2.1
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  Lesser General Public License for more details.
  .
- You should have received a copy of the GNU Lesser General Public
- License along with this library; if not, write to the Free Software
- Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ A copy of the license is available on Debian systems at
+ /usr/share/common-licenses/LGPL-2.1
 
 Files: src/processing/app/debug/EventThread.java,
        src/processing/app/debug/StreamRedirectThread.java
@@ -135,38 +134,39 @@ Files: debian/*
 Copyright: 2010, Scott Howard <showard314@gmail.com>
            2010, Philip Hands <phil@hands.com>
            2009, Arduino Ubuntu Team <arduino-ubuntu-team@lists.launchpad.net>
-License: GPL-2
+License: GPL-2+
 
 Files: debian/icons/*
 Copyright: 2010, Peter Oliver <https://github.com/mavit/Arduino>
-License: GPL-2
+License: GPL-2+
 
 Files: tools/Mangler/src/*
 Copyright: 2008 Ben Fry and Casey Reas
-License: GPL-2
+License: GPL-2+
 
-Files: src/processing/app/*, src/processing/app/syntax/PdeKeywords.java
-       src/processing/app/syntax/PdeTextAreaDefaults.java
+Files: app/src/processing/app/*, app/src/processing/app/syntax/PdeKeywords.java
+       app/src/processing/app/syntax/PdeTextAreaDefaults.java
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
            2004-05, Hernando Barragan
-License: GPL-2
+License: GPL-2+
 
-Files: src/processing/app/debug/Sizer.java, src/processing/app/debug/Target.java
+Files: app/src/processing/app/debug/Sizer.java
+       app/src/processing/app/debug/Target.java
 Copyright: 2006, David A. Mellis
-License: GPL-2
+License: GPL-2+
 
-Files: src/processing/app/tools/AutoFormat.java
+Files: app/src/processing/app/tools/AutoFormat.java
 Copyright: 1997-98, Van Di-Han HO
            2001, Jason Pell
            2003, Martin Gomez
            2005-09, Ben Fry and Casey Reas
-License: GPL-2
+License: GPL-2+
 
-Files: src/processing/app/tools/DiscourseFormat.java
+Files: app/src/processing/app/tools/DiscourseFormat.java
 Copyright: 2005-06, Ignacio Manuel Gonzalez Moreta
            2006-08, Ben Fry and Casey Reas
-License: GPL-2
+License: GPL-2+
 
 Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c
        hardware/arduino/bootloaders/lilypad/src/ATmegaBOOT.c
@@ -175,17 +175,17 @@ Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c
 Copyright: 2003, Jason P. Kyle
            2009, David A. Mellis
            2009, D. Cuartielles
-License: GPL-2
+License: GPL-2+
 
 Files: hardware/arduino/bootloaders/stk500v2/*
 Copyright: 2010, Arduino Developers
-License: GPL-2
+License: GPL-2+
 
 Files: libraries/Ethernet/utility/w5100.*
 Copyright: 2008, WIZnet Co.Ltd 
-License: GPL-2
+License: GPL-2+
 
-License: GPL-2
+License: GPL-2+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -196,27 +196,72 @@ License: GPL-2
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  .
- You should have received a copy of the GNU General Public License along
- with this program; if not, write to the Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ A copy of the license is available on Debian systems at
+ /usr/share/common-licenses/GPL-2
 
-Files: src/processing/app/syntax/*.java
-Copyright: 1998-99, Slava Pestov
-           1999, Mike Dillon
-License: MIT style
+Files: libraries/SD/utility/*
+Copyright: 2009 by William Greiman
+License: GPL-3+
 
-Files: src/processing/app/syntax/KeywordMap.java
-Copyright: 1998-99, Slava Pestov
-           1999, Mike Dillon
-License: MIT style
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ A copy of the license is available on Debian systems at
+ /usr/share/common-licenses/GPL-3
 
-License: MIT style
- You may use and modify this package for any purpose. Redistribution is
- permitted, in both source and binary form, provided that this notice
- remains intact in all source distributions of this package.
+Files: hardware/arduino/cores/arduino/Udp.h libraries/Ethernet/EthernetUdp.*
+Copyright: 2008 Bjoern Hartmann
+License: MIT
+
+Files: hardware/arduino/cores/arduino/IPAddress.h
+Copyright: 2011 Adrian McEwen
+License: MIT
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
 
 Files: reference/*
 Copyright: PD
+
+Files: hardware/arduino/bootloaders/diskloader/src/USB*
+Copyright: 2010 Peter Barret
+License: ISC
+  Permission to use, copy, modify, and/or distribute this software for  
+  any purpose with or without fee is hereby granted, provided that the  
+  above copyright notice and this permission notice appear in all copies.  
+  .
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL  
+  WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED  
+  WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR  
+  BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES  
+  OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,  
+  WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,  
+  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS  
+  SOFTWARE.  
 
 Files: examples/Analog/*
 Copyright: 2008-2009, Tom Igoe
@@ -602,37 +647,30 @@ License: CC-BY-SA-3.0
  to  be  included  in the License; this License is not intended to
  restrict the license of any rights under applicable law.
 
-Files: examples/ArduinoISP/ArduinoISP.pde
-Copyright: 2010, rsbohn (on code.google.com)
+Files: hardware/arduino/bootloaders/optiboot/boot.h
+Copyright: 2002-2007  Eric B. Weddington
 License: BSD
- Redistribution  and use in source and binary forms, with or with‐
- out modification, are permitted provided that the following  con‐
- ditions are met:
-
-    *  Redistributions of source code must retain the above copy‐
- right notice, this list of  conditions  and  the  following  dis‐
- claimer.
-    *  Redistributions  in  binary  form must reproduce the above
- copyright notice, this list of conditions and the following  dis‐
- claimer in the documentation and/or other materials provided with
- the distribution.
-    * Neither the name of this project nor the names of its
- contributors  may  be used to endorse or promote products derived
- from this software without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND  CONTRIBU‐
- TORS  AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
- NOT LIMITED TO, THE IMPLIED  WARRANTIES  OF  MERCHANTABILITY  AND
- FITNESS  FOR  A  PARTICULAR  PURPOSE  ARE DISCLAIMED. IN NO EVENT
- SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY  DI‐
- RECT,  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS IN‐
- TERRUPTION) HOWEVER  CAUSED  AND  ON  ANY  THEORY  OF  LIABILITY,
- WHETHER  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLI‐
- GENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF  THE  USE  OF  THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
-On Debian systems, the complete text of the GNU General Public License 
-version 2 License and Lesser GNU General Public version 2.1 License be found
-in `/usr/share/common-licenses/GPL-2' and `/usr/share/common-licenses/LGPL-2.1'.
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+ .
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+   * Neither the name of the copyright holders nor the names of
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+ .
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.

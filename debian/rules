@@ -22,7 +22,7 @@ override_jh_build:
 	mkdir -p build/linux/work/hardware/tools	
 	cd core/methods && ant
 	cd build && ant
-	#rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
+	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
 
 
 override_dh_installchangelogs:
