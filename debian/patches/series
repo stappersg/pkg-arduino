@@ -2,7 +2,6 @@ ethernet_lib.patch
 remove_update_warning.patch
 install_jar_links.patch
 wrapper_for_deb.patch
-arduino_protocol_avrdude_510.patch
 mjo_makefile
 mjo_makefile_debianise
 mjo_makefile_tweaks

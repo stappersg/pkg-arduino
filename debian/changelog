@@ -1,8 +1,9 @@
 arduino (1:1.0+dfsg-1) UNRELEASED; urgency=low
 
   * New upstream release
+  * debian/patches/arduino_protocol_avrdude_510.patch removed, applied upstream
 
- -- Scott Howard <showard@debian.org>  Mon, 05 Dec 2011 17:52:26 -0500
+ -- Scott Howard <showard@debian.org>  Mon, 05 Dec 2011 17:55:37 -0500
 
 arduino (1:1.0~beta1+dfsg-1) experimental; urgency=low
 

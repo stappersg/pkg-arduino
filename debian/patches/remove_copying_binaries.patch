@@ -3,9 +3,9 @@ Description: Arduino copies precompiled binaries into the build tree,
 Author: Scott Howard <showard@debian.org>
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2011-05-24 10:11:25.841885504 -0400
-+++ arduino/build/build.xml	2011-05-24 10:11:47.418425809 -0400
-@@ -325,8 +325,6 @@
+--- arduino.orig/build/build.xml	2011-12-05 17:53:32.000000000 -0500
++++ arduino/build/build.xml	2011-12-05 17:54:08.497864116 -0500
+@@ -352,8 +352,6 @@
    </target>
  
    <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
