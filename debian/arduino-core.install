@@ -1,4 +1,3 @@
 build/linux/work/hardware/ usr/share/arduino
-debian/historic/arduino usr/share/arduino/hardware/arduino/cores
 mjo/Arduino.mk usr/share/arduino
 build/linux/work/libraries/ build/linux/work/tools/		usr/share/arduino
