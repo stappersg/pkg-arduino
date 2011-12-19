@@ -136,7 +136,7 @@ Copyright: 2010, Scott Howard <showard314@gmail.com>
            2009, Arduino Ubuntu Team <arduino-ubuntu-team@lists.launchpad.net>
 License: GPL-2+
 
-Files: debian/icons/*
+Files: debian/icons/*, debian/dist/*
 Copyright: 2010, Peter Oliver <https://github.com/mavit/Arduino>
 License: GPL-2+
 

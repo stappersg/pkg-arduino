@@ -7,3 +7,4 @@ mjo_makefile_debianise
 mjo_makefile_tweaks
 makefile_libraries.diff
 remove_copying_binaries.patch
+permission_fix.patch

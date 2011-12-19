@@ -1,10 +1,14 @@
 arduino (1:1.0+dfsg-2) UNRELEASED; urgency=low
 
   * Historic arduino main.cxx and Makefile removed in favor of
-    /usr/share/arduino/Arduino.mk. (LP: #652571)
+    /usr/share/arduino/Arduino.mk. (Closes: #652571)
   * Updated debian/watch to ignore versions starting with 00
+  * debian/patches/permission_fix.patch,
+    debian/dist/cc.arduino.add-groups.policy,
+    debian/dist/arduino-add-groups added to add users to dailout and
+    tty groups if needed. (Closes: #652523)
 
- -- Scott Howard <showard@debian.org>  Tue, 06 Dec 2011 09:58:13 -0500
+ -- Scott Howard <showard@debian.org>  Sun, 18 Dec 2011 20:12:38 -0500
 
 arduino (1:1.0+dfsg-1) unstable; urgency=low
 
