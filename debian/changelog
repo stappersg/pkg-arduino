@@ -1,4 +1,4 @@
-arduino (1:1.0+dfsg-2) UNRELEASED; urgency=low
+arduino (1:1.0+dfsg-2) unstable; urgency=low
 
   * Historic arduino main.cxx and Makefile removed in favor of
     /usr/share/arduino/Arduino.mk. (Closes: #652571)
@@ -9,7 +9,7 @@ arduino (1:1.0+dfsg-2) UNRELEASED; urgency=low
     tty groups if needed. (Closes: #652523)
   * Added debian/arduino.sharedmimeinfo
 
- -- Scott Howard <showard@debian.org>  Sun, 18 Dec 2011 20:22:35 -0500
+ -- Scott Howard <showard@debian.org>  Sun, 18 Dec 2011 21:12:15 -0500
 
 arduino (1:1.0+dfsg-1) unstable; urgency=low
 
