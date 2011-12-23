@@ -2,8 +2,9 @@ arduino (1:1.0+dfsg-3) unstable; urgency=low
 
   * Only add user to dialout group, not tty. Testing shows only
     dialout is necessary, and don't want to add extra permissions.
+  * added manpage for arduino-add-groups
 
- -- Scott Howard <showard@debian.org>  Fri, 23 Dec 2011 10:53:45 -0500
+ -- Scott Howard <showard@debian.org>  Fri, 23 Dec 2011 11:03:49 -0500
 
 arduino (1:1.0+dfsg-2) unstable; urgency=low
 
