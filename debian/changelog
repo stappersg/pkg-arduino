@@ -1,3 +1,10 @@
+arduino (1:1.0+dfsg-3) unstable; urgency=low
+
+  * Only add user to dialout group, not tty. Testing shows only
+    dialout is necessary, and don't want to add extra permissions.
+
+ -- Scott Howard <showard@debian.org>  Fri, 23 Dec 2011 10:53:45 -0500
+
 arduino (1:1.0+dfsg-2) unstable; urgency=low
 
   * Historic arduino main.cxx and Makefile removed in favor of

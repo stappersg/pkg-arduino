@@ -4,14 +4,15 @@ Description: Uses pkexec to add user to groups dailout and tty
 Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652523
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2011-12-18 20:04:09.430188773 -0500
-+++ arduino/build/linux/dist/arduino	2011-12-18 20:04:23.294189103 -0500
-@@ -1,4 +1,18 @@
+--- arduino.orig/build/linux/dist/arduino	2011-12-23 10:52:18.581468273 -0500
++++ arduino/build/linux/dist/arduino	2011-12-23 10:52:54.197469119 -0500
+@@ -1,4 +1,19 @@
 -#!/bin/sh
 +#!/bin/bash
 +
 +if [[ `id -u` -ne 0 ]]; then
-+    for group in dialout tty; do
++#    for group in dialout tty; do
++    for group in dialout; do
 +	if ! groups $USER | grep -q " : .*\b$group\b"; then
 +	    missing_groups="$missing_groups\n$group"
 +	fi
