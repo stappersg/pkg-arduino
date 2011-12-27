@@ -1,9 +1,12 @@
 arduino (1:1.0+dfsg-4) unstable; urgency=low
 
-  * zenity and policykit moved to Recommends. Package can be configured
-    and work without zenity and policykit (Closes: #653295)
+  * policykit moved to Recommends. Package can be configured
+    and work without policykit (Closes: #653295)
+  * Dependency on zenity removed (Closes: #653296). Uses Debian
+    specefic checker in debian/permission-checker instead (written in
+    java as to pull in no extra dependencies).
 
- -- Scott Howard <showard@debian.org>  Mon, 26 Dec 2011 22:35:34 -0500
+ -- Scott Howard <showard@debian.org>  Tue, 27 Dec 2011 12:21:24 -0500
 
 arduino (1:1.0+dfsg-3) unstable; urgency=low
 

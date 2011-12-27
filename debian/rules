@@ -15,6 +15,7 @@ override_dh_clean:
 	rm -rf build/linux/work/hardware/tools
 	cd core/methods && ant clean
 	cd build && ant clean
+	rm -f debian/permission-checker/*.class
 	dh_clean
 
 override_jh_build:
@@ -23,6 +24,9 @@ override_jh_build:
 	cd core/methods && ant
 	cd build && ant
 	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
+	javac debian/permission-checker/arduinopc.java
+	cd debian/permission-checker && jar cfe arduinopc.jar arduinopc *.class
+	mv debian/permission-checker/*.jar .
 
 
 override_dh_installchangelogs:

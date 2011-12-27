@@ -16,7 +16,7 @@ Architecture: all
 Depends: default-jre | java6-runtime, libjna-java,
  librxtx-java (>= 2.2pre2-3), ${misc:Depends},
  arduino-core (= ${binary:Version})
-Recommends: extra-xdg-menus, policykit-1, zenity
+Recommends: extra-xdg-menus, policykit-1
 Description: AVR development board IDE and built-in libraries
  Arduino is an open-source electronics prototyping platform based on
  flexible, easy-to-use hardware and software. It's intended for artists,

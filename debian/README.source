@@ -1,7 +1,0 @@
-This package gets its source from a combination of the upstream SVN and
-upstream released tarball, please inspect the rules file's get-orig-source
-target. Both are found at http://arduino.cc/en/Main/Software. This package
-follows what would happen in the make.sh and dist.sh scripts in a Debian
-compliant way.
-
-Patches are described in debian/patches directly.

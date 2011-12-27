@@ -4,9 +4,9 @@ Description: Uses pkexec to add user to groups dailout and tty
 Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652523
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2011-12-23 10:52:18.581468273 -0500
-+++ arduino/build/linux/dist/arduino	2011-12-23 10:52:54.197469119 -0500
-@@ -1,4 +1,19 @@
+--- arduino.orig/build/linux/dist/arduino	2011-12-27 12:17:18.675536651 -0500
++++ arduino/build/linux/dist/arduino	2011-12-27 12:17:29.255536904 -0500
+@@ -1,4 +1,18 @@
 -#!/bin/sh
 +#!/bin/bash
 +
@@ -18,9 +18,8 @@ Index: arduino/build/linux/dist/arduino
 +	fi
 +    done
 +
-+    if [[ -n $missing_groups ]] && zenity --title=Arduino --window-icon=/usr/share/icons/hicolor/48x48/apps/arduino.png --question --text "You need to be a member of the following groups to upload code to an Arduino microcontroller over the USB or serial ports:\n$missing_groups" --ok-label='Add' --cancel-label='Ignore'; then
-+	pkexec /usr/bin/arduino-add-groups \
-+	    && zenity --title=Arduino --window-icon=/usr/share/icons/hicolor/48x48/apps/arduino.png --info --text "You must log out and log in again before any changes will take effect."
++    if [[ -n $missing_groups ]] && ! java -jar /usr/share/arduino/arduinopc.jar; then
++	pkexec /usr/bin/arduino-add-groups
 +    fi
 +fi
 +

@@ -5,3 +5,4 @@ debian/*.desktop usr/share/applications/
 debian/icons/* usr/share/icons/hicolor
 debian/dist/arduino-add-groups /usr/bin
 debian/dist/cc.arduino.add-groups.policy /usr/share/polkit-1/actions
+arduinopc.jar usr/share/arduino/
