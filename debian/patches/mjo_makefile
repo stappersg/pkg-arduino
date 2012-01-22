@@ -6,12 +6,16 @@ Description: Unpack Martin Oldfield's arduino-mk tarball into mjo/
  package.
 Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 
---- /dev/null
-+++ b/mjo/README
+Index: arduino/mjo/README
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/README	2012-01-22 00:50:46.246502582 -0500
 @@ -0,0 +1 @@
 +The contents of this directory originate from: http://mjo.tc/atelier/2009/02/arduino-cli.html
---- /dev/null
-+++ b/mjo/Arduino.mk
+Index: arduino/mjo/Arduino.mk
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/Arduino.mk	2012-01-22 00:50:46.250502582 -0500
 @@ -0,0 +1,394 @@
 +########################################################################
 +#
@@ -407,9 +411,11 @@ Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 +.PHONY:	all clean depends upload raw_upload reset
 +
 +include $(DEP_FILE)
---- /dev/null
-+++ b/mjo/arduino-cli.html
-@@ -0,0 +1,350 @@
+Index: arduino/mjo/arduino-cli.html
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ arduino/mjo/arduino-cli.html	2012-01-22 00:54:06.686507347 -0500
+@@ -0,0 +1,354 @@
 +<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 +<html xmlns="http://www.w3.org/1999/xhtml">
 +  <head>
@@ -479,7 +485,8 @@ Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 +<p>To this we&#39;ll add a Makefile:</p>
 +
 +<pre><code>ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java 
-+                                            
++ARDUINO_VARIANT = standard
++                                           
 +TARGET       = CLItest                            
 +MCU          = atmega168                          
 +F_CPU        = 16000000                           
@@ -494,6 +501,9 @@ Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 +<dl>
 +<dt><span class="caps">ARDUINO</span>_DIR</dt>
 +<dd>Where you installed the Arduino software. On the Mac this has to point deep inside the Arduino installation /Applications.  </dd>
++<dt><span class="caps">ARDUINO</span>_VARIANT</dt>
++<dd>Selects the appropriate arduino variant from 
++/usr/share/arduino/hardware/arduino/variants/$(ARDUINO_VARIANT)</dd>
 +<dt><span class="caps">TARGET</span></dt>
 +<dd>The basename used for the final files. Canonically            this would match the .pde file, but you can choose anything!        </dd>
 +<dt><span class="caps">ARDUINO</span>_LIBS</dt>
