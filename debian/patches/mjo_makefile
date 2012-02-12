@@ -9,21 +9,22 @@ Origin: other, http://mjo.tc/atelier/2009/02/arduino-cli.html
 Index: arduino/mjo/README
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/README	2012-01-22 00:50:46.246502582 -0500
++++ arduino/mjo/README	2012-02-12 17:08:55.905251514 -0500
 @@ -0,0 +1 @@
 +The contents of this directory originate from: http://mjo.tc/atelier/2009/02/arduino-cli.html
 Index: arduino/mjo/Arduino.mk
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/Arduino.mk	2012-01-22 00:50:46.250502582 -0500
-@@ -0,0 +1,394 @@
++++ arduino/mjo/Arduino.mk	2012-02-12 12:19:53.000000000 -0500
+@@ -0,0 +1,513 @@
 +########################################################################
 +#
 +# Arduino command line tools Makefile
 +# System part (i.e. project independent)
 +#
-+# Copyright (C) 2010 Martin Oldfield <m@mjo.tc>, based on work that is
-+# Copyright Nicholas Zambetti, David A. Mellis & Hernando Barragan
++# Copyright (C) 2010,2011,2012 Martin Oldfield <m@mjo.tc>, based on
++# work that is copyright Nicholas Zambetti, David A. Mellis & Hernando
++# Barragan.
 +# 
 +# This file is free software; you can redistribute it and/or modify it
 +# under the terms of the GNU Lesser General Public License as
@@ -50,6 +51,37 @@ Index: arduino/mjo/Arduino.mk
 +#         0.4  25.v.2010   M J Oldfield
 +#                          - tweaked reset target on Philip Hands' advice
 +#
++#         0.5  23.iii.2011 Stefan Tomanek
++#                          - added ad-hoc library building
++#              17.v.2011   M J Oldfield
++#                          - grabbed said version from Ubuntu
++#
++#         0.6  22.vi.2011  M J Oldfield
++#                          - added ard-parse-boards supports
++#                          - added -lc to linker opts, 
++#                            on Fabien Le Lez's advice
++#
++#         0.7  12.vii.2011 M J Oldfield
++#                          - moved -lm to the end of linker opts,
++#	                     to solve Frank Knopf's problem;
++#                          - added -F to stty opts: Craig Hollabaugh 
++#	                     reckons it's good for Ubuntu
++#
++#         0.8  12.ii.2012  M J Oldfield
++#                          - Patches for Arduino 1.0 IDE:
++#                              support .ino files;
++#                              handle board 'variants';
++#                              tweaked compile flags.
++#                          - Build a library from all the system
++#                            supplied code rather than linking the .o
++#                            files directly.
++#                          - Let TARGET default to current directory
++#			     as per Daniele Vergini's patch.
++#                          - Add support for .c files in system
++#                            libraries: Dirk-Willem van Gulik and Evan
++#                            Goldenberg both reported this and
++#                            provided patches in the same spirit.
++#
 +########################################################################
 +#
 +# STANDARD ARDUINO WORKFLOW
@@ -62,10 +94,9 @@ Index: arduino/mjo/Arduino.mk
 +#       ARDUINO_DIR  = /Applications/arduino-0013
 +#
 +#       TARGET       = CLItest
-+#       ARDUINO_LIBS = LiquidCrystal
++#       ARDUINO_LIBS = Ethernet Ethernet/utility SPI
 +#
-+#       MCU          = atmega168
-+#       F_CPU        = 16000000
++#       BOARD_TAG    = uno
 +#       ARDUINO_PORT = /dev/cu.usb*
 +#
 +#       include /usr/local/share/Arduino.mk
@@ -73,14 +104,25 @@ Index: arduino/mjo/Arduino.mk
 +# Hopefully these will be self-explanatory but in case they're not:
 +#
 +#    ARDUINO_DIR  - Where the Arduino software has been unpacked
++#
 +#    TARGET       - The basename used for the final files. Canonically
 +#                   this would match the .pde file, but it's not needed
 +#                   here: you could always set it to xx if you wanted!
-+#    ARDUINO_LIBS - A list of any libraries used by the sketch (we assume
-+#                   these are in $(ARDUINO_DIR)/hardware/libraries
-+#    MCU,F_CPU    - The target processor description
++#
++#    ARDUINO_LIBS - A list of any libraries used by the sketch (we
++#                   assume these are in
++#                   $(ARDUINO_DIR)/hardware/libraries 
++#
 +#    ARDUINO_PORT - The port where the Arduino can be found (only needed
 +#                   when uploading
++#
++#    BOARD_TAG    - The ard-parse-boards tag for the board e.g. uno or mega
++#                   'make show_boards' shows a list
++#
++# You might also want to specify these, but normally they'll be read from the
++# boards.txt file i.e. implied by BOARD_TAG
++#
++#    MCU,F_CPU    - The target processor description
 +#
 +# Once this file has been created the typical workflow is just
 +#
@@ -88,17 +130,19 @@ Index: arduino/mjo/Arduino.mk
 +#
 +# All of the object files are created in the build-cli subdirectory
 +# All sources should be in the current directory and can include:
-+#  - at most one .pde file which will be treated as C++ after the standard
-+#    Arduino header and footer have been affixed.
++#  - at most one .pde or .ino file which will be treated as C++ after
++#    the standard Arduino header and footer have been affixed.
 +#  - any number of .c, .cpp, .s and .h files
 +#
++# Included libraries are built in the build-cli/libs subdirectory.
 +#
 +# Besides make upload you can also
-+#   make            - no upload
-+#   make clean      - remove all our dependencies
-+#   make depends    - update dependencies
-+#   make reset      - reset the Arduino by tickling DTR on the serial port
-+#   make raw_upload - upload without first resetting
++#   make             - no upload
++#   make clean       - remove all our dependencies
++#   make depends     - update dependencies
++#   make reset       - reset the Arduino by tickling DTR on the serial port
++#   make raw_upload  - upload without first resetting
++#   make show_boards - list all the boards defined in boards.txt
 +#
 +########################################################################
 +#
@@ -119,6 +163,9 @@ Index: arduino/mjo/Arduino.mk
 +#
 +#     ISP_PROG	   = -c stk500v2
 +#     ISP_PORT     = /dev/ttyACM0
++#
++# You might also need to set the fuse bits, but typically they'll be
++# read from boards.txt, based on the BOARD_TAG variable:
 +#     
 +#     ISP_LOCK_FUSE_PRE  = 0x3f
 +#     ISP_LOCK_FUSE_POST = 0xcf
@@ -135,6 +182,23 @@ Index: arduino/mjo/Arduino.mk
 +#
 +#
 +########################################################################
++
++########################################################################
++# 
++# Default TARGET to cwd (ex Daniele Vergini)
++ifndef TARGET
++TARGET  = $(notdir $(CURDIR))
++endif
++
++########################################################################
++
++#
++# Arduino version number
++ifndef ARDUINO_VERSION
++ARDUINO_VERSION = 100
++endif
++
++#
 +# Some paths
 +#
 +
@@ -152,9 +216,69 @@ Index: arduino/mjo/Arduino.mk
 +AVRDUDE_CONF     = $(ARDUINO_ETC_PATH)/avrdude.conf
 +endif
 +
-+ARDUINO_LIB_PATH  = $(ARDUINO_DIR)/hardware/libraries
++ARDUINO_LIB_PATH  = $(ARDUINO_DIR)/libraries
 +ARDUINO_CORE_PATH = $(ARDUINO_DIR)/hardware/arduino/cores/arduino
++ARDUINO_VAR_PATH  = $(ARDUINO_DIR)/hardware/arduino/variants
 +
++endif
++
++########################################################################
++# boards.txt parsing
++#
++ifndef BOARD_TAG
++BOARD_TAG   = uno
++endif
++
++ifndef BOARDS_TXT
++BOARDS_TXT  = $(ARDUINO_DIR)/hardware/arduino/boards.txt
++endif
++
++ifndef PARSE_BOARD
++PARSE_BOARD = ard-parse-boards --boards_txt=$(BOARDS_TXT)
++endif
++
++# Which variant ? This affects the include path
++ifndef VARIANT
++VARIANT = $(shell $(PARSE_BOARD) $(BOARD_TAG) build.variant)
++endif
++
++# processor stuff
++ifndef MCU
++MCU   = $(shell $(PARSE_BOARD) $(BOARD_TAG) build.mcu)
++endif
++
++ifndef F_CPU
++F_CPU = $(shell $(PARSE_BOARD) $(BOARD_TAG) build.f_cpu)
++endif
++
++# normal programming info
++ifndef AVRDUDE_ARD_PROGRAMMER
++AVRDUDE_ARD_PROGRAMMER = $(shell $(PARSE_BOARD) $(BOARD_TAG) upload.protocol)
++endif
++
++ifndef AVRDUDE_ARD_BAUDRATE
++AVRDUDE_ARD_BAUDRATE   = $(shell $(PARSE_BOARD) $(BOARD_TAG) upload.speed)
++endif
++
++# fuses if you're using e.g. ISP
++ifndef ISP_LOCK_FUSE_PRE
++ISP_LOCK_FUSE_PRE  = $(shell $(PARSE_BOARD) $(BOARD_TAG) bootloader.unlock_bits)
++endif
++
++ifndef ISP_LOCK_FUSE_POST
++ISP_LOCK_FUSE_POST = $(shell $(PARSE_BOARD) $(BOARD_TAG) bootloader.lock_bits)
++endif
++
++ifndef ISP_HIGH_FUSE
++ISP_HIGH_FUSE      = $(shell $(PARSE_BOARD) $(BOARD_TAG) bootloader.high_fuses)
++endif
++
++ifndef ISP_LOW_FUSE
++ISP_LOW_FUSE       = $(shell $(PARSE_BOARD) $(BOARD_TAG) bootloader.low_fuses)
++endif
++
++ifndef ISP_EXT_FUSE
++ISP_EXT_FUSE       = $(shell $(PARSE_BOARD) $(BOARD_TAG) bootloader.extended_fuses)
 +endif
 +
 +# Everything gets built in here
@@ -167,10 +291,11 @@ Index: arduino/mjo/Arduino.mk
 +LOCAL_CPP_SRCS  = $(wildcard *.cpp)
 +LOCAL_CC_SRCS   = $(wildcard *.cc)
 +LOCAL_PDE_SRCS  = $(wildcard *.pde)
++LOCAL_INO_SRCS  = $(wildcard *.ino)
 +LOCAL_AS_SRCS   = $(wildcard *.S)
-+LOCAL_OBJ_FILES = $(LOCAL_C_SRCS:.c=.o) $(LOCAL_CPP_SRCS:.cpp=.o) \
-+		$(LOCAL_CC_SRCS:.cc=.o) $(LOCAL_PDE_SRCS:.pde=.o) \
-+		$(LOCAL_AS_SRCS:.S=.o)
++LOCAL_OBJ_FILES = $(LOCAL_C_SRCS:.c=.o)   $(LOCAL_CPP_SRCS:.cpp=.o) \
++		$(LOCAL_CC_SRCS:.cc=.o)   $(LOCAL_PDE_SRCS:.pde=.o) \
++		$(LOCAL_INO_SRCS:.ino=.o) $(LOCAL_AS_SRCS:.S=.o)
 +LOCAL_OBJS      = $(patsubst %,$(OBJDIR)/%,$(LOCAL_OBJ_FILES))
 +
 +# Dependency files
@@ -187,8 +312,6 @@ Index: arduino/mjo/Arduino.mk
 +endif
 +endif
 +
-+# all the objects!
-+OBJS            = $(LOCAL_OBJS) $(CORE_OBJS)
 +
 +########################################################################
 +# Rules for making stuff
@@ -198,6 +321,7 @@ Index: arduino/mjo/Arduino.mk
 +TARGET_HEX = $(OBJDIR)/$(TARGET).hex
 +TARGET_ELF = $(OBJDIR)/$(TARGET).elf
 +TARGETS    = $(OBJDIR)/$(TARGET).*
++CORE_LIB   = $(OBJDIR)/libcore.a
 +
 +# A list of dependencies
 +DEP_FILE   = $(OBJDIR)/depends.mk
@@ -218,19 +342,19 @@ Index: arduino/mjo/Arduino.mk
 +# General arguments
 +SYS_LIBS      = $(patsubst %,$(ARDUINO_LIB_PATH)/%,$(ARDUINO_LIBS))
 +SYS_INCLUDES  = $(patsubst %,-I%,$(SYS_LIBS))
-+SYS_OBJS      = $(wildcard $(patsubst %,%/*.o,$(SYS_LIBS)))
++LIB_C_SRCS    = $(wildcard $(patsubst %,%/*.c,$(SYS_LIBS)))
++LIB_CPP_SRCS  = $(wildcard $(patsubst %,%/*.cpp,$(SYS_LIBS)))
++LIB_OBJS      = $(patsubst $(ARDUINO_LIB_PATH)/%.c,$(OBJDIR)/libs/%.o,$(LIB_C_SRCS)) \
++		$(patsubst $(ARDUINO_LIB_PATH)/%.cpp,$(OBJDIR)/libs/%.o,$(LIB_CPP_SRCS))
 +
-+CPPFLAGS      = -mmcu=$(MCU) -DF_CPU=$(F_CPU) \
-+			-I. -I$(ARDUINO_CORE_PATH) \
++CPPFLAGS      = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -DARDUINO=$(ARDUINO_VERSION) \
++			-I. -I$(ARDUINO_CORE_PATH) -I$(ARDUINO_VAR_PATH)/$(VARIANT) \
 +			$(SYS_INCLUDES) -g -Os -w -Wall \
 +			-ffunction-sections -fdata-sections
 +CFLAGS        = -std=gnu99
 +CXXFLAGS      = -fno-exceptions
 +ASFLAGS       = -mmcu=$(MCU) -I. -x assembler-with-cpp
-+LDFLAGS       = -mmcu=$(MCU) -lm -Wl,--gc-sections -Os
-+
-+# Rules for making a CPP file from the main sketch (.cpe)
-+PDEHEADER     = \\\#include \"WProgram.h\"
++LDFLAGS       = -mmcu=$(MCU) -Wl,--gc-sections -Os
 +
 +# Expand and pick the first port
 +ARD_PORT      = $(firstword $(wildcard $(ARDUINO_PORT)))
@@ -242,6 +366,15 @@ Index: arduino/mjo/Arduino.mk
 +# here for building e.g. a system C++ file and a local C++
 +# file. Besides making things simpler now, this would also make it
 +# easy to change the build options in future
++
++# library sources
++$(OBJDIR)/libs/%.o: $(ARDUINO_LIB_PATH)/%.c
++	mkdir -p $(dir $@)
++	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
++
++$(OBJDIR)/libs/%.o: $(ARDUINO_LIB_PATH)/%.cpp
++	mkdir -p $(dir $@)
++	$(CC) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 +
 +# normal local sources
 +# .o rules are for objects, .d for dependency tracking
@@ -278,7 +411,12 @@ Index: arduino/mjo/Arduino.mk
 +
 +# the pde -> cpp -> o file
 +$(OBJDIR)/%.cpp: %.pde
-+	$(ECHO) $(PDEHEADER) > $@
++	$(ECHO) '#include "WProgram.h"' > $@
++	$(CAT)  $< >> $@
++
++# the ino -> cpp -> o file
++$(OBJDIR)/%.cpp: %.ino
++	$(ECHO) '#include <Arduino.h>' > $@
 +	$(CAT)  $< >> $@
 +
 +$(OBJDIR)/%.o: $(OBJDIR)/%.cpp
@@ -321,35 +459,7 @@ Index: arduino/mjo/Arduino.mk
 +AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
 +endif
 +
-+ifndef AVRDUDE_ARD_PROGRAMMER
-+AVRDUDE_ARD_PROGRAMMER = stk500v1
-+endif
-+
-+ifndef AVRDUDE_ARD_BAUDRATE
-+AVRDUDE_ARD_BAUDRATE   = 19200
-+endif
-+
 +AVRDUDE_ARD_OPTS = -c $(AVRDUDE_ARD_PROGRAMMER) -b $(AVRDUDE_ARD_BAUDRATE) -P $(ARD_PORT)
-+
-+ifndef ISP_LOCK_FUSE_PRE
-+ISP_LOCK_FUSE_PRE  = 0x3f
-+endif
-+
-+ifndef ISP_LOCK_FUSE_POST
-+ISP_LOCK_FUSE_POST = 0xcf
-+endif
-+
-+ifndef ISP_HIGH_FUSE
-+ISP_HIGH_FUSE      = 0xdf
-+endif
-+
-+ifndef ISP_LOW_FUSE
-+ISP_LOW_FUSE       = 0xff
-+endif
-+
-+ifndef ISP_EXT_FUSE
-+ISP_EXT_FUSE       = 0x01
-+endif
 +
 +ifndef ISP_PROG
 +ISP_PROG	   = -c stk500v2
@@ -368,8 +478,11 @@ Index: arduino/mjo/Arduino.mk
 +$(OBJDIR):
 +		mkdir $(OBJDIR)
 +
-+$(TARGET_ELF): 	$(OBJS)
-+		$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SYS_OBJS)
++$(TARGET_ELF): 	$(LOCAL_OBJS) $(CORE_LIB) $(OTHER_OBJS)
++		$(CC) $(LDFLAGS) -o $@ $(LOCAL_OBJS) $(CORE_LIB) $(OTHER_OBJS) -lc -lm
++
++$(CORE_LIB):	$(CORE_OBJS) $(LIB_OBJS)
++		$(AR) rcs $@ $(CORE_OBJS) $(LIB_OBJS)
 +
 +$(DEP_FILE):	$(OBJDIR) $(DEPS)
 +		cat $(DEPS) > $(DEP_FILE)
@@ -384,7 +497,7 @@ Index: arduino/mjo/Arduino.mk
 +# stdin/out appears to work but generates a spurious error on MacOS at
 +# least. Perhaps it would be better to just do it in perl ?
 +reset:		
-+		for STTYF in 'stty --file' 'stty -f' 'stty <' ; \
++		for STTYF in 'stty -F' 'stty --file' 'stty -f' 'stty <' ; \
 +		  do $$STTYF /dev/tty >/dev/null 2>/dev/null && break ; \
 +		done ;\
 +		$$STTYF $(ARD_PORT)  hupcl ;\
@@ -403,19 +516,25 @@ Index: arduino/mjo/Arduino.mk
 +			-U lock:w:$(ISP_LOCK_FUSE_POST):m
 +
 +clean:
-+		$(REMOVE) $(OBJS) $(TARGETS) $(DEP_FILE) $(DEPS)
++		$(REMOVE) $(LOCAL_OBJS) $(CORE_OBJS) $(LIB_OBJS) $(CORE_LIB) $(TARGETS) $(DEP_FILE) $(DEPS)
 +
 +depends:	$(DEPS)
 +		cat $(DEPS) > $(DEP_FILE)
 +
-+.PHONY:	all clean depends upload raw_upload reset
++size:		$(OBJDIR) $(TARGET_HEX)
++		$(SIZE) $(TARGET_HEX)
++
++show_boards:	
++		$(PARSE_BOARD) --boards
++
++.PHONY:	all clean depends upload raw_upload reset size show_boards
 +
 +include $(DEP_FILE)
 Index: arduino/mjo/arduino-cli.html
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ arduino/mjo/arduino-cli.html	2012-01-22 00:54:06.686507347 -0500
-@@ -0,0 +1,354 @@
++++ arduino/mjo/arduino-cli.html	2012-02-12 17:12:21.553250518 -0500
+@@ -0,0 +1,478 @@
 +<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 +<html xmlns="http://www.w3.org/1999/xhtml">
 +  <head>
@@ -427,8 +546,7 @@ Index: arduino/mjo/arduino-cli.html
 +    <meta name="keywords"    content="Arduino command line Makefile" />
 +    <meta name="description" content="" />    
 +    <style type="text/css" media="all">@import "../../std.css";</style>
-+    <style type="text/css" media="print">@import "../../print.css";</style>
-+</head>
++    <style type="text/css" media="print">@import "../../print.css";</style></head>
 +
 +  <body>
 +    <div id="wrapper">
@@ -440,17 +558,25 @@ Index: arduino/mjo/arduino-cli.html
 +      <div id="main">
 +        <h2>Update News</h2>
 +
-+<p>The current version of this software (0.4) won&#39;t work with versions of the Arduino software before 0018.</p>
++<p>2012-02-12 : After letting this languish for over six months, there&#39;s now <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz">version 0.8</a><span class="link_list"><sup>1</sup></span> which:</p>
++
++<ul>
++<li>Supports version 1.0 of the official Arduino <span class="caps">IDE.</span></li>
++<li>Compiles the system software to a library potentially making the   final executable smaller.</li>
++<li>Supports plain C files in system libraries.</li>
++</ul>
++
++<p>In principle version 0.8 should work with older releases of the Arduino <span class="caps">IDE </span>but I&#39;ve not checked it. If you do upgrade to 1.0 though, you&#39;ll need to rename your .pde files to .ino.</p>
 +
 +<h2>Introduction</h2>
 +
-+<p>The <a href="http://www.arduino.cc/">Arduino</a><span class="link_list"><sup>1</sup></span> has done much to popularize microcontrollers for the casual tinkerer. Its success suggests that there&#39;s considerable value in combining a standard microcontroller (the ATmega) and a <span class="caps">GCC </span>based toolchain into an easily digesible package. For myself, it&#39;s certainly easier to just install the latest release of the Arduino software than worry about building my own cross-compilers, particularly when it&#39;s all new to me and consequently somewhat confusing.</p>
++<p>The <a href="http://www.arduino.cc/">Arduino</a><span class="link_list"><sup>2</sup></span> has done much to popularize microcontrollers for the casual tinkerer. Its success suggests that there&#39;s considerable value in combining a standard microcontroller (the ATmega) and a <span class="caps">GCC </span>based toolchain into an easily digesible package. For myself, it&#39;s certainly easier to just install the latest release of the Arduino software than worry about building my own cross-compilers, particularly when it&#39;s all new to me and consequently somewhat confusing.</p>
 +
 +<p>After working through the toy tutorials though, I found myself wishing that writing code for the Arduino were more like writing other C programs. In my case, that means editing it with emacs then building it with make. I must emphasize that I&#39;m not criticizing the Arduino <span class="caps">IDE</span>: there&#39;s nothing wrong with it beyond it not being emacs...</p>
 +
-+<p>It turns out that others have been along this path before: the Arduino website has a hopeful sounding <a href="http://www.arduino.cc/en/Hacking/CommandLine">Arduino from the Command Line</a><span class="link_list"><sup>2</sup></span> article. In turn this points you at the Makefile shipped as part of the Arduino software distribution: hardware/cores/arduino/Makefile.</p>
++<p>It turns out that others have been along this path before: in the past the Arduino website had a hopeful sounding &#39;Arduino from the Command Line&#39; article, but it&#39;s gone now. There is still <a href="http://arduino.cc/en/Hacking/HomePage">some information</a><span class="link_list"><sup>3</sup></span> though it&#39;s more limited.</p>
 +
-+<p>This didn&#39;t really fit quite what I wanted to do though, so I wrote my own Makefile. You might wonder why I should embark on such a task. Well:</p>
++<p>Without an official Makefile, I wrote my own. You might wonder why I should embark on such a task. Well:</p>
 +
 +<ul>
 +<li>I was keen that all of my objects and random other files were   completely separate from the main Arduino stuff in the applet   directory.</li>
@@ -462,66 +588,62 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<p>So to the Makefile. Obviously it owes a great debt to the people who wrote the Makefile shipped with the Arduino <span class="caps">IDE </span>and here&#39;s the credit list from that file:</p>
 +
-+<pre><code># Arduino 0011 Makefile                                  
-+# Arduino adaptation by mellis, eighthave, oli.keller    </code></pre>
++<pre><code># Arduino 0011 Makefile
++# Arduino adaptation by mellis, eighthave, oli.keller</code></pre>
 +
 +<p>Thanks then to mellis, eighthavem and oli.keller.</p>
 +
 +<h2>Installation instructions</h2>
 +
-+<p>You&#39;ll need to download <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz">the tarball containing the Makefile,</a><span class="link_list"><sup>3</sup></span>, unpack it, and then copy the Makefile somewhere sensible:</p>
++<p>If you&#39;re using Debian or Ubuntu, then just grab the arduino-core package.</p>
 +
-+<pre><code>$ wget http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz 
-+$ tar xzvf arduino-mk_0.4.tar.gz 
-+$ cp arduino-mk-0.4/Arduino.mk /path/to/my/arduino/stuff/Arduino.mk </code></pre>
++<p>You&#39;ll need to download <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz">the tarball containing the Makefile,</a><span class="link_list"><sup>4</sup></span>, unpack it, and then copy the Makefile somewhere sensible:</p>
 +
-+<p>The next step is to create a small Makefile for the sketch you actually want to build. The typical Arduino sketch directory looks like this:</p>
++<pre><code>$ wget http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz
++$ tar xzvf arduino-mk_0.8.tar.gz
++$ cp arduino-mk-0.8/Arduino.mk /path/to/my/arduino/stuff/Arduino.mk
++$ cp arduino-mk-0.8/ard-parse-boards /usr/local/bin</code></pre>
 +
-+<pre><code>$ ls -ltr  
-+total 8    
-+drwxr-xr-x   4 mjo  staff  136 15 Feb 19:53 applet        
-+-rw-r--r--@  1 mjo  staff  384 17 Feb 16:11 CLItest.pde</code></pre>
++<p> The next step is to create a small Makefile for the sketch you actually want to build. Let&#39;s build the <a href="http://arduino.cc/en/Tutorial/WebServer">WebServer example</a><span class="link_list"><sup>5</sup></span> from the Arduino distribution: it&#39;s a good example because software-wise it&#39;s as complicated as the stardard examples get, but you can just plug the hardware together.</p>
 +
-+<p>To this we&#39;ll add a Makefile:</p>
++<p>Create a new directory and copy the WebServer.ino file into it. Now this we&#39;ll add a Makefile:</p>
 +
-+<pre><code>ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java 
-+ARDUINO_VARIANT = standard
-+                                           
-+TARGET       = CLItest                            
-+MCU          = atmega168                          
-+F_CPU        = 16000000                           
-+ARDUINO_PORT = /dev/cu.usb*                       
-+                                            
-+ARDUINO_LIBS = LiquidCrystal              
-+                                            
++<p><strong>Note: If you&#39;re using version 1.0 of the Arduino software, you&#39;ll  need to make sure that the sketch&#39;s name ends in .ino and not .pde.</strong></p>
++
++<pre><code>ARDUINO_DIR = /Applications/Arduino.app/Contents/Resources/Java
++
++BOARD_TAG    = uno
++ARDUINO_PORT = /dev/cu.usb*
++
++ARDUINO_LIBS = Ethernet Ethernet/utility SPI
++
 +include /path/to/my/arduino/stuff/Arduino.mk</code></pre>
 +
 +<p>Hopefully these will be self-explanatory but in case they&#39;re not:</p>
 +
 +<dl>
 +<dt><span class="caps">ARDUINO</span>_DIR</dt>
-+<dd>Where you installed the Arduino software. On the Mac this has to point deep inside the Arduino installation /Applications.  </dd>
-+<dt><span class="caps">ARDUINO</span>_VARIANT</dt>
-+<dd>Selects the appropriate arduino variant from 
-+/usr/share/arduino/hardware/arduino/variants/$(ARDUINO_VARIANT)</dd>
-+<dt><span class="caps">TARGET</span></dt>
-+<dd>The basename used for the final files. Canonically            this would match the .pde file, but you can choose anything!        </dd>
++<dd>Where you installed the Arduino software. On the Mac this has to point deep inside the Arduino installation /Applications.</dd>
 +<dt><span class="caps">ARDUINO</span>_LIBS</dt>
-+<dd>A list of any libraries used by the sketch&mdash;we assume  these are in $(ARDUINO_DIR)/hardware/libraries.                     </dd>
-+<dt><span class="caps">MCU</span></dt>
-+<dd>The target processor (atmega168 for the Duemilanove).           </dd>
-+<dt>F_CPU</dt>
-+<dd>The target&#39;s clock speed (16000000 for the Duemilanove).      </dd>
++<dd>A list of any libraries used by the sketch&mdash;we assume  these are in $(ARDUINO_DIR)/hardware/libraries.</dd>
++<dt><span class="caps">BOARD</span>_TAG</dt>
++<dd>A tag identifying which type of Arduino you&#39;re using. This only works in version 0.6 and later.</dd>
 +<dt><span class="caps">ARDUINO</span>_PORT</dt>
 +<dd>The port where the Arduino can be found (only needed when  uploading) If this expands to several ports, the first will be used.</dd>
 +</dl>
 +
 +
-+<p>A couple of other options might be useful:</p>
++<p>Until version 0.8 you had to specify a <span class="caps">TARGET </span>name which set the basename for the executables. You still <em>can</em> do this, but it&#39;s not necessary: thanks to a patch from Daniele Vergini it now defaults to the name of the current directory.</p>
++
++<p>In the past, the following options were used, and indeed you can still use them. However it&#39;s probably better to use set <span class="caps">BOARD</span>_TAG and let the Makefile look up the values in boards.txt:</p>
 +
 +<dl>
++<dt><span class="caps">MCU</span></dt>
++<dd>The target processor (atmega168 for the Duemilanove).</dd>
++<dt>F_CPU</dt>
++<dd>The target&#39;s clock speed (16000000 for the Duemilanove).</dd>
 +<dt><span class="caps">AVRDUDE</span>_ARD_PROGRAMMER</dt>
-+<dd>The protocol avrdude speaks&mdash;defaults to stk500v1.           </dd>
++<dd>The protocol avrdude speaks&mdash;defaults to stk500v1.</dd>
 +<dt><span class="caps">AVRDUDE</span>_ARD_BAUDRATE</dt>
 +<dd>The rate at which we talk to the board&mdash;defaults to 19,200.</dd>
 +</dl>
@@ -529,68 +651,144 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<p>If you&#39;re using the toolchain provided by the system rather than bundled with the Arduino software (as I think is the case on Linux) then you&#39;ll have to add some more paths:</p>
 +
-+<pre><code>AVR_TOOLS_PATH   = /usr/bin  
++<pre><code>AVR_TOOLS_PATH   = /usr/bin
 +AVRDUDE_CONF     = /etc/avrdude.conf</code></pre>
++
++<h3><span class="caps">BOARD</span>_TAG</h3>
++
++<p>Makefiles before version 0.5 had to specify which processor and speed the target used. For standard boards, this information can be found in the boards.txt file, so it seemed sensible to use that instead.</p>
++
++<p>Now, one need only define <span class="caps">BOARD</span>_TAG to match the target hardware and it should work. Internally the Makefile invokes ard-parse-boards&mdash;a small Perl utility included with the software&mdash;which parses board.txt.</p>
++
++<p>If you&#39;re not sure which board tag you need, ard-parse-board will dump a full list:</p>
++
++<pre><code>$ ard-parse-boards --boards						
++Tag          Board Name							
++atmega168    Arduino NG or older w/ ATmega168				
++atmega328    Arduino Duemilanove or Nano w/ ATmega328			
++atmega8      Arduino NG or older w/ ATmega8				
++bt           Arduino BT w/ ATmega168					
++bt328        Arduino BT w/ ATmega328					
++diecimila    Arduino Diecimila, Duemilanove, or Nano w/ ATmega168	
++fio          Arduino Fio						
++lilypad      LilyPad Arduino w/ ATmega168				
++lilypad328   LilyPad Arduino w/ ATmega328				
++mega         Arduino Mega (ATmega1280)					
++mega2560     Arduino Mega 2560						
++mini         Arduino Mini						
++pro          Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega168		
++pro328       Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328		
++pro5v        Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168		
++pro5v328     Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328		
++uno          Arduino Uno						</code></pre>
++
++<p>If you don&#39;t set it, <span class="caps">BOARD</span>_TAG defaults to uno.</p>
++
++<p>You can, of course, continue to set F_CPU and <span class="caps">MCU </span>directly should you prefer that.</p>
++
++<h3><span class="caps">ARDUINO</span>_LIBS</h3>
++
++<p>Early (up to and including version 0.4) of this Makefile didn&#39;t really support this (despite claims to the contrary). Happily various kind people sorted out the problem, one of whom patched the Debian and Ubuntu version.</p>
++
++<p>In the official <span class="caps">IDE, </span>it&#39;s enough to select the library from a menu: this puts the relevant #include into the Sketch and adds the necessarily linker tweaks too.</p>
++
++<p>In this Makefile, you&#39;ll need to both add the #include yourself and append the directories which contain the library to the <span class="caps">ARDUINO</span>_LIBS variable. Often these will both have the same name, though it&#39;s worth noting that the #include refers to a single file, but the <span class="caps">ARDUINO</span>_LIBS entry refers to an entire directory of source files.</p>
++
++<p>However, care is needed if the library&#39;s source files aren&#39;t in a single directory.  For example, the webserver example uses the <a href="http://www.arduino.cc/en/Reference/Ethernet">Ethernet library</a><span class="link_list"><sup>6</sup></span> and we needed to include both Ethernet and Ethernet/utility in <span class="caps">ARDUINO</span>_LIBS.</p>
++
++<p>If you omit the .../utility library, you&#39;ll get messy looking link errors from the bowels of the Ethernet library. The <span class="caps">SPI </span>and Wire libraries are like this too!</p>
 +
 +<h2>Building</h2>
 +
 +<p>If you&#39;re used to Unix then this is easy:</p>
 +
-+<pre><code>$ make 
++<pre><code>$ make
 +...</code></pre>
 +
 +<p>The output is pretty verbose, but I think it should be obvious if it worked. After building you&#39;ll see a new directory has been created which contains all the object files: build-cli.</p>
 +
-+<pre><code>$ ls -l  
-+total 32 
-+-rw-r--r--@  1 mjo  staff  384 17 Feb 16:11 CLItest.pde  
-+-rw-r--r--@  1 mjo  staff  202 17 Feb 16:39 Makefile     
-+drwxr-xr-x   4 mjo  staff  136 15 Feb 19:53 applet       
-+drwxr-xr-x  21 mjo  staff  714 17 Feb 17:52 build-cli    </code></pre>
++<pre><code>$ $ ls -lR
++total 16
++-rw-r--r--   1 mjo  staff   263 12 Feb 11:06 Makefile
++-rw-r--r--   1 mjo  staff  2308 12 Feb 10:57 WebServer.ino
++drwxr-xr-x  28 mjo  staff   952 12 Feb 11:07 build-cli</code></pre>
 +
 +<h3>build-cli</h3>
 +
 +<p>Let&#39;s peek inside the build-cli directory:</p>
 +
-+<pre><code>$ ls -l build-cli 
-+total 392 
-+-rw-r--r--  1 mjo  staff    491 17 Feb 17:52 CLItest.cpp          
-+-rw-r--r--  1 mjo  staff    583 17 Feb 17:52 CLItest.d            
-+-rwxr-xr-x  1 mjo  staff  60971 17 Feb 17:52 CLItest.elf          
-+-rw-r--r--  1 mjo  staff   3994 17 Feb 17:52 CLItest.hex          
-+-rw-r--r--  1 mjo  staff   5932 17 Feb 17:52 CLItest.o            
-+-rw-r--r--  1 mjo  staff   6920 17 Feb 17:52 HardwareSerial.o     
-+-rw-r--r--  1 mjo  staff  12708 17 Feb 17:52 Print.o              
-+-rw-r--r--  1 mjo  staff   6852 17 Feb 17:52 WInterrupts.o        
-+-rw-r--r--  1 mjo  staff   4680 17 Feb 17:52 WMath.o              
-+-rw-r--r--  1 mjo  staff    611 17 Feb 17:52 depends.mk           
-+-rw-r--r--  1 mjo  staff   5900 17 Feb 17:52 pins_arduino.o       
-+-rw-r--r--  1 mjo  staff   8476 17 Feb 17:52 wiring.o             
-+-rw-r--r--  1 mjo  staff   7224 17 Feb 17:52 wiring_analog.o      
-+-rw-r--r--  1 mjo  staff   8244 17 Feb 17:52 wiring_digital.o     
-+-rw-r--r--  1 mjo  staff   6544 17 Feb 17:52 wiring_pulse.o       
-+-rw-r--r--  1 mjo  staff   7424 17 Feb 17:52 wiring_serial.o      
-+-rw-r--r--  1 mjo  staff   5308 17 Feb 17:52 wiring_shift.o       </code></pre>
++<pre><code>$ ls -l build-cli
++total 2136	 						
++-rw-r--r--  1 mjo  staff    2292 12 Feb 11:07 CDC.o		
++-rw-r--r--  1 mjo  staff    2292 12 Feb 11:07 HID.o		
++-rw-r--r--  1 mjo  staff   23452 12 Feb 11:07 HardwareSerial.o	
++-rw-r--r--  1 mjo  staff   16008 12 Feb 11:07 IPAddress.o	
++-rw-r--r--  1 mjo  staff   40012 12 Feb 11:07 Print.o		
++-rw-r--r--  1 mjo  staff   21068 12 Feb 11:07 Stream.o		
++-rw-r--r--  1 mjo  staff   16580 12 Feb 11:07 Tone.o		
++-rw-r--r--  1 mjo  staff    2300 12 Feb 11:07 USBCore.o		
++-rw-r--r--  1 mjo  staff    6048 12 Feb 11:06 WInterrupts.o	
++-rw-r--r--  1 mjo  staff    7068 12 Feb 11:07 WMath.o		
++-rw-r--r--  1 mjo  staff   79196 12 Feb 11:07 WString.o		
++-rw-r--r--  1 mjo  staff    2329 12 Feb 10:57 WebServer.cpp	
++-rw-r--r--  1 mjo  staff    1920 12 Feb 11:06 WebServer.d	
++-rw-r--r--  1 mjo  staff   11324 12 Feb 11:06 WebServer.o	
++-rwxr-xr-x  1 mjo  staff  193852 12 Feb 11:07 WebServer.elf
++-rw-r--r--  1 mjo  staff   28572 12 Feb 11:07 WebServer.hex	
++-rw-r--r--  1 mjo  staff    1920 12 Feb 11:08 depends.mk	
++-rw-r--r--  1 mjo  staff  541002 12 Feb 11:07 libcore.a		
++drwxr-xr-x  4 mjo  staff     136 12 Feb 10:57 libs		
++-rw-r--r--  1 mjo  staff    3616 12 Feb 11:07 main.o		
++&lt;-rw-r--r--  1 mjo  staff    5544 12 Feb 11:07 new.o		
++-rw-r--r--  1 mjo  staff    9780 12 Feb 11:06 wiring.o		
++-rw-r--r--  1 mjo  staff    7024 12 Feb 11:06 wiring_analog.o	
++-rw-r--r--  1 mjo  staff    9704 12 Feb 11:06 wiring_digital.o	
++-rw-r--r--  1 mjo  staff    7056 12 Feb 11:06 wiring_pulse.o	
++-rw-r--r--  1 mjo  staff    5736 12 Feb 11:06 wiring_shift.o	
++								
++./build-cli/libs:						
++total 0								
++drwxr-xr-x  9 mjo  staff  306 12 Feb 11:07 Ethernet		
++drwxr-xr-x  3 mjo  staff  102 12 Feb 11:07 SPI			
++								
++./build-cli/libs/Ethernet:					
++total 392							
++-rw-r--r--  1 mjo  staff  24836 12 Feb 11:07 Dhcp.o		
++-rw-r--r--  1 mjo  staff  23112 12 Feb 11:07 Dns.o		
++-rw-r--r--  1 mjo  staff  33008 12 Feb 11:07 Ethernet.o		
++-rw-r--r--  1 mjo  staff  42000 12 Feb 11:07 EthernetClient.o	
++-rw-r--r--  1 mjo  staff  19420 12 Feb 11:07 EthernetServer.o	
++-rw-r--r--  1 mjo  staff  41244 12 Feb 11:07 EthernetUdp.o	
++drwxr-xr-x  4 mjo  staff    136 12 Feb 11:07 utility		
++								
++./build-cli/libs/Ethernet/utility:				
++total 152							
++-rw-r--r--  1 mjo  staff  40480 12 Feb 11:07 socket.o		
++-rw-r--r--  1 mjo  staff  34840 12 Feb 11:07 w5100.o		
++								
++./build-cli/libs/SPI:						
++total 16							
++-rw-r--r--  1 mjo  staff  6812 12 Feb 11:07 SPI.o		</code></pre>
 +
 +<p>Most of the files in here are object files for the wiring library. What about the others ?</p>
 +
 +<dl>
-+<dt><span class="caps">CLI</span>test.cpp</dt>
-+<dd>This is the .pde sketch file with a small main program prepended and a suitable #include prepended. </dd>
-+<dt><span class="caps">CLI</span>test.d</dt>
-+<dd>This tracks the dependencies used by <span class="caps">CLI</span>test.pde </dd>
-+<dt><span class="caps">CLI</span>test.elf</dt>
-+<dd>This is executable produced by the linker </dd>
-+<dt><span class="caps">CLI</span>test.hex</dt>
-+<dd>This is a hex dump of (the code part) of the executable  in a format understood by the Arduino&#39;s bootloader. </dd>
-+<dt><span class="caps">CLI</span>test.o</dt>
-+<dd>The object file we got by compiling <span class="caps">CLI</span>test.cpp. </dd>
++<dt>WebServer.cpp</dt>
++<dd>This is the .pde sketch file with a small main program prepended and a suitable #include prepended.</dd>
++<dt>WebServer.d</dt>
++<dd>This tracks the dependencies used by WebServer.pde</dd>
++<dt>WebServer.elf</dt>
++<dd>This is executable produced by the linker</dd>
++<dt>WebServer.hex</dt>
++<dd>This is a hex dump of (the code part) of the executable  in a format understood by the Arduino&#39;s bootloader.</dd>
++<dt>WebServer.o</dt>
++<dd>The object file we got by compiling WebServer.cpp.</dd>
 +<dt>depends.mk</dt>
 +<dd>A single file containing all the dependency relations  (it&#39;s the concatentation of all the .d files).</dd>
++<dt>libcore.a</dt>
++<dd>Rather than link all the system supplied objects directly,  we build them into this library first, then link against it.</dd>
 +</dl>
 +
-+
-+<p>You may recall the <span class="caps">TARGET </span>variable we specified in the Makefile above: it&#39;s that which sets the base name for e.g. <span class="caps">CLI</span>test.elf. However <span class="caps">CLI</span>test.cpp, <span class="caps">CLI</span>test.o and <span class="caps">CLI</span>test.d take their name from the .pde sketch file.</p>
 +
 +<h2>Uploading code</h2>
 +
@@ -604,7 +802,7 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<p>Assuming that avrdude supports your programmer though, you&#39;ll only need to make a few changes to the Makefile to tell avrdude where it can find the programmer and how to talk to it:</p>
 +
-+<pre><code>ISP_PORT         = /dev/ttyACM0 
++<pre><code>ISP_PORT         = /dev/ttyACM0
 +ISP_PROG         = -c stk500v2</code></pre>
 +
 +<p>Then to upload:</p>
@@ -613,18 +811,20 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<h3>Fuses</h3>
 +
-+<p>You might need to change the fuse settings when programming, though some care needs to be taken here or you might irreversibly change the chip. You can set the fuse settings thus (the values below are the defaults):</p>
++<p>You might need to change the fuse settings when programming, though some care needs to be taken here or you might irreversibly damage the chip.</p>
 +
-+<pre><code>ISP_LOCK_FUSE_PRE  = 0x3f 
-+ISP_LOCK_FUSE_POST = 0xcf 
-+ISP_HIGH_FUSE      = 0xdf 
-+ISP_LOW_FUSE       = 0xff 
++<p>Normally the fuse settings are chosen from the boards.txt file to match the value of <span class="caps">BOARD</span>_TAG (assuming you&#39;re running version 0.6 or higher), but you can set them yourself:</p>
++
++<pre><code>ISP_LOCK_FUSE_PRE  = 0x3f
++ISP_LOCK_FUSE_POST = 0xcf
++ISP_HIGH_FUSE      = 0xdf
++ISP_LOW_FUSE       = 0xff
 +ISP_EXT_FUSE       = 0x01
 +</code></pre>
 +
 +<h2>Growing the project</h2>
 +
-+<p>There a couple of obvious things to do now. You might want to edit the sketch. That&#39;s easy: just edit the .pde file and run make again.</p>
++<p>There a couple of obvious things to do now. You might want to edit the sketch. That&#39;s easy: just edit the .ino file and run make again.</p>
 +
 +<p>Alternatively you might want to add some more source files to the project. That&#39;s easy too: the Makefile understands C, C++ and assembler files in the source directory (with .c, .cpp, and .s extensions). Everything <strong>should</strong> just work.</p>
 +
@@ -640,31 +840,66 @@ Index: arduino/mjo/arduino-cli.html
 +
 +<ul>
 +<li>The Makefile isn&#39;t very elegant.</li>
-+<li>Handling Arduino libraries isn&#39;t very clean. For one thing I&#39;m   relying on them being compiled in a compatible way by the Arduino   environment which is probably a bit risky. Secondly it&#39;s a bit lazy   to get the user to specify which libraries are being used manually.</li>
 +<li>When compiling the sketch file, the compiler actually sees the .cpp   file derived from it. Accordingly the line numbers of any errors   will be wrong (but not by that much).</li>
-+<li>I fear that the Makefile makes unwarranted assumptions about the   hardware: for example, all my Arduino experience has been ATmega 168   related.</li>
 +<li>The Makefile doesn&#39;t do some of the things that the Makefile   distributed with the Arduino software does e.g. generating <span class="caps">COFF   </span>files. I worry that some of these might be important.</li>
 +<li>This hasn&#39;t been used very much yet, even by me. I&#39;m writing this   now as much for my benefit as anyone else&#39;s, though I&#39;d be delighted   to know if anyone else finds it useful.</li>
 +</ul>
 +
 +<h2>Changelog</h2>
 +
-+<h3>2010-05-21, version 0.3</h3>
++<h3>2010-05-21, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz">version 0.3</a><span class="link_list"><sup>7</sup></span></h3>
 +
 +<ul>
 +<li>Tidied up the licensing, making it clear that it&#39;s released under <span class="caps">LGPL</span> 2.1.</li>
-+<li><a href="http://hands.com/~phil/">Philip Hands</a><span class="link_list"><sup>4</sup></span> sent me some code to reset the   Arduino by dropping <span class="caps">DTR </span>for 100ms, and I added it.</li>
++<li><a href="http://hands.com/~phil/">Philip Hands</a><span class="link_list"><sup>8</sup></span> sent me some code to reset the   Arduino by dropping <span class="caps">DTR </span>for 100ms, and I added it.</li>
 +<li>Tweaked the Makefile to handle version 0018 of the Arduino software   which now includes main.cpp. Accordingly we don&#39;t need to&mdash;and   indeed must not&mdash;add main.cxx to the .pde sketch file. The paths   seem to have changed a bit too.</li>
 +</ul>
 +
-+<h3>2010-05-24, version 0.4</h3>
++<h3>2010-05-24, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz">version 0.4</a><span class="link_list"><sup>9</sup></span></h3>
 +
 +<ul>
-+<li>Tweaked rules for the reset target on Philip Hands&#39; advice. </li>
++<li>Tweaked rules for the reset target on Philip Hands&#39; advice.</li>
 +</ul>
++
++<h3>2011-06-23, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.5.tar.gz">version 0.5</a><span class="link_list"><sup>10</sup></span></h3>
++
++<ul>
++<li>Imported changes from Debian/Ubuntu, which incorporate a patch from   Stefan Tomanek so that libraries would be compiled too.</li>
++</ul>
++
++<p>Note: Many other people sent me similar patches, but I didn&#39;t get around to using them. In the end, I took the patch from Debian and Ubuntu: there seems merit in not forking the code and using a tested version. So, thanks and apologies to Nick Andrew, Leandro Coletto Biazon, Thibaud Chupin, Craig Hollabaugh, Johannes H. Jensen, Fabien Le Lez, Craig Leres, and Mark Sproul.</p>
++
++<h3>2011-06-23, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.6.tar.gz">version 0.6</a><span class="link_list"><sup>11</sup></span></h3>
++
++<ul>
++<li>Added ard-parse-boards. Mark Sproul suggested doing something like   this ages ago, but I&#39;ve only recently looked at it in detail.</li>
++<li>Fabien Le Lez reported that one needs to link with -lc to avoid    <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1290294587">linker errors.</a><span class="link_list"><sup>12</sup></span></li>
++</ul>
++
++<h3>Unreleased, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.7.tar.gz">version 0.7</a><span class="link_list"><sup>13</sup></span></h3>
++
++<ul>
++<li>Added -lm to the linker options, and -F to stty.</li>
++</ul>
++
++<h3>2012-02-12, <a href="http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz">version 0.8</a><span class="link_list"><sup>14</sup></span></h3>
++
++<ul>
++<li>Patches for version 1.0 of the Arduino <span class="caps">IDE.</span> Older versions might   still work, but I&#39;ve not tested it.</li>
++<li>A change to the build process: rather than link all the system   objects directly into the executable, bundle them in a library   first. This should make the final executable smaller.</li>
++<li>If <span class="caps">TARGET </span>isn&#39;t explicitly set, default to the current directory   name. Thanks to Daniele Vergini for this patch.</li>
++<li>Add support for .c files in system libraries: Dirk-Willem van Gulik   and Evan Goldenberg both reported this and provided patches in the   same spirit.</li>
++<li>Added a size target as suggested by Alex Satrapa.</li>
++</ul>
++
++<h2>Similar work</h2>
++
++<p>It&#39;s not a derivative of this, but Alan Burlison has written <a href="http://bleaklow.com/2010/06/04/a_makefile_for_arduino_sketches.html">a similar thing.</a><span class="link_list"><sup>15</sup></span></p>
++
++<p>Alan&#39;s Makefile was used in <a href="http://pragprog.com/magazines/2011-04/advanced-arduino-hacking">a Pragmatic Programmer&#39;s article.</a><span class="link_list"><sup>16</sup></span> </p>
 +        <div id="link_list">
 +          <h2>References</h2>
-+          <ul><li>1. http://www.arduino.cc/</li><li>2. http://www.arduino.cc/en/Hacking/CommandLine</li><li>3. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz</li><li>4. http://hands.com/~phil/</li></ul>
++          <ul><li>1. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz</li><li>2. http://www.arduino.cc/</li><li>3. http://arduino.cc/en/Hacking/HomePage</li><li>4. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz</li><li>5. http://arduino.cc/en/Tutorial/WebServer</li><li>6. http://www.arduino.cc/en/Reference/Ethernet</li><li>7. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.3.tar.gz</li><li>8. http://hands.com/~phil/</li><li>9. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.4.tar.gz</li><li>10. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.5.tar.gz</li><li>11. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.6.tar.gz</li><li>12. http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1290294587</li><li>13. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.7.tar.gz</li><li>14. http://mjo.tc/atelier/2009/02/acli/arduino-mk_0.8.tar.gz</li><li>15. http://bleaklow.com/2010/06/04/a_makefile_for_arduino_sketches.html</li><li>16. http://pragprog.com/magazines/2011-04/advanced-arduino-hacking</li></ul>
 +        </div>      </div>
 +           
 +      <div id="sidebar">
@@ -678,11 +913,11 @@ Index: arduino/mjo/arduino-cli.html
 +          <h3>Related Articles</h3>
 +          <ul>
 +            
-+            <li><a href="../03/aarduino.html">The AArduino</a><br/>Martin Oldfield, 16 Jun 2009</li>
++            <li><a href="../03/aarduino.html">The AArduino</a><br/>Martin Oldfield, 22 Jun 2011</li>
 +            
-+            <li><a href="avrdude-cookbook.html">Avrdude Cookbook</a><br/>Martin Oldfield, 23 Feb 2009</li>
++            <li><a href="olimex-avrdude-mac.html">MacOS X and the Olimex AVR-ISP500</a><br/>Martin Oldfield, 22 Jun 2011</li>
 +            
-+            <li><a href="olimex-avrdude-mac.html">MacOS X and the Olimex AVR-ISP500</a><br/>Martin Oldfield, 17 Feb 2009</li>
++            <li><a href="avrdude-cookbook.html">Avrdude Cookbook</a><br/>Martin Oldfield, 16 Jun 2010</li>
 +            
 +          </ul>
 +        </div>
@@ -708,23 +943,21 @@ Index: arduino/mjo/arduino-cli.html
 +          <h3><a href="../../index/index.html">Other Articles</a></h3>
 +          <ul>
 +            
-+            <li><a href="../../2010/06/arm-toolchain.html">Getting an ARM toolchain on MacOS 10.6</a><br/>Martin Oldfield, 06 Jun 2010</li>
++            <li><a href="../../2008/08/logitech.html">Replacing a Logitech Mouse Button</a><br/>Martin Oldfield, 07 Feb 2012</li>
 +            
-+            <li><a href="../../2010/05/bus-pirate.html">The Bus Pirate on MacOS</a><br/>Martin Oldfield, 26 May 2010</li>
++            <li><a href="../01/london_food.html">Places to eat in London</a><br/>Martin Oldfield, 07 Feb 2012</li>
 +            
-+            <li><a href="../../2010/04/perl-unicode.html">Unicode games with perl, MySQL, and XML</a><br/>Martin Oldfield, 17 Apr 2010</li>
++            <li><a href="../01/paris_food.html">Places to eat in Paris</a><br/>Martin Oldfield, 06 Nov 2011</li>
 +            
-+            <li><a href="../../2010/01/gps-track-filter.html">Filtering GPS tracks</a><br/>Martin Oldfield, 04 Jan 2010</li>
++            <li><a href="../01/paris_drink.html">Places to drink in Paris</a><br/>Martin Oldfield, 06 Nov 2011</li>
 +            
-+            <li><a href="../01/paris_drink.html">Places to drink in Paris</a><br/>Martin Oldfield, 15 Dec 2009</li>
++            <li><a href="../../2011/08/intervalometer.html">An Intervalometer</a><br/>Martin Oldfield, 23 Aug 2011</li>
 +            
-+            <li><a href="../01/paris_food.html">Places to eat in Paris</a><br/>Martin Oldfield, 15 Dec 2009</li>
++            <li><a href="../../2011/08/timelapse.html">Time-lapse photography</a><br/>Martin Oldfield, 13 Aug 2011</li>
 +            
-+            <li><a href="../11/sons-and-daughters.html">Sons and Daughters</a><br/>Martin Oldfield, 06 Dec 2009</li>
++            <li><a href="../../2011/03/xcode4-perl.html">Perl and Xcode 4</a><br/>Martin Oldfield, 22 Jun 2011</li>
 +            
-+            <li><a href="../12/garmin-gpx.html">Faking geocaches in Garmin GPX files</a><br/>Martin Oldfield, 06 Dec 2009</li>
-+            
-+            <li><a href="../08/macos-pic.html">Playing with PICs on MacOS X</a><br/>Martin Oldfield, 18 Aug 2009</li>
++            <li><a href="../../2010/04/perl-unicode.html">Unicode games with perl, MySQL, and XML</a><br/>Martin Oldfield, 22 Jun 2011</li>
 +            
 +            <li>...</li>
 +          </ul>
@@ -732,10 +965,11 @@ Index: arduino/mjo/arduino-cli.html
 +        
 +
 +        
-+        <div class="lastlistcontainer">
-+          <h3>Bookmark this article</h3>
++        <div class="lastlistcontainer">        
++	  <h3>Bookmark this article</h3>
 +        <ul class="social">
-+          
++	  <li><g:plusone count="false"></g:plusone></li>
++	  
 +          <li><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html" title="Facebook"><img src="../../social/facebook.png" alt="[ facebook ]"/></a></li>
 +          
 +          <li><a href="http://del.icio.us/post?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Delicious"><img src="../../social/delicious.png" alt="[ delicious ]"/></a></li>
@@ -747,13 +981,15 @@ Index: arduino/mjo/arduino-cli.html
 +          <li><a href="http://www.stumbleupon.com?url=http%3A%2F%2Fmjo.tc%2Fatelier%2F2009%2F02%2Farduino-cli.html&title=Arduino+from+the+command+line" title="Stumbleupon"><img src="../../social/stumbleupon.png" alt="[ stumbleupon ]"/></a></li>
 +          
 +        </ul>
++
 +        </div>
++
 +        
 +
 +        </div>
 +
 +        <div id="footer">
-+          Revised by Martin Oldfield on 07 Jun 2010, original version 17 Feb 2009.<br/>
++          Revised by Martin Oldfield on 12 Feb 2012, original version 17 Feb 2009.<br/>
 +          Contact: Martin Oldfield, ex-atelier@mjo.tc<br/>
 +          This work is available under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>, or the <a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">LGPL</a> version 2.1 or later.
 +       </div>
@@ -767,6 +1003,13 @@ Index: arduino/mjo/arduino-cli.html
 +    <script type="text/javascript">
 +    _uacct = "UA-567180-1";
 +    urchinTracker();
++    </script>
++    <script type="text/javascript">
++  (function() {
++    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
++    po.src = 'https://apis.google.com/js/plusone.js';
++    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
++  })();
 +    </script>
 +  </body>
 +</html>

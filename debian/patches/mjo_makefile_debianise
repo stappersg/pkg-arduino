@@ -3,9 +3,11 @@ Author: Philip Hands <phil@hands.com>
 Origin: vendor
 Forwarded: not-needed
 
---- arduino-0018+dfsg.orig/mjo/Arduino.mk
-+++ arduino-0018+dfsg/mjo/Arduino.mk
-@@ -40,7 +40,7 @@
+Index: arduino/mjo/Arduino.mk
+===================================================================
+--- arduino.orig/mjo/Arduino.mk	2012-02-12 12:19:53.000000000 -0500
++++ arduino/mjo/Arduino.mk	2012-02-12 17:15:36.725249566 -0500
+@@ -72,7 +72,7 @@
  #
  # For example:
  #
@@ -13,8 +15,8 @@ Forwarded: not-needed
 +#       ARDUINO_DIR  = /usr/share/arduino
  #
  #       TARGET       = CLItest
- #       ARDUINO_LIBS = LiquidCrystal
-@@ -122,11 +122,11 @@
+ #       ARDUINO_LIBS = Ethernet Ethernet/utility SPI
+@@ -186,11 +186,11 @@
  ifneq (ARDUINO_DIR,)
  
  ifndef AVR_TOOLS_PATH

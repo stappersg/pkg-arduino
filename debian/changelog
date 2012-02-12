@@ -1,3 +1,21 @@
+arduino (1:1.0+dfsg-6) unstable; urgency=low
+
+  * New upstream release of mjo makefile (0.8). debian/patches/mjo* updated
+    - Patches for version 1.0 of the Arduino IDE. Older versions might still
+      work, but I've not tested it.
+    - A change to the build process: rather than link all the system objects
+      directly into the executable, bundle them in a library first. This
+      should make the final executable smaller.
+    - If TARGET isn't explicitly set, default to the current directory name.
+      Thanks to Daniele Vergini for this patch.
+    - Add support for .c files in system libraries: Dirk-Willem van Gulik and
+      Evan Goldenberg both reported this and provided patches in the same
+      spirit.
+    - Added a size target as suggested by Alex Satrapa.
+
+
+ -- Scott Howard <showard@debian.org>  Sun, 12 Feb 2012 17:33:27 -0500
+
 arduino (1:1.0+dfsg-5) unstable; urgency=low
 
   * Updated Arduino.mk and arduino-cli.html in arduino-core for

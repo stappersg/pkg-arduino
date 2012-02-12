@@ -3,18 +3,20 @@ Author: Philip Hands <phil@hands.com>
 Origin: vendor
 Forwarded: yes
 
---- a/mjo/Arduino.mk
-+++ b/mjo/Arduino.mk
-@@ -310,7 +310,7 @@
- AVRDUDE_ARD_BAUDRATE   = 19200
+Index: arduino/mjo/Arduino.mk
+===================================================================
+--- arduino.orig/mjo/Arduino.mk	2012-02-12 17:21:11.000000000 -0500
++++ arduino/mjo/Arduino.mk	2012-02-12 17:24:42.229246915 -0500
+@@ -440,7 +440,7 @@
+ AVRDUDE_COM_OPTS += -C $(AVRDUDE_CONF)
  endif
  
 -AVRDUDE_ARD_OPTS = -c $(AVRDUDE_ARD_PROGRAMMER) -b $(AVRDUDE_ARD_BAUDRATE) -P $(ARD_PORT)
 +AVRDUDE_ARD_OPTS = -c $(AVRDUDE_ARD_PROGRAMMER) -b $(AVRDUDE_ARD_BAUDRATE) -P $(ARD_PORT) $(AVRDUDE_ARD_EXTRAOPTS)
  
- ifndef ISP_LOCK_FUSE_PRE
- ISP_LOCK_FUSE_PRE  = 0x3f
-@@ -361,15 +361,15 @@
+ ifndef ISP_PROG
+ ISP_PROG	   = -c stk500v2
+@@ -474,15 +474,15 @@
  		$(AVRDUDE) $(AVRDUDE_COM_OPTS) $(AVRDUDE_ARD_OPTS) \
  			-U flash:w:$(TARGET_HEX):i
  
@@ -23,7 +25,7 @@ Forwarded: yes
  # stdin/out appears to work but generates a spurious error on MacOS at
  # least. Perhaps it would be better to just do it in perl ?
  reset:		
- 		for STTYF in 'stty --file' 'stty -f' 'stty <' ; \
+ 		for STTYF in 'stty -F' 'stty --file' 'stty -f' 'stty <' ; \
 -		  do $$STTYF /dev/tty >/dev/null 2>/dev/null && break ; \
 -		done ;\
 -		$$STTYF $(ARD_PORT)  hupcl ;\
