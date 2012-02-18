@@ -1,3 +1,4 @@
 build/linux/work/hardware/ usr/share/arduino
 mjo/Arduino.mk usr/share/arduino
+mjo/ard-parse-boards usr/share/arduino
 build/linux/work/libraries/ build/linux/work/tools/		usr/share/arduino

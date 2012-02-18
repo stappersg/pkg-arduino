@@ -40,6 +40,7 @@ override_dh_install:
 	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh
 	mkdir -p debian/arduino-core/usr/share/arduino/lib
 	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
+	chmod +x debian/arduino-core/usr/share/arduino/ard-parse-boards
 
 override_jh_depends:
 #jh_depends can't resolve symlinks
