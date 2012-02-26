@@ -1,3 +1,0 @@
-#This file is included as a reference for the user on how to use/make bootloaders
-arduino-core: script-not-executable usr/share/arduino/hardware/arduino/bootloaders/optiboot/makeall
-

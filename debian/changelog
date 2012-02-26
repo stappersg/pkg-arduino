@@ -1,3 +1,10 @@
+arduino (1:1.0+dfsg-8) UNRELEASED; urgency=low
+
+  * Made the bootloader makefile script executable, no need for lintian
+    overrides any more (arduino/hardware/arduino/bootloaders/optboot/makeall)
+
+ -- Scott Howard <showard@debian.org>  Sun, 26 Feb 2012 10:01:03 -0500
+
 arduino (1:1.0+dfsg-7) unstable; urgency=low
 
   * arduino-core depends on libconfig-yaml-perl. Ship mjo/ard-parse-boards
