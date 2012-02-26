@@ -1,4 +1,4 @@
-Format-Specification: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Arduino
 Upstream-Contact: Arduino Developers <developers@arduino.cc>
 Source: www.arduino.cc
@@ -66,7 +66,7 @@ Files: libraries/Matrix/*
 Copyright: 2006, Nicholas Zambetti
 License: LGPL-2.1
 
-Files: libraries/EEPROM/*, libraries/Sprite/*
+Files: libraries/EEPROM/* libraries/Sprite/*
 Copyright: 2006, David A. Mellis
 License: LGPL-2.1
 
@@ -101,7 +101,7 @@ License: LGPL-2.1
  A copy of the license is available on Debian systems at
  /usr/share/common-licenses/LGPL-2.1
 
-Files: src/processing/app/debug/EventThread.java,
+Files: src/processing/app/debug/EventThread.java
        src/processing/app/debug/StreamRedirectThread.java
 Copyright: 1997-2003, Sun Microsystems, Inc.
 License: other
@@ -135,7 +135,7 @@ Copyright: 2010, Scott Howard <showard314@gmail.com>
            2009, Arduino Ubuntu Team <arduino-ubuntu-team@lists.launchpad.net>
 License: GPL-2+
 
-Files: debian/icons/*, debian/dist/*, debian/arduino.sharedmimeinfo
+Files: debian/icons/* debian/dist/* debian/arduino.sharedmimeinfo
 Copyright: 2010, Peter Oliver <https://github.com/mavit/Arduino>
 License: GPL-2+
 
@@ -143,7 +143,7 @@ Files: tools/Mangler/src/*
 Copyright: 2008 Ben Fry and Casey Reas
 License: GPL-2+
 
-Files: app/src/processing/app/*, app/src/processing/app/syntax/PdeKeywords.java
+Files: app/src/processing/app/* app/src/processing/app/syntax/PdeKeywords.java
        app/src/processing/app/syntax/PdeTextAreaDefaults.java
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
@@ -244,7 +244,8 @@ License: MIT
  THE SOFTWARE.
 
 Files: reference/*
-Copyright: PD
+Copyright: 2009-2012 Arduino Team
+License: CC-BY-SA-3.0
 
 Files: hardware/arduino/bootloaders/diskloader/src/USB*
 Copyright: 2010 Peter Barret
@@ -289,6 +290,34 @@ Copyright: 2005, David Cuartielles
            2006, David A. Mellis
            2009, Limor Fried
 License: CC-BY-SA-3.0
+
+Files: hardware/arduino/bootloaders/optiboot/boot.h
+Copyright: 2002-2007 Eric B. Weddington
+License: BSD
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+ .
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+   * Neither the name of the copyright holders nor the names of
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+ .
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
 
 Files: examples/Sensors/*
 Copyright: 2008, David Mellis
@@ -645,31 +674,3 @@ License: CC-BY-SA-3.0
  not granted under this License, such additional rights are deemed
  to  be  included  in the License; this License is not intended to
  restrict the license of any rights under applicable law.
-
-Files: hardware/arduino/bootloaders/optiboot/boot.h
-Copyright: 2002-2007  Eric B. Weddington
-License: BSD
-   Redistribution and use in source and binary forms, with or without
-   modification, are permitted provided that the following conditions are met:
- .
-   * Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright
-     notice, this list of conditions and the following disclaimer in
-     the documentation and/or other materials provided with the
-     distribution.
-   * Neither the name of the copyright holders nor the names of
-     contributors may be used to endorse or promote products derived
-     from this software without specific prior written permission.
- .
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-  POSSIBILITY OF SUCH DAMAGE.
