@@ -5,7 +5,7 @@ Maintainer: Scott Howard <showard@debian.org>
 Uploaders: Philip Hands <phil@hands.com>
 Build-Depends: debhelper (>= 8), javahelper, default-jdk,
  librxtx-java (>= 2.2pre2-3), libjna-java, ant
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://www.arduino.cc
 Vcs-Git: git://git.debian.org/collab-maint/arduino.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
@@ -30,11 +30,12 @@ Description: AVR development board IDE and built-in libraries
 
 Package: arduino-core
 Architecture: all
-Depends: ${misc:Depends}, gcc-avr, avrdude, gcc, avr-libc, libconfig-yaml-perl
-Description: Minimal (java-free) tool to interact with an Arduino
+Depends: ${misc:Depends}, gcc-avr, avrdude, gcc, avr-libc
+Suggests: arduino-mk
+Description: Code, examples, and libraries for the Arduino platform
  Arduino is an open hardware microcontroller platform.  This package contains
  the minimal set of tools to allow one to program an Arduino.  It also contains
- some examples, and a quick intro in the package's README.Debian.
+ examples and libraries. For a CLI, see the 'arduino-mk' package.
  .
  This package does not include the Java based Integrated Development
  Environment, which can be found in the 'arduino' package.

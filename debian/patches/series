@@ -2,8 +2,5 @@ ethernet_lib.patch
 remove_update_warning.patch
 install_jar_links.patch
 wrapper_for_deb.patch
-mjo_makefile
-mjo_makefile_debianise
-mjo_makefile_tweaks
 remove_copying_binaries.patch
 permission_fix.patch

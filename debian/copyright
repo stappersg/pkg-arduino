@@ -1,8 +1,7 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: Arduino
-Maintainer: Arduino Developers <developers@arduino.cc>
-Source: svn branch at http://arduino.googlecode.com/svn/
- and .tgz from www.arduino.cc
+Format-Specification: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Arduino
+Upstream-Contact: Arduino Developers <developers@arduino.cc>
+Source: www.arduino.cc
 
 Files: core/src/processing/xml
 Copyright: 2000-2002, Marc De Scheemaecker

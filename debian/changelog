@@ -2,8 +2,11 @@ arduino (1:1.0+dfsg-8) UNRELEASED; urgency=low
 
   * Made the bootloader makefile script executable, no need for lintian
     overrides any more (arduino/hardware/arduino/bootloaders/optboot/makeall)
+  * Removed all mjo makefile patches from package. Arduino-mk is now
+    suggested by arduino-core.
+  * Debian S-R 3.9.3 no changes
 
- -- Scott Howard <showard@debian.org>  Sun, 26 Feb 2012 10:01:03 -0500
+ -- Scott Howard <showard@debian.org>  Sun, 26 Feb 2012 10:48:10 -0500
 
 arduino (1:1.0+dfsg-7) unstable; urgency=low
 
