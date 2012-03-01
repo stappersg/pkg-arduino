@@ -1,3 +1,10 @@
+arduino (1:1.0+dfsg-9) unstable; urgency=low
+
+  * *.pde has been renamed *.ino by upstream. debian/rules changed
+    to not compress *.ino
+
+ -- Scott Howard <showard@debian.org>  Thu, 01 Mar 2012 15:58:45 -0500
+
 arduino (1:1.0+dfsg-8) unstable; urgency=low
 
   * Made the bootloader makefile script executable, no need for lintian
