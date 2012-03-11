@@ -1,4 +1,3 @@
-ethernet_lib.patch
 remove_update_warning.patch
 install_jar_links.patch
 wrapper_for_deb.patch

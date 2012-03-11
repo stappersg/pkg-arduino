@@ -4,30 +4,30 @@ Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603818
 
 Index: arduino/app/src/processing/app/UpdateCheck.java
 ===================================================================
---- arduino.orig/app/src/processing/app/UpdateCheck.java	2010-11-20 10:39:43.205429039 -0500
-+++ arduino/app/src/processing/app/UpdateCheck.java	2010-11-20 10:42:31.807145245 -0500
-@@ -97,27 +97,6 @@
+--- arduino.orig/app/src/processing/app/UpdateCheck.java	2012-03-11 19:09:34.000000000 -0400
++++ arduino/app/src/processing/app/UpdateCheck.java	2012-03-11 19:14:55.381231127 -0400
+@@ -98,27 +98,6 @@
          }
        }
        Preferences.set("update.last", String.valueOf(now));
 -
 -      String prompt =
--        "A new version of Arduino is available,\n" +
--        "would you like to visit the Arduino download page?";
+-        _("A new version of Arduino is available,\n" +
+-          "would you like to visit the Arduino download page?");
 -        
 -      if (base.activeEditor != null) {
 -        if (latest > Base.REVISION) {
--          Object[] options = { "Yes", "No" };
+-          Object[] options = { _("Yes"), _("No") };
 -          int result = JOptionPane.showOptionDialog(base.activeEditor,
 -                                                    prompt,
--                                                    "Update",
+-                                                    _("Update"),
 -                                                    JOptionPane.YES_NO_OPTION,
 -                                                    JOptionPane.QUESTION_MESSAGE,
 -                                                    null,
 -                                                    options,
 -                                                    options[0]);
 -          if (result == JOptionPane.YES_OPTION) {
--            Base.openURL("http://www.arduino.cc/en/Main/Software");
+-            Base.openURL(_("http://www.arduino.cc/en/Main/Software"));
 -          }
 -        }
 -      }
