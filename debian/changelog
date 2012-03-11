@@ -1,3 +1,9 @@
+arduino (1:1.0.1~rc1+dfsg-1) experimental; urgency=low
+
+  * New upstream release, experimental.
+
+ -- Scott Howard <showard@debian.org>  Sun, 11 Mar 2012 18:19:42 -0400
+
 arduino (1:1.0+dfsg-9) unstable; urgency=low
 
   * *.pde has been renamed *.ino by upstream. debian/rules changed

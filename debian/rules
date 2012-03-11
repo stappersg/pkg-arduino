@@ -51,20 +51,15 @@ DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
 get-orig-source:
-	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz
-	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz
-	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/
+	#wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz UNCOMMENT after RC
+	wget http://files.arduino.cc/downloads/arduino-1.0.1-rc1-src.tar.gz #DELETE after RC
+	mv arduino-1.0.1-rc1-src.tar.gz arduino-1.0.1~rc1-src.tar.gz #DELETE after RC
+	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz;\
+	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/;\
+	mv debian/arduino-1.0.1-rc1 debian/arduino-1.0.1~rc1 #DELETE after RC
 	#remove junk
 	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore | xargs -n1 rm -f;\
-	#find $(DESTDIR) -type d -empty -delete;\
-	#find $(DESTDIR) -type d -iname macosx -or -iname windows | xargs -n1 rm -fr;\
-	#rm -f $(DESTDIR)/src/processing/app/preproc/.cvsignore;\
-	#rm -rf $(DESTDIR)/build/linux/dist/lib;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
-	#rm -f $(DESTDIR)/.project;\
-	#rm -fr $(DESTDIR)/.[a-z]*;\
-	#rm -fr $(DESTDIR)/app/.[a-z]*;\
-	#rm -fr $(DESTDIR)/hardware/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
 	
