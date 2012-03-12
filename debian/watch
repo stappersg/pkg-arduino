@@ -2,5 +2,4 @@ version=3
 opts=\
 dversionmangle=s/.dfsg//,\
 uversionmangle=s/00/0\./ \
-http://googlecode.debian.net/p/arduino/arduino-([\d\.]*)-src\.tar\.gz debian jh_repack
-
+http://code.google.com/p/arduino/downloads/list?can=1 .*/arduino-(\d[\d\.]*)-src\.(?:zip|tgz|tbz2|txz|tar\.gz|tar\.bz2|tar\.xz)
