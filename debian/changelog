@@ -1,9 +1,9 @@
-arduino (1:1.0.1~rc2+dfsg-1) UNRELEASED; urgency=low
+arduino (1:1.0.1~rc2+dfsg-1) experimental; urgency=low
 
   * Updated watch file, remove compressed avrtools that upstream added
-  * Bumped to rc2
+  * New upstream release.
 
- -- Scott Howard <showard@debian.org>  Wed, 11 Apr 2012 23:11:42 -0400
+ -- Scott Howard <showard@debian.org>  Wed, 11 Apr 2012 23:21:24 -0400
 
 arduino (1:1.0.1~rc1+dfsg-1) experimental; urgency=low
 
