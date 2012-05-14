@@ -2,8 +2,9 @@ arduino (1:1.0.1~rc2+dfsg-2) experimental; urgency=low
 
   * Allow for opening file from command line or file manager
     e.g. "$ arduino {filename}.ino" (LP: #998952)
+  * Properly detect groups assigned by PAM (Closes: #669058)
 
- -- Scott Howard <showard@debian.org>  Mon, 14 May 2012 00:01:40 -0400
+ -- Scott Howard <showard@debian.org>  Mon, 14 May 2012 00:05:04 -0400
 
 arduino (1:1.0.1~rc2+dfsg-1) experimental; urgency=low
 
