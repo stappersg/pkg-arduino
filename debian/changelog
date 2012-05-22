@@ -1,3 +1,9 @@
+arduino (1:1.0.1+dfsg-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Scott Howard <showard@debian.org>  Tue, 22 May 2012 09:26:04 -0400
+
 arduino (1:1.0.1~rc2+dfsg-2) experimental; urgency=low
 
   * Allow for opening file from command line or file manager

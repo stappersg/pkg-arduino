@@ -51,12 +51,12 @@ DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
 get-orig-source:
-	#wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz UNCOMMENT after RC
-	wget http://files.arduino.cc/downloads/arduino-1.0.1-rc2-src.tar.gz #DELETE after RC
-	mv arduino-1.0.1-rc2-src.tar.gz arduino-1.0.1~rc2-src.tar.gz #DELETE after RC
+	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz
+	#wget http://files.arduino.cc/downloads/arduino-1.0.1-rc2-src.tar.gz #used for RC
+	#mv arduino-1.0.1-rc2-src.tar.gz arduino-1.0.1~rc2-src.tar.gz #used for RC
 	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz;\
 	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/;\
-	mv debian/arduino-1.0.1-rc2 debian/arduino-1.0.1~rc2 #DELETE after RC
+	#mv debian/arduino-1.0.1-rc2 debian/arduino-1.0.1~rc2 #used for RC
 	#remove junk
 	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore -or -iname *.bz2 | xargs -n1 rm -f;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
