@@ -1,3 +1,11 @@
+arduino (1:1.0.1+dfsg-2) unstable; urgency=low
+
+  * debian/patches/SimpleDateFormat_fix.diff
+    - Arduino would fail to launch if date strings were improperly
+      translated. (Closes: #674415)
+
+ -- Scott Howard <showard@debian.org>  Sun, 03 Jun 2012 16:35:24 -0400
+
 arduino (1:1.0.1+dfsg-1) unstable; urgency=low
 
   * New upstream release.

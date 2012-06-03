@@ -1,0 +1,21 @@
+Description: The yyMMdd string that the sketch archiver tool uses to format archive
+ names was being localized (i.e. was wrapped in _()).  This gave an
+ error on startup (and the Arduino software would fail to launch), if
+ someone translated the string to something that wasn't a valid date
+ format.  Since this is an internal string, it shouldn't be translated.
+Bug: http://code.google.com/p/arduino/issues/detail?id=942
+Author: David Mellis <d.mellis@arduino.cc>
+
+Index: arduino/app/src/processing/app/tools/Archiver.java
+===================================================================
+--- arduino.orig/app/src/processing/app/tools/Archiver.java	2012-06-03 16:34:30.051340157 -0400
++++ arduino/app/src/processing/app/tools/Archiver.java	2012-06-03 16:34:39.295340377 -0400
+@@ -56,7 +56,7 @@
+     numberFormat.setGroupingUsed(false); // no commas
+     numberFormat.setMinimumIntegerDigits(digits);
+ 
+-    dateFormat = new SimpleDateFormat(_("yyMMdd"));
++    dateFormat = new SimpleDateFormat("yyMMdd");
+   }
+ 
+ 
