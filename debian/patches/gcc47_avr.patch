@@ -1,3 +1,7 @@
+Description: patch to work with libc 1.8.0 and gcc 4.7
+Bug: http://andybrown.me.uk/wk/2012/04/28/avr-gcc-4-7-0-and-avr-libc-1-8-0-compiled-for-windows/
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=677294
+Author: Andy Brown <http://andybrown.me.uk/wk/>
 Index: arduino/hardware/arduino/cores/arduino/HardwareSerial.cpp
 ===================================================================
 --- arduino.orig/hardware/arduino/cores/arduino/HardwareSerial.cpp	2012-06-13 10:24:21.671004938 -0400
