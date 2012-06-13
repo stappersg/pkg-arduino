@@ -43,7 +43,7 @@ public class arduinopc extends JFrame {
 
         //JLabel label = new JLabel("<html>You need to be a member of the \"dailout\"<br>group to upload code to an Arduino<br>microcontroller over the USB or<br>serial ports.<br></html>");
 	//label.setBounds(10,10,300,100);
-        panel.add(new JLabel("<html>You need to be added to the \"dailout\"<br>group to upload code to an Arduino<br>microcontroller over the USB or<br>serial ports.<br><br>You must log out and log in again<br>before any group changes<br>will take effect.</html>", JLabel.CENTER));
+        panel.add(new JLabel("<html>You need to be added to the \"dialout\"<br>group to upload code to an Arduino<br>microcontroller over the USB or<br>serial ports.<br><br>Click \"Add\" below to be added.<br><br>You must log out and log in again<br>before any group changes<br>will take effect.</html>", JLabel.CENTER));
         //label.setFont(new Font("Georgia", Font.PLAIN, 14));
        //label.setForeground(new Color(50, 50, 25));
 //label.setOpaque(true);
@@ -56,7 +56,7 @@ public class arduinopc extends JFrame {
 
 
        setTitle("Arduino Permission Checker");
-       setSize(300, 200);
+       setSize(300, 250);
        setLocationRelativeTo(null);
        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
