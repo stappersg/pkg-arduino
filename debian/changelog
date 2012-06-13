@@ -2,8 +2,9 @@ arduino (1:1.0.1+dfsg-3) unstable; urgency=low
 
   * Fixed spelling error in pop-up window that adds users to dialout
     group. Clarified that clicking "Add" will add you to the group.
+    (Closes: #677376)
 
- -- Scott Howard <showard@debian.org>  Wed, 13 Jun 2012 09:25:29 -0400
+ -- Scott Howard <showard@debian.org>  Wed, 13 Jun 2012 10:13:56 -0400
 
 arduino (1:1.0.1+dfsg-2) unstable; urgency=low
 
