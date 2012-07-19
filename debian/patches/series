@@ -5,3 +5,4 @@ remove_copying_binaries.patch
 permission_fix.patch
 SimpleDateFormat_fix.diff
 gcc47_avr.patch
+fr_fix.diff

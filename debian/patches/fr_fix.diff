@@ -1,0 +1,17 @@
+Description: In french language, on Édition (Edit) menu, it appears Coller (Paste) instead of Copier (Copy).
+Bug-Debian: bugs.debian.org/682079
+Applied-Upstream: https://github.com/arduino/IDE_translations/commit/ab5041d740d07b644afded299f196ff76fb70cfd
+
+Index: arduino/app/src/processing/app/Resources_fr.po
+===================================================================
+--- arduino.orig/app/src/processing/app/Resources_fr.po	2012-07-19 13:46:18.377380493 -0400
++++ arduino/app/src/processing/app/Resources_fr.po	2012-07-19 13:49:59.481385748 -0400
+@@ -216,7 +216,7 @@
+ 
+ #: Editor.java:1143 Editor.java:2660
+ msgid "Copy"
+-msgstr "Coller"
++msgstr "Copier"
+ 
+ #: Editor.java:1151 Editor.java:2668
+ msgid "Copy for Forum"

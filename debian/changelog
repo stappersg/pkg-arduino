@@ -1,3 +1,9 @@
+arduino (1:1.0.1+dfsg-4) unstable; urgency=low
+
+  * Fixed French translation of "Copy" in "Edit" menu (Closes: #682079)
+
+ -- Scott Howard <showard@debian.org>  Thu, 19 Jul 2012 13:51:07 -0400
+
 arduino (1:1.0.1+dfsg-3) unstable; urgency=low
 
   * Fixed spelling error in pop-up window that adds users to dialout
