@@ -1,3 +1,10 @@
+arduino (1:1.0.1+dfsg-5) unstable; urgency=low
+
+  * Updated Resources_fr.propertues to fix French transtaion of Copy
+    in Edit menu (Closes: #682079)
+
+ -- Scott Howard <showard@debian.org>  Mon, 30 Jul 2012 11:04:58 -0400
+
 arduino (1:1.0.1+dfsg-4) unstable; urgency=low
 
   * Fixed French translation of "Copy" in "Edit" menu (Closes: #682079)

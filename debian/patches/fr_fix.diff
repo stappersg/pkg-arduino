@@ -4,8 +4,8 @@ Applied-Upstream: https://github.com/arduino/IDE_translations/commit/ab5041d740d
 
 Index: arduino/app/src/processing/app/Resources_fr.po
 ===================================================================
---- arduino.orig/app/src/processing/app/Resources_fr.po	2012-07-19 13:46:18.377380493 -0400
-+++ arduino/app/src/processing/app/Resources_fr.po	2012-07-19 13:49:59.481385748 -0400
+--- arduino.orig/app/src/processing/app/Resources_fr.po	2012-07-30 11:01:09.695499167 -0400
++++ arduino/app/src/processing/app/Resources_fr.po	2012-07-30 11:01:39.831498549 -0400
 @@ -216,7 +216,7 @@
  
  #: Editor.java:1143 Editor.java:2660
@@ -15,3 +15,16 @@ Index: arduino/app/src/processing/app/Resources_fr.po
  
  #: Editor.java:1151 Editor.java:2668
  msgid "Copy for Forum"
+Index: arduino/app/src/processing/app/Resources_fr.properties
+===================================================================
+--- arduino.orig/app/src/processing/app/Resources_fr.properties	2012-07-30 11:01:09.695499167 -0400
++++ arduino/app/src/processing/app/Resources_fr.properties	2012-07-30 11:02:51.059497090 -0400
+@@ -158,7 +158,7 @@
+ Cut=Couper
+ 
+ #: Editor.java:1143 Editor.java:2660
+-Copy=Coller
++Copy=Copier
+ 
+ #: Editor.java:1151 Editor.java:2668
+ Copy\ for\ Forum=Copier pour le forum
