@@ -1,9 +1,9 @@
-arduino (1:1.0.1+dfsg-6) UNRELEASED; urgency=low
+arduino (1:1.0.1+dfsg-6) unstable; urgency=low
 
   * Fixes gcc 4.7 related build failure of Ethernet library
     (Closes: #684748)
 
- -- Scott Howard <showard@debian.org>  Sun, 19 Aug 2012 15:39:29 -0400
+ -- Scott Howard <showard@debian.org>  Fri, 24 Aug 2012 09:29:34 -0400
 
 arduino (1:1.0.1+dfsg-5) unstable; urgency=low
 
