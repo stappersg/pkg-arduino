@@ -1,3 +1,11 @@
+arduino (1:1.0.1+dfsg-7) unstable; urgency=low
+
+  * Fixed another gcc 4.7 related bug in Ethernet library due to IPAddress
+    pointing to either a uint8_t or unint32_t IP address (Closes: #689325)
+    Thanks to Francesco Apollonio
+
+ -- Scott Howard <showard@debian.org>  Tue, 02 Oct 2012 15:19:56 -0400
+
 arduino (1:1.0.1+dfsg-6) unstable; urgency=low
 
   * Fixes gcc 4.7 related build failure of Ethernet library
