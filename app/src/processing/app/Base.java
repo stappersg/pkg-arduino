@@ -42,9 +42,9 @@ import static processing.app.I18n._;
  * files and images, etc) that comes from that.
  */
 public class Base {
-  public static final int REVISION = 101;
+  public static final int REVISION = 102;
   /** This might be replaced by main() if there's a lib/version.txt file. */
-  static String VERSION_NAME = "0101";
+  static String VERSION_NAME = "0102";
   /** Set true if this a proper release rather than a numbered revision. */
   static public boolean RELEASE = false;
 
@@ -1568,7 +1568,19 @@ public class Base {
 
 
   static public File getSketchbookLibrariesFolder() {
-    return new File(getSketchbookFolder(), "libraries");
+    File libdir = new File(getSketchbookFolder(), "libraries");
+    if (!libdir.exists()) {
+      try {
+        libdir.mkdirs();
+        File readme = new File(libdir, "readme.txt");
+        FileWriter freadme = new FileWriter(readme);
+        freadme.write(_("For information on installing libraries, see: " +
+                        "http://arduino.cc/en/Guide/Libraries\n"));
+        freadme.close();
+      } catch (Exception e) {
+      }
+    }
+    return libdir;
   }
 
 
