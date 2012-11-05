@@ -1,3 +1,9 @@
+arduino (1:1.0.2+dfsg-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Scott Howard <showard@debian.org>  Mon, 05 Nov 2012 13:53:48 -0500
+
 arduino (1:1.0.1+dfsg-7) unstable; urgency=low
 
   * Fixed another gcc 4.7 related bug in Ethernet library due to IPAddress
