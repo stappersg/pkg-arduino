@@ -35,6 +35,10 @@ Copyright: 2004-09, Ben Fry and Casey Reas
            2008, Dan Shiffman
 License: LGPL-2.1
 
+Files: libraries/* hardware/*
+Copyright: 2009-2012 Arduino
+License: LGPL-2.1
+
 Files: libraries/SoftwareSerial/*
 Copyright: 2006, David A. Mellis
 License: LGPL-2.1
@@ -42,6 +46,10 @@ License: LGPL-2.1
 Files: libraries/Servo/*
 Copyright: 2009, Michael Margolis
 License: LGPL-2.1
+
+Files: libraries/SPI/*
+Copyright: 2010 by Cristian Maglie <c.maglie@bug.st>
+License: LGPL-2.1 or GPL-2
 
 Files: libraries/Wire/*
 Copyright: 2006, Nicholas Zambetti
@@ -78,13 +86,6 @@ License: LGPL-2.1
 
 Files: lib/*
 Copyright: 2009, Arduino Developers
-License: LGPL-2.1
-
-Files: mjo/*
-Copyright: 2010, Martin Oldfield <m@mjo.tc>
-           2006, Nicholas Zambetti
-           2005-08, David A. Mellis
-           2004-05, Hernando Barragan
 License: LGPL-2.1
 
 License: LGPL-2.1
@@ -197,6 +198,11 @@ License: GPL-2+
  .
  A copy of the license is available on Debian systems at
  /usr/share/common-licenses/GPL-2
+
+
+Files: libraries/SD/*.h libraries/SD/*.c
+Copyright: 2010 SparkFun Electronics
+License: GPL-3
 
 Files: libraries/SD/utility/*
 Copyright: 2009 by William Greiman

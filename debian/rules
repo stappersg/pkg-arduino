@@ -20,7 +20,9 @@ override_dh_clean:
 
 override_jh_build:
 	jh_linkjars
-	mkdir -p build/linux/work/hardware/tools	
+	mkdir -p build/linux/work/hardware/tools
+	#remove unneeded macosx support
+	rm -rf app/src/processing/app/macosx
 	cd core/methods && ant
 	cd build && ant
 	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
