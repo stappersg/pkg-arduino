@@ -1,6 +1,9 @@
 arduino (1:1.0.2+dfsg-1) UNRELEASED; urgency=low
 
   * New upstream release
+    - No wifishield firmware inluded in Debian: pre-compiled avr32 binaries
+      with no sane build system. For source code and binaries, see the 
+      wifishield repo on github
   * refreshed patches:
     - debian/patches/SimpleDateFormat_fix.diff deleted, applied upstream
     - debian/patches/gcc47_avr.patch updated, partially applied upstream

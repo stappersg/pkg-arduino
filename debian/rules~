@@ -60,8 +60,7 @@ get-orig-source:
 	#remove junk
 	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore -or -iname *.bz2 | xargs -n1 rm -f;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
-	#precompiled avr32 binaries, no sane build system
-	rm -rf $(DESTDIR)/hardware/arduino/firmwares/wifishield;\
+	rm -rf $(DESTDIR)hardware/arduino/firmwares/wifishield;\ #precompiled avr32 binaries, no sane build system
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
 	
