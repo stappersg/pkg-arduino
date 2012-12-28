@@ -27,68 +27,73 @@ License: ZLIB
 Files: core/src/processing/core/*
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: core/src/processing/core/PVector.java
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
            2008, Dan Shiffman
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/* hardware/*
-Copyright: 2009-2012 Arduino
-License: LGPL-2.1
+Copyright: 2009-2012, Arduino (TM)
+License: LGPL-2.1+
+
+Files: build/shared/examples/*
+Copyright: 2009-2012, Arduino(TM)
+License: public-domain
+ This example code is in the public domain.
 
 Files: libraries/SoftwareSerial/*
 Copyright: 2006, David A. Mellis
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/Servo/*
 Copyright: 2009, Michael Margolis
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/SPI/*
 Copyright: 2010 by Cristian Maglie <c.maglie@bug.st>
-License: LGPL-2.1 GPL-2
+License: LGPL-2.1+ or GPL-2
 
 Files: libraries/Wire/*
 Copyright: 2006, Nicholas Zambetti
            2006, James Tichenor
            2006, Shawn Bonkowski
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/Firmata/*
 Copyright: 2006-08, Hans-Christoph Steiner
            2009, Jeff Hoefs
            2009, Shigeru Kobayashi
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/Stepper/*
 Copyright: Tom Igoe
            Sebastian Gassner
            David A. Mellis
            Noah Shibley
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/Matrix/*
 Copyright: 2006, Nicholas Zambetti
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: libraries/EEPROM/* libraries/Sprite/*
 Copyright: 2006, David A. Mellis
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: hardware/arduino/cores/arduino/*
 Copyright: 2006, Nicholas Zambetti
            2005-08, David A. Mellis
            2004-05, Hernando Barragan
-License: LGPL-2.1
+License: LGPL-2.1+
 
 Files: lib/*
 Copyright: 2009, Arduino Developers
-License: LGPL-2.1
+License: LGPL-2.1+
 
-License: LGPL-2.1
+License: LGPL-2.1+
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either

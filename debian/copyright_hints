@@ -32,294 +32,6 @@ Files: app/.classpath
  build/create_reference.pl
  build/fetch.sh
  build/howto.txt
- build/javadoc/core/allclasses-frame.html
- build/javadoc/core/allclasses-noframe.html
- build/javadoc/core/constant-values.html
- build/javadoc/core/deprecated-list.html
- build/javadoc/core/help-doc.html
- build/javadoc/core/index-all.html
- build/javadoc/core/index.html
- build/javadoc/core/overview-frame.html
- build/javadoc/core/overview-summary.html
- build/javadoc/core/overview-tree.html
- build/javadoc/core/package-list
- build/javadoc/core/processing/core/PApplet.RegisteredMethods.html
- build/javadoc/core/processing/core/PApplet.RendererChangeException.html
- build/javadoc/core/processing/core/PApplet.html
- build/javadoc/core/processing/core/PConstants.html
- build/javadoc/core/processing/core/PFont.html
- build/javadoc/core/processing/core/PGraphics.html
- build/javadoc/core/processing/core/PGraphics2D.html
- build/javadoc/core/processing/core/PGraphics3D.html
- build/javadoc/core/processing/core/PGraphicsJava2D.html
- build/javadoc/core/processing/core/PImage.html
- build/javadoc/core/processing/core/PLine.html
- build/javadoc/core/processing/core/PMaterial.html
- build/javadoc/core/processing/core/PMatrix.html
- build/javadoc/core/processing/core/PMatrix2D.html
- build/javadoc/core/processing/core/PMatrix3D.html
- build/javadoc/core/processing/core/PPolygon.html
- build/javadoc/core/processing/core/PShape.html
- build/javadoc/core/processing/core/PShapeSVG.html
- build/javadoc/core/processing/core/PSmoothTriangle.html
- build/javadoc/core/processing/core/PStyle.html
- build/javadoc/core/processing/core/PTriangle.html
- build/javadoc/core/processing/core/PVector.html
- build/javadoc/core/processing/core/package-frame.html
- build/javadoc/core/processing/core/package-summary.html
- build/javadoc/core/processing/core/package-tree.html
- build/javadoc/core/processing/xml/StdXMLBuilder.html
- build/javadoc/core/processing/xml/StdXMLParser.html
- build/javadoc/core/processing/xml/StdXMLReader.html
- build/javadoc/core/processing/xml/XMLElement.html
- build/javadoc/core/processing/xml/XMLEntityResolver.html
- build/javadoc/core/processing/xml/XMLException.html
- build/javadoc/core/processing/xml/XMLParseException.html
- build/javadoc/core/processing/xml/XMLValidationException.html
- build/javadoc/core/processing/xml/XMLValidator.html
- build/javadoc/core/processing/xml/XMLWriter.html
- build/javadoc/core/processing/xml/package-frame.html
- build/javadoc/core/processing/xml/package-summary.html
- build/javadoc/core/processing/xml/package-tree.html
- build/javadoc/core/resources/inherit.gif
- build/javadoc/core/serialized-form.html
- build/javadoc/core/stylesheet.css
- build/javadoc/everything/allclasses-frame.html
- build/javadoc/everything/allclasses-noframe.html
- build/javadoc/everything/antlr/ExtendedCommonASTWithHiddenTokens.html
- build/javadoc/everything/antlr/TokenStreamCopyingHiddenTokenFilter.html
- build/javadoc/everything/antlr/java/JavaLexer.html
- build/javadoc/everything/antlr/java/JavaTokenTypes.html
- build/javadoc/everything/antlr/java/package-frame.html
- build/javadoc/everything/antlr/java/package-summary.html
- build/javadoc/everything/antlr/java/package-tree.html
- build/javadoc/everything/antlr/package-frame.html
- build/javadoc/everything/antlr/package-summary.html
- build/javadoc/everything/antlr/package-tree.html
- build/javadoc/everything/constant-values.html
- build/javadoc/everything/deprecated-list.html
- build/javadoc/everything/help-doc.html
- build/javadoc/everything/index-all.html
- build/javadoc/everything/index.html
- build/javadoc/everything/overview-frame.html
- build/javadoc/everything/overview-summary.html
- build/javadoc/everything/overview-tree.html
- build/javadoc/everything/package-list
- build/javadoc/everything/processing/app/Base.html
- build/javadoc/everything/processing/app/Commander.html
- build/javadoc/everything/processing/app/Editor.html
- build/javadoc/everything/processing/app/EditorConsole.html
- build/javadoc/everything/processing/app/EditorHeader.html
- build/javadoc/everything/processing/app/EditorLineStatus.html
- build/javadoc/everything/processing/app/EditorListener.html
- build/javadoc/everything/processing/app/EditorStatus.html
- build/javadoc/everything/processing/app/EditorToolbar.html
- build/javadoc/everything/processing/app/FindReplace.html
- build/javadoc/everything/processing/app/Platform.html
- build/javadoc/everything/processing/app/Preferences.html
- build/javadoc/everything/processing/app/PresentMode.html
- build/javadoc/everything/processing/app/Sketch.html
- build/javadoc/everything/processing/app/SketchCode.html
- build/javadoc/everything/processing/app/Theme.html
- build/javadoc/everything/processing/app/UpdateCheck.html
- build/javadoc/everything/processing/app/WebServer.html
- build/javadoc/everything/processing/app/debug/Compiler.html
- build/javadoc/everything/processing/app/debug/EventThread.html
- build/javadoc/everything/processing/app/debug/MessageConsumer.html
- build/javadoc/everything/processing/app/debug/Runner.html
- build/javadoc/everything/processing/app/debug/RunnerException.html
- build/javadoc/everything/processing/app/debug/RunnerListener.html
- build/javadoc/everything/processing/app/debug/StreamRedirectThread.html
- build/javadoc/everything/processing/app/debug/package-frame.html
- build/javadoc/everything/processing/app/debug/package-summary.html
- build/javadoc/everything/processing/app/debug/package-tree.html
- build/javadoc/everything/processing/app/linux/Platform.html
- build/javadoc/everything/processing/app/linux/package-frame.html
- build/javadoc/everything/processing/app/linux/package-summary.html
- build/javadoc/everything/processing/app/linux/package-tree.html
- build/javadoc/everything/processing/app/macosx/Platform.html
- build/javadoc/everything/processing/app/macosx/ThinkDifferent.html
- build/javadoc/everything/processing/app/macosx/package-frame.html
- build/javadoc/everything/processing/app/macosx/package-summary.html
- build/javadoc/everything/processing/app/macosx/package-tree.html
- build/javadoc/everything/processing/app/package-frame.html
- build/javadoc/everything/processing/app/package-summary.html
- build/javadoc/everything/processing/app/package-tree.html
- build/javadoc/everything/processing/app/preproc/PdeEmitter.html
- build/javadoc/everything/processing/app/preproc/PdeLexer.html
- build/javadoc/everything/processing/app/preproc/PdePartialTokenTypes.html
- build/javadoc/everything/processing/app/preproc/PdeRecognizer.html
- build/javadoc/everything/processing/app/preproc/PdeTokenTypes.html
- build/javadoc/everything/processing/app/preproc/package-frame.html
- build/javadoc/everything/processing/app/preproc/package-summary.html
- build/javadoc/everything/processing/app/preproc/package-tree.html
- build/javadoc/everything/processing/app/syntax/CTokenMarker.html
- build/javadoc/everything/processing/app/syntax/DefaultInputHandler.html
- build/javadoc/everything/processing/app/syntax/InputHandler.MacroRecorder.html
- build/javadoc/everything/processing/app/syntax/InputHandler.NonRecordable.html
- build/javadoc/everything/processing/app/syntax/InputHandler.NonRepeatable.html
- build/javadoc/everything/processing/app/syntax/InputHandler.Wrapper.html
- build/javadoc/everything/processing/app/syntax/InputHandler.backspace.html
- build/javadoc/everything/processing/app/syntax/InputHandler.backspace_word.html
- build/javadoc/everything/processing/app/syntax/InputHandler.delete.html
- build/javadoc/everything/processing/app/syntax/InputHandler.delete_word.html
- build/javadoc/everything/processing/app/syntax/InputHandler.document_end.html
- build/javadoc/everything/processing/app/syntax/InputHandler.document_home.html
- build/javadoc/everything/processing/app/syntax/InputHandler.end.html
- build/javadoc/everything/processing/app/syntax/InputHandler.home.html
- build/javadoc/everything/processing/app/syntax/InputHandler.html
- build/javadoc/everything/processing/app/syntax/InputHandler.insert_break.html
- build/javadoc/everything/processing/app/syntax/InputHandler.insert_char.html
- build/javadoc/everything/processing/app/syntax/InputHandler.insert_tab.html
- build/javadoc/everything/processing/app/syntax/InputHandler.next_char.html
- build/javadoc/everything/processing/app/syntax/InputHandler.next_line.html
- build/javadoc/everything/processing/app/syntax/InputHandler.next_page.html
- build/javadoc/everything/processing/app/syntax/InputHandler.next_word.html
- build/javadoc/everything/processing/app/syntax/InputHandler.overwrite.html
- build/javadoc/everything/processing/app/syntax/InputHandler.prev_char.html
- build/javadoc/everything/processing/app/syntax/InputHandler.prev_line.html
- build/javadoc/everything/processing/app/syntax/InputHandler.prev_page.html
- build/javadoc/everything/processing/app/syntax/InputHandler.prev_word.html
- build/javadoc/everything/processing/app/syntax/InputHandler.repeat.html
- build/javadoc/everything/processing/app/syntax/InputHandler.toggle_rect.html
- build/javadoc/everything/processing/app/syntax/JEditTextArea.html
- build/javadoc/everything/processing/app/syntax/KeywordMap.html
- build/javadoc/everything/processing/app/syntax/PdeKeywords.html
- build/javadoc/everything/processing/app/syntax/PdeTextAreaDefaults.html
- build/javadoc/everything/processing/app/syntax/SyntaxDocument.html
- build/javadoc/everything/processing/app/syntax/SyntaxStyle.html
- build/javadoc/everything/processing/app/syntax/SyntaxUtilities.html
- build/javadoc/everything/processing/app/syntax/TextAreaDefaults.html
- build/javadoc/everything/processing/app/syntax/TextAreaPainter.Highlight.html
- build/javadoc/everything/processing/app/syntax/TextAreaPainter.html
- build/javadoc/everything/processing/app/syntax/TextUtilities.html
- build/javadoc/everything/processing/app/syntax/Token.html
- build/javadoc/everything/processing/app/syntax/TokenMarker.LineInfo.html
- build/javadoc/everything/processing/app/syntax/TokenMarker.html
- build/javadoc/everything/processing/app/syntax/package-frame.html
- build/javadoc/everything/processing/app/syntax/package-summary.html
- build/javadoc/everything/processing/app/syntax/package-tree.html
- build/javadoc/everything/processing/app/tools/Archiver.html
- build/javadoc/everything/processing/app/tools/AutoFormat.html
- build/javadoc/everything/processing/app/tools/ColorSelector.ColorRange.html
- build/javadoc/everything/processing/app/tools/ColorSelector.ColorSlider.html
- build/javadoc/everything/processing/app/tools/ColorSelector.html
- build/javadoc/everything/processing/app/tools/CreateFont.html
- build/javadoc/everything/processing/app/tools/DiscourseFormat.html
- build/javadoc/everything/processing/app/tools/FixEncoding.html
- build/javadoc/everything/processing/app/tools/Tool.html
- build/javadoc/everything/processing/app/tools/package-frame.html
- build/javadoc/everything/processing/app/tools/package-summary.html
- build/javadoc/everything/processing/app/tools/package-tree.html
- build/javadoc/everything/processing/app/windows/Advapi32.ChangeServiceConfig2Info.html
- build/javadoc/everything/processing/app/windows/Advapi32.Handler.html
- build/javadoc/everything/processing/app/windows/Advapi32.HandlerEx.html
- build/javadoc/everything/processing/app/windows/Advapi32.SERVICE_DESCRIPTION.html
- build/javadoc/everything/processing/app/windows/Advapi32.SERVICE_MAIN_FUNCTION.html
- build/javadoc/everything/processing/app/windows/Advapi32.SERVICE_STATUS.html
- build/javadoc/everything/processing/app/windows/Advapi32.SERVICE_TABLE_ENTRY.html
- build/javadoc/everything/processing/app/windows/Advapi32.html
- build/javadoc/everything/processing/app/windows/Options.html
- build/javadoc/everything/processing/app/windows/Platform.html
- build/javadoc/everything/processing/app/windows/Registry.REGISTRY_ROOT_KEY.html
- build/javadoc/everything/processing/app/windows/Registry.html
- build/javadoc/everything/processing/app/windows/WINBASE.FILETIME.html
- build/javadoc/everything/processing/app/windows/WINBASE.SECURITY_ATTRIBUTES.html
- build/javadoc/everything/processing/app/windows/WINBASE.html
- build/javadoc/everything/processing/app/windows/WINERROR.html
- build/javadoc/everything/processing/app/windows/WINNT.html
- build/javadoc/everything/processing/app/windows/WINREG.html
- build/javadoc/everything/processing/app/windows/package-frame.html
- build/javadoc/everything/processing/app/windows/package-summary.html
- build/javadoc/everything/processing/app/windows/package-tree.html
- build/javadoc/everything/processing/candy/BaseObject.html
- build/javadoc/everything/processing/candy/Circle.html
- build/javadoc/everything/processing/candy/Ellipse.html
- build/javadoc/everything/processing/candy/Gradient.html
- build/javadoc/everything/processing/candy/Line.html
- build/javadoc/everything/processing/candy/LinearGradient.html
- build/javadoc/everything/processing/candy/LinearGradientPaint.LinearGradientContext.html
- build/javadoc/everything/processing/candy/LinearGradientPaint.html
- build/javadoc/everything/processing/candy/Path.html
- build/javadoc/everything/processing/candy/Poly.html
- build/javadoc/everything/processing/candy/RadialGradient.html
- build/javadoc/everything/processing/candy/RadialGradientPaint.RadialGradientContext.html
- build/javadoc/everything/processing/candy/RadialGradientPaint.html
- build/javadoc/everything/processing/candy/Rect.html
- build/javadoc/everything/processing/candy/SVG.Path.html
- build/javadoc/everything/processing/candy/SVG.html
- build/javadoc/everything/processing/candy/package-frame.html
- build/javadoc/everything/processing/candy/package-summary.html
- build/javadoc/everything/processing/candy/package-tree.html
- build/javadoc/everything/processing/core/PApplet.RegisteredMethods.html
- build/javadoc/everything/processing/core/PApplet.RendererChangeException.html
- build/javadoc/everything/processing/core/PApplet.html
- build/javadoc/everything/processing/core/PConstants.html
- build/javadoc/everything/processing/core/PFont.html
- build/javadoc/everything/processing/core/PGraphics.html
- build/javadoc/everything/processing/core/PGraphics2D.html
- build/javadoc/everything/processing/core/PGraphics3D.html
- build/javadoc/everything/processing/core/PGraphicsJava2D.html
- build/javadoc/everything/processing/core/PImage.html
- build/javadoc/everything/processing/core/PLine.html
- build/javadoc/everything/processing/core/PMaterial.html
- build/javadoc/everything/processing/core/PMatrix.html
- build/javadoc/everything/processing/core/PMatrix2D.html
- build/javadoc/everything/processing/core/PMatrix3D.html
- build/javadoc/everything/processing/core/PPolygon.html
- build/javadoc/everything/processing/core/PShape.html
- build/javadoc/everything/processing/core/PShapeSVG.html
- build/javadoc/everything/processing/core/PSmoothTriangle.html
- build/javadoc/everything/processing/core/PStyle.html
- build/javadoc/everything/processing/core/PTriangle.html
- build/javadoc/everything/processing/core/PVector.html
- build/javadoc/everything/processing/core/package-frame.html
- build/javadoc/everything/processing/core/package-summary.html
- build/javadoc/everything/processing/core/package-tree.html
- build/javadoc/everything/processing/dxf/RawDXF.html
- build/javadoc/everything/processing/dxf/package-frame.html
- build/javadoc/everything/processing/dxf/package-summary.html
- build/javadoc/everything/processing/dxf/package-tree.html
- build/javadoc/everything/processing/net/Client.html
- build/javadoc/everything/processing/net/Server.html
- build/javadoc/everything/processing/net/package-frame.html
- build/javadoc/everything/processing/net/package-summary.html
- build/javadoc/everything/processing/net/package-tree.html
- build/javadoc/everything/processing/opengl/PGraphicsOpenGL.TessCallback.html
- build/javadoc/everything/processing/opengl/PGraphicsOpenGL.html
- build/javadoc/everything/processing/opengl/package-frame.html
- build/javadoc/everything/processing/opengl/package-summary.html
- build/javadoc/everything/processing/opengl/package-tree.html
- build/javadoc/everything/processing/pdf/PGraphicsPDF.html
- build/javadoc/everything/processing/pdf/package-frame.html
- build/javadoc/everything/processing/pdf/package-summary.html
- build/javadoc/everything/processing/pdf/package-tree.html
- build/javadoc/everything/processing/serial/Serial.html
- build/javadoc/everything/processing/serial/package-frame.html
- build/javadoc/everything/processing/serial/package-summary.html
- build/javadoc/everything/processing/serial/package-tree.html
- build/javadoc/everything/processing/video/Capture.html
- build/javadoc/everything/processing/video/Movie.html
- build/javadoc/everything/processing/video/MovieMaker.html
- build/javadoc/everything/processing/video/package-frame.html
- build/javadoc/everything/processing/video/package-summary.html
- build/javadoc/everything/processing/video/package-tree.html
- build/javadoc/everything/processing/xml/StdXMLBuilder.html
- build/javadoc/everything/processing/xml/StdXMLParser.html
- build/javadoc/everything/processing/xml/StdXMLReader.html
- build/javadoc/everything/processing/xml/XMLElement.html
- build/javadoc/everything/processing/xml/XMLEntityResolver.html
- build/javadoc/everything/processing/xml/XMLException.html
- build/javadoc/everything/processing/xml/XMLParseException.html
- build/javadoc/everything/processing/xml/XMLValidationException.html
- build/javadoc/everything/processing/xml/XMLValidator.html
- build/javadoc/everything/processing/xml/XMLWriter.html
- build/javadoc/everything/processing/xml/package-frame.html
- build/javadoc/everything/processing/xml/package-summary.html
- build/javadoc/everything/processing/xml/package-tree.html
- build/javadoc/everything/resources/inherit.gif
- build/javadoc/everything/serialized-form.html
- build/javadoc/everything/stylesheet.css
  build/javadoc/make.sh
  build/javadoc/stylesheet.css
  build/javadoc/upload.sh
@@ -405,7 +117,6 @@ Files: app/.classpath
  debian/patches/series
  debian/patches/wrapper_for_deb.patch
  debian/rules
- debian/rules~
  debian/source/format
  debian/source/include-binaries
  debian/watch
@@ -417,7 +128,9 @@ Files: app/.classpath
  hardware/arduino/bootloaders/atmega/ATmegaBOOT_168_ng.hex
  hardware/arduino/bootloaders/atmega/ATmegaBOOT_168_pro_8MHz.hex
  hardware/arduino/bootloaders/atmega/Makefile
+ hardware/arduino/bootloaders/atmega8/ATmegaBOOT-prod-firmware-2009-11-07.hex
  hardware/arduino/bootloaders/atmega8/ATmegaBOOT.hex
+ hardware/arduino/bootloaders/atmega8/ATmegaBOOT.txt
  hardware/arduino/bootloaders/atmega8/Makefile
  hardware/arduino/bootloaders/bt/ATmegaBOOT_168.hex
  hardware/arduino/bootloaders/bt/ATmegaBOOT_168_atmega328_bt.hex
@@ -425,9 +138,23 @@ Files: app/.classpath
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina-LilyPadUSB.hex
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Makefile
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Readme.txt
+ hardware/arduino/bootloaders/caterina/Caterina-Esplora.hex
+ hardware/arduino/bootloaders/caterina/Caterina-Esplora.txt
  hardware/arduino/bootloaders/caterina/Caterina-Leonardo.hex
+ hardware/arduino/bootloaders/caterina/Caterina-Leonardo.txt
  hardware/arduino/bootloaders/caterina/Caterina-Micro.hex
+ hardware/arduino/bootloaders/caterina/Caterina-Micro.txt
+ hardware/arduino/bootloaders/caterina/Esplora-prod-firmware-2012-12-10.hex
+ hardware/arduino/bootloaders/caterina/Esplora-prod-firmware-2012-12-10.txt
+ hardware/arduino/bootloaders/caterina/Leonardo-prod-firmware-2012-04-26.hex
+ hardware/arduino/bootloaders/caterina/Leonardo-prod-firmware-2012-04-26.txt
+ hardware/arduino/bootloaders/caterina/Leonardo-prod-firmware-2012-12-10.hex
+ hardware/arduino/bootloaders/caterina/Leonardo-prod-firmware-2012-12-10.txt
  hardware/arduino/bootloaders/caterina/Makefile
+ hardware/arduino/bootloaders/caterina/Micro-prod-firmware-2012-11-23.hex
+ hardware/arduino/bootloaders/caterina/Micro-prod-firmware-2012-11-23.txt
+ hardware/arduino/bootloaders/caterina/Micro-prod-firmware-2012-12-10.hex
+ hardware/arduino/bootloaders/caterina/Micro-prod-firmware-2012-12-10.txt
  hardware/arduino/bootloaders/lilypad/LilyPadBOOT_168.hex
  hardware/arduino/bootloaders/lilypad/src/Makefile
  hardware/arduino/bootloaders/optiboot/Makefile
@@ -479,6 +206,13 @@ Files: app/.classpath
  hardware/arduino/programmers.txt
  libraries/EEPROM/examples/eeprom_write/eeprom_write.ino
  libraries/EEPROM/keywords.txt
+ libraries/Esplora/examples/EsploraKart/EsploraKart.ino
+ libraries/Esplora/examples/EsploraLedShow/EsploraLedShow.ino
+ libraries/Esplora/examples/EsploraLedShow2/EsploraLedShow2.ino
+ libraries/Esplora/examples/EsploraMusic/EsploraMusic.ino
+ libraries/Esplora/examples/EsploraRemote/EsploraRemote.ino
+ libraries/Esplora/examples/EsploraTable/EsploraTable.ino
+ libraries/Esplora/keywords.txt
  libraries/Ethernet/Dhcp.cpp
  libraries/Ethernet/Dhcp.h
  libraries/Ethernet/Ethernet.cpp
@@ -530,6 +264,7 @@ Files: app/.classpath
  libraries/WiFi/examples/ConnectWithWEP/ConnectWithWEP.ino
  libraries/WiFi/examples/ConnectWithWPA/ConnectWithWPA.ino
  libraries/WiFi/examples/ScanNetworks/ScanNetworks.ino
+ libraries/WiFi/examples/SimpleWebServerWiFi/SimpleWebServerWiFi.ino
  libraries/WiFi/examples/WifiChatServer/WifiChatServer.ino
  libraries/WiFi/examples/WifiWebClient/WifiWebClient.ino
  libraries/WiFi/examples/WifiWebServer/WifiWebServer.ino
@@ -553,9 +288,7 @@ Copyright: *No copyright*
 License: UNKNOWN
  FIXME
 
-Files: build/javadoc/everything/antlr/java/JavaRecognizer.html
- build/javadoc/everything/processing/app/preproc/PdePreprocessor.html
- build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
+Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  build/shared/examples/01.Basics/Blink/Blink.ino
  build/shared/examples/01.Basics/DigitalReadSerial/DigitalReadSerial.ino
  build/shared/examples/01.Basics/Fade/Fade.ino
@@ -1032,6 +765,12 @@ Files: core/methods/demo/PApplet.java
 Copyright: 2001-04 Massachusetts Institute of Technology
   2004-10 Ben Fry and Casey Reas
 License: LGPL
+ FIXME
+
+Files: libraries/Esplora/Esplora.cpp
+ libraries/Esplora/Esplora.h
+Copyright: 2012, Arduino(TM) All right reserved
+License: LGPL-2.1+
  FIXME
 
 Files: hardware/arduino/cores/arduino/WInterrupts.c
