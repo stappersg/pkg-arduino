@@ -46,9 +46,11 @@ override_dh_install:
 
 override_jh_depends:
 #jh_depends can't resolve symlinks
+
+copyright_check:
+	${MAKE} -f /usr/share/cdbs/1/rules/utils.mk debian/stamp-copyright-check
+	rm debian/stamp-copyright-check
     
-
-
 DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
 TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
 
