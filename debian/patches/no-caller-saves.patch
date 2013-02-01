@@ -1,0 +1,19 @@
+Author: Scott Howard <showard@debian.org>
+Description: WiFi.cpp won't compile without -fno-caller-saves
+Bug: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50925
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=698254
+
+Index: arduino/app/src/processing/app/debug/Compiler.java
+===================================================================
+--- arduino.orig/app/src/processing/app/debug/Compiler.java	2013-02-01 10:57:01.535264910 -0500
++++ arduino/app/src/processing/app/debug/Compiler.java	2013-02-01 10:57:27.807264371 -0500
+@@ -622,6 +622,9 @@
+       baseCommandCompilerCPP.add("-I" + (String) includePaths.get(i));
+     }
+ 
++    if (sourceName.contains("WiFi.cpp")) {
++      baseCommandCompilerCPP.add("-fno-caller-saves");
++    }
+     baseCommandCompilerCPP.add(sourceName);
+     baseCommandCompilerCPP.add("-o");
+     baseCommandCompilerCPP.add(objectName);

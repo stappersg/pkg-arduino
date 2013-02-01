@@ -72,5 +72,3 @@ get-orig-source:
 	tar zcf $(CURDIR)/../$(TARFILE) -C $(CURDIR)/debian arduino-$(SVNTAG);\
 	rm -fr $(DESTDIR);\
 	rm -fr arduino-$(SVNTAG)-src.tar.gz
-
-PHONY: build clean binary-indep binary install get-orig-source
