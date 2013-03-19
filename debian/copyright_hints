@@ -111,6 +111,7 @@ Files: app/.classpath
  debian/linkjars
  debian/patches/fr_fix.diff
  debian/patches/install_jar_links.patch
+ debian/patches/no-caller-saves.patch
  debian/patches/permission_fix.patch
  debian/patches/remove_copying_binaries.patch
  debian/patches/remove_update_warning.patch
@@ -172,8 +173,10 @@ Files: app/.classpath
  hardware/arduino/bootloaders/optiboot/pin_defs.h
  hardware/arduino/bootloaders/optiboot/stk500.h
  hardware/arduino/bootloaders/stk500v2/Makefile
+ hardware/arduino/bootloaders/stk500v2/Mega2560-prod-firmware-2011-06-29.hex
  hardware/arduino/bootloaders/stk500v2/STK500V2.pnproj
  hardware/arduino/bootloaders/stk500v2/STK500V2.pnps
+ hardware/arduino/bootloaders/stk500v2/avr_cpunames.h
  hardware/arduino/bootloaders/stk500v2/avrinterruptnames.h
  hardware/arduino/bootloaders/stk500v2/command.h
  hardware/arduino/bootloaders/stk500v2/stk500boot.ppg
@@ -204,35 +207,13 @@ Files: app/.classpath
  hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/makefile
  hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/readme.txt
  hardware/arduino/programmers.txt
- libraries/EEPROM/examples/eeprom_write/eeprom_write.ino
- libraries/EEPROM/keywords.txt
- libraries/Esplora/examples/EsploraKart/EsploraKart.ino
- libraries/Esplora/examples/EsploraLedShow/EsploraLedShow.ino
- libraries/Esplora/examples/EsploraLedShow2/EsploraLedShow2.ino
- libraries/Esplora/examples/EsploraMusic/EsploraMusic.ino
- libraries/Esplora/examples/EsploraRemote/EsploraRemote.ino
- libraries/Esplora/examples/EsploraTable/EsploraTable.ino
+ libraries/Esplora/examples/Beginners/EsploraLedShow/EsploraLedShow.ino
+ libraries/Esplora/examples/Beginners/EsploraLedShow2/EsploraLedShow2.ino
+ libraries/Esplora/examples/Beginners/EsploraMusic/EsploraMusic.ino
+ libraries/Esplora/examples/Experts/EsploraKart/EsploraKart.ino
+ libraries/Esplora/examples/Experts/EsploraRemote/EsploraRemote.ino
+ libraries/Esplora/examples/Experts/EsploraTable/EsploraTable.ino
  libraries/Esplora/keywords.txt
- libraries/Ethernet/Dhcp.cpp
- libraries/Ethernet/Dhcp.h
- libraries/Ethernet/Ethernet.cpp
- libraries/Ethernet/Ethernet.h
- libraries/Ethernet/EthernetClient.cpp
- libraries/Ethernet/EthernetClient.h
- libraries/Ethernet/EthernetServer.cpp
- libraries/Ethernet/EthernetServer.h
- libraries/Ethernet/examples/BarometricPressureWebServer/BarometricPressureWebServer.ino
- libraries/Ethernet/examples/ChatServer/ChatServer.ino
- libraries/Ethernet/examples/DhcpAddressPrinter/DhcpAddressPrinter.ino
- libraries/Ethernet/examples/DhcpChatServer/DhcpChatServer.ino
- libraries/Ethernet/examples/DnsWebClient/DnsWebClient.ino
- libraries/Ethernet/examples/TelnetClient/TelnetClient.ino
- libraries/Ethernet/examples/WebClient/WebClient.ino
- libraries/Ethernet/examples/WebServer/WebServer.ino
- libraries/Ethernet/keywords.txt
- libraries/Ethernet/util.h
- libraries/Ethernet/utility/socket.cpp
- libraries/Ethernet/utility/socket.h
  libraries/Firmata/Boards.h
  libraries/Firmata/TODO.txt
  libraries/Firmata/keywords.txt
@@ -247,43 +228,13 @@ Files: app/.classpath
  libraries/SPI/keywords.txt
  libraries/Servo/examples/Knob/Knob.ino
  libraries/Servo/keywords.txt
- libraries/SoftwareSerial/keywords.txt
  libraries/Stepper/Stepper.cpp
  libraries/Stepper/Stepper.h
  libraries/Stepper/examples/stepper_oneRevolution/stepper_oneRevolution.ino
  libraries/Stepper/examples/stepper_oneStepAtATime/stepper_oneStepAtATime.ino
  libraries/Stepper/examples/stepper_speedControl/stepper_speedControl.ino
  libraries/Stepper/keywords.txt
- libraries/WiFi/WiFi.cpp
- libraries/WiFi/WiFi.h
- libraries/WiFi/WiFiClient.cpp
- libraries/WiFi/WiFiClient.h
- libraries/WiFi/WiFiServer.cpp
- libraries/WiFi/WiFiServer.h
- libraries/WiFi/examples/ConnectNoEncryption/ConnectNoEncryption.ino
- libraries/WiFi/examples/ConnectWithWEP/ConnectWithWEP.ino
- libraries/WiFi/examples/ConnectWithWPA/ConnectWithWPA.ino
- libraries/WiFi/examples/ScanNetworks/ScanNetworks.ino
- libraries/WiFi/examples/SimpleWebServerWiFi/SimpleWebServerWiFi.ino
- libraries/WiFi/examples/WifiChatServer/WifiChatServer.ino
- libraries/WiFi/examples/WifiWebClient/WifiWebClient.ino
- libraries/WiFi/examples/WifiWebServer/WifiWebServer.ino
- libraries/WiFi/keywords.txt
- libraries/WiFi/utility/debug.h
- libraries/WiFi/utility/server_drv.cpp
- libraries/WiFi/utility/server_drv.h
- libraries/WiFi/utility/socket.c
- libraries/WiFi/utility/socket.h
- libraries/WiFi/utility/spi_drv.cpp
- libraries/WiFi/utility/spi_drv.h
- libraries/WiFi/utility/wifi_drv.cpp
- libraries/WiFi/utility/wifi_drv.h
- libraries/WiFi/utility/wifi_spi.h
- libraries/WiFi/utility/wl_definitions.h
- libraries/WiFi/utility/wl_types.h
  libraries/Wire/keywords.txt
- readme.txt
- todo.txt
 Copyright: *No copyright*
 License: UNKNOWN
  FIXME
@@ -296,7 +247,7 @@ Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  build/shared/examples/02.Digital/BlinkWithoutDelay/BlinkWithoutDelay.ino
  build/shared/examples/02.Digital/Button/Button.ino
  build/shared/examples/02.Digital/Debounce/Debounce.ino
- build/shared/examples/02.Digital/DigitalIputPullup/DigitalIputPullup.ino
+ build/shared/examples/02.Digital/DigitalInputPullup/DigitalInputPullup.ino
  build/shared/examples/02.Digital/StateChangeDetection/StateChangeDetection.ino
  build/shared/examples/02.Digital/toneKeyboard/toneKeyboard.ino
  build/shared/examples/02.Digital/toneMelody/toneMelody.ino
@@ -354,14 +305,13 @@ Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  build/shared/examples/09.USB/Mouse/ButtonMouseControl/ButtonMouseControl.ino
  build/shared/examples/09.USB/Mouse/JoystickMouseControl/JoystickMouseControl.ino
  build/shared/examples/10.StarterKit/p14_TweakTheArduinoLogo/p14_TweakTheArduinoLogo.ino
- libraries/EEPROM/examples/eeprom_clear/eeprom_clear.ino
- libraries/EEPROM/examples/eeprom_read/eeprom_read.ino
- libraries/Ethernet/examples/PachubeClient/PachubeClient.ino
- libraries/Ethernet/examples/PachubeClientString/PachubeClientString.ino
- libraries/Ethernet/examples/TwitterClient/TwitterClient.ino
- libraries/Ethernet/examples/UDPSendReceiveString/UDPSendReceiveString.ino
- libraries/Ethernet/examples/UdpNtpClient/UdpNtpClient.ino
- libraries/Ethernet/examples/WebClientRepeating/WebClientRepeating.ino
+ libraries/Esplora/examples/Beginners/EsploraAccelerometer/EsploraAccelerometer.ino
+ libraries/Esplora/examples/Beginners/EsploraBlink/EsploraBlink.ino
+ libraries/Esplora/examples/Beginners/EsploraJoystickMouse/EsploraJoystickMouse.ino
+ libraries/Esplora/examples/Beginners/EsploraLightCalibrator/EsploraLightCalibrator.ino
+ libraries/Esplora/examples/Beginners/EsploraSoundSensor/EsploraSoundSensor.ino
+ libraries/Esplora/examples/Beginners/EsploraTemperatureSensor/EsploraTemperatureSensor.ino
+ libraries/Esplora/examples/Experts/EsploraPong/EsploraPong.ino
  libraries/Firmata/examples/AllInputsFirmata/AllInputsFirmata.ino
  libraries/Firmata/examples/AnalogFirmata/AnalogFirmata.ino
  libraries/Firmata/examples/EchoString/EchoString.ino
@@ -384,13 +334,7 @@ Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  libraries/SD/examples/ReadWrite/ReadWrite.ino
  libraries/SD/examples/listfiles/listfiles.ino
  libraries/Servo/examples/Sweep/Sweep.ino
- libraries/SoftwareSerial/examples/SoftwareSerialExample/SoftwareSerialExample.ino
- libraries/SoftwareSerial/examples/TwoPortReceive/TwoPortReceive.ino
  libraries/Stepper/examples/MotorKnob/MotorKnob.ino
- libraries/WiFi/examples/WifiPachubeClient/WifiPachubeClient.ino
- libraries/WiFi/examples/WifiPachubeClientString/WifiPachubeClientString.ino
- libraries/WiFi/examples/WifiTwitterClient/WifiTwitterClient.ino
- libraries/WiFi/examples/WifiWebClientRepeating/WifiWebClientRepeating.ino
  libraries/Wire/examples/SFRRanger_reader/SFRRanger_reader.ino
  libraries/Wire/examples/digital_potentiometer/digital_potentiometer.ino
  libraries/Wire/examples/master_reader/master_reader.ino
@@ -440,30 +384,6 @@ Files: app/src/processing/app/Resources_an.properties
  app/src/processing/app/Resources_zh_tw.po
  app/src/processing/app/Resources_zh_tw.properties
 Copyright: 2012, THE PACKAGE'S HOLDER
-License: UNKNOWN
- FIXME
-
-Files: hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
- hardware/arduino/bootloaders/caterina/Caterina.c
- hardware/arduino/bootloaders/caterina/Caterina.h
- hardware/arduino/bootloaders/caterina/Descriptors.c
- hardware/arduino/bootloaders/caterina/Descriptors.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Arduino-usbdfu.c
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Arduino-usbdfu.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Board/LEDs.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Descriptors.c
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Descriptors.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Arduino-usbserial.c
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Arduino-usbserial.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Board/LEDs.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Descriptors.c
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Descriptors.h
- hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Lib/LightweightRingBuff.h
-Copyright: 2010, Dean Camera (dean [at
-  2011, Dean Camera (dean [at
 License: UNKNOWN
  FIXME
 
@@ -537,7 +457,7 @@ Files: core/src/processing/xml/CDATAReader.java
  core/src/processing/xml/XMLValidator.java
  core/src/processing/xml/XMLWriter.java
 Copyright: 2000-2002, Marc De Scheemaecker
-License: zlib/libpng
+License: Zlib
  FIXME
 
 Files: core/methods/demo/PGraphics.java
@@ -610,12 +530,29 @@ Copyright: 2005-2006, David A. Mellis
 License: LGPL-2.1+
  FIXME
 
+Files: hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Arduino-usbdfu.c
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Arduino-usbdfu.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Board/LEDs.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Descriptors.c
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Descriptors.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Arduino-usbserial.c
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Arduino-usbserial.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Board/LEDs.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Descriptors.c
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Descriptors.h
+ hardware/arduino/firmwares/atmegaxxu2/arduino-usbserial/Lib/LightweightRingBuff.h
+Copyright: 2010, Dean Camera (dean [at
+  Dean Camera, 2010,
+License: UNKNOWN
+ FIXME
+
 Files: libraries/SD/utility/FatStructs.h
  libraries/SD/utility/Sd2Card.cpp
  libraries/SD/utility/Sd2Card.h
  libraries/SD/utility/Sd2PinMap.h
  libraries/SD/utility/SdFat.h
  libraries/SD/utility/SdFatUtil.h
+ libraries/SD/utility/SdFatmainpage.h
  libraries/SD/utility/SdFile.cpp
  libraries/SD/utility/SdInfo.h
  libraries/SD/utility/SdVolume.cpp
@@ -623,6 +560,18 @@ Copyright: 2008, William Greiman
   2009, William Greiman
   2010, William Greiman
 License: GPL-3+
+ FIXME
+
+Files: hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
+ hardware/arduino/bootloaders/caterina/Caterina.c
+ hardware/arduino/bootloaders/caterina/Caterina.h
+ hardware/arduino/bootloaders/caterina/Descriptors.c
+ hardware/arduino/bootloaders/caterina/Descriptors.h
+Copyright: 2011, Dean Camera (dean [at
+License: UNKNOWN
  FIXME
 
 Files: core/src/processing/core/PGraphics2D.java
@@ -635,18 +584,6 @@ Files: core/src/processing/core/PGraphics2D.java
 Copyright: 2005-08 Ben Fry and Casey Reas
   2006-08 Ben Fry and Casey Reas
   2008, Ben Fry and Casey Reas
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/Print.cpp
- hardware/arduino/cores/arduino/Print.h
- hardware/arduino/cores/arduino/Stream.cpp
- hardware/arduino/cores/arduino/Stream.h
- libraries/EEPROM/EEPROM.cpp
- libraries/EEPROM/EEPROM.h
-Copyright: 2006, David A. Mellis. All right reserved
-  2008, David A. Mellis. All right reserved
-  2010, David A. Mellis. All right reserved
 License: LGPL-2.1+
  FIXME
 
@@ -680,12 +617,13 @@ Copyright: 2006, David A. Mellis
 License: GPL-2+
  FIXME
 
-Files: libraries/Ethernet/utility/w5100.cpp
- libraries/Ethernet/utility/w5100.h
- libraries/SPI/SPI.cpp
- libraries/SPI/SPI.h
-Copyright: 2010, Cristian Maglie <c.maglie@bug.st>
-License: UNKNOWN
+Files: hardware/arduino/cores/arduino/Print.cpp
+ hardware/arduino/cores/arduino/Print.h
+ hardware/arduino/cores/arduino/Stream.cpp
+ hardware/arduino/cores/arduino/Stream.h
+Copyright: 2008, David A. Mellis. All right reserved
+  2010, David A. Mellis. All right reserved
+License: LGPL-2.1+
  FIXME
 
 Files: core/license.txt
@@ -711,26 +649,11 @@ Copyright: 2010, SparkFun Electronics
 License: UNKNOWN
  FIXME
 
-Files: hardware/arduino/cores/arduino/Tone.cpp
- libraries/SoftwareSerial/SoftwareSerial.cpp
- libraries/SoftwareSerial/SoftwareSerial.h
-Copyright: *No copyright*
-License: LGPL-2.1+
- FIXME
-
 Files: libraries/Firmata/Firmata.cpp
  libraries/Firmata/Firmata.h
  libraries/Firmata/examples/OldStandardFirmata/OldStandardFirmata.ino
 Copyright: 2006-2008, Hans-Christoph Steiner.
 License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/Udp.h
- libraries/Ethernet/EthernetUdp.cpp
- libraries/Ethernet/EthernetUdp.h
-Copyright: 2008, Bjoern Hartmann
-  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-License: MIT/X11 (BSD like)
  FIXME
 
 Files: app/src/processing/app/Base.java
@@ -764,13 +687,7 @@ Files: core/methods/demo/PApplet.java
  core/src/processing/core/PApplet.java
 Copyright: 2001-04 Massachusetts Institute of Technology
   2004-10 Ben Fry and Casey Reas
-License: LGPL
- FIXME
-
-Files: libraries/Esplora/Esplora.cpp
- libraries/Esplora/Esplora.h
-Copyright: 2012, Arduino(TM) All right reserved
-License: LGPL-2.1+
+License: LGPL-2.1
  FIXME
 
 Files: hardware/arduino/cores/arduino/WInterrupts.c
@@ -786,9 +703,9 @@ Copyright: 2009, Michael Margolis. All right reserved
 License: LGPL-2.1+
  FIXME
 
-Files: libraries/Ethernet/Dns.cpp
- libraries/Ethernet/Dns.h
-Copyright: 2009-2010, MCQN Ltd
+Files: libraries/SPI/SPI.cpp
+ libraries/SPI/SPI.h
+Copyright: 2010, Cristian Maglie <c.maglie@bug.st>
 License: UNKNOWN
  FIXME
 
@@ -809,7 +726,33 @@ Copyright: 2002-2007, Eric B. Weddington
   HOLDERS AND CONTRIBUTORS "AS IS"
   OWNER OR CONTRIBUTORS BE
   holders nor the names of
-License: BSD (2 clause)
+License: BSD-2-clause
+ FIXME
+
+Files: hardware/arduino/cores/arduino/malloc.c
+Copyright: 2002, 2004, 2010, Joerg Wunsch
+  2010, Gerben van den Broeke
+  HOLDERS AND CONTRIBUTORS "AS IS"
+  OWNER OR CONTRIBUTORS BE
+  holders nor the names of
+License: BSD-2-clause
+ FIXME
+
+Files: hardware/arduino/cores/arduino/IPAddress.h
+Copyright: 2011, Adrian McEwen
+  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+License: Expat
+ FIXME
+
+Files: hardware/arduino/cores/arduino/Udp.h
+Copyright: 2008, Bjoern Hartmann
+  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+License: Expat
+ FIXME
+
+Files: hardware/arduino/bootloaders/stk500v2/stk500boot.c
+Copyright: 2006, Peter Fleury
+License: GPL
  FIXME
 
 Files: app/src/processing/app/tools/AutoFormat.java
@@ -817,12 +760,7 @@ Copyright: 1997-1998, Van Di-Han HO.
   2001, Jason Pell
   2003, Martin Gomez, Ateneo de Manila University
   2005-09 Ben Fry and Casey Reas
-License: GPL
- FIXME
-
-Files: hardware/arduino/bootloaders/stk500v2/stk500boot.c
-Copyright: 2006, Peter Fleury
-License: GPL
+License: GPL-2
  FIXME
 
 Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c
@@ -862,16 +800,15 @@ Copyright: 2012, Scott Howard <showard@debian.org>
 License: GPL-2+
  FIXME
 
-Files: libraries/SD/utility/SdFatmainpage.h
-Copyright: &copy; 2009, by William Greiman
-  2009, William Greiman
-License: GPL-3+
- FIXME
-
 Files: core/src/processing/core/PFont.java
 Copyright: 2001-04 Massachusetts Institute of Technology
   2004-10 Ben Fry & Casey Reas
 License: LGPL-2.01
+ FIXME
+
+Files: hardware/arduino/cores/arduino/Tone.cpp
+Copyright: *No copyright*
+License: LGPL-2.1+
  FIXME
 
 Files: hardware/arduino/cores/arduino/WCharacter.h
@@ -884,6 +821,11 @@ License: LGPL-2.1+
 
 Files: hardware/arduino/cores/arduino/Printable.h
 Copyright: 2011, Adrian McEwen. All right reserved
+License: LGPL-2.1+
+ FIXME
+
+Files: libraries/Esplora/Esplora.h
+Copyright: 2012, Arduino(TM) All right reserved
 License: LGPL-2.1+
  FIXME
 
@@ -922,12 +864,6 @@ Files: libraries/Firmata/examples/I2CFirmata/I2CFirmata.ino
 Copyright: 2009, Jeff Hoefs.
   2009, Shigeru Kobayashi.
 License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/IPAddress.h
-Copyright: 2011, Adrian McEwen
-  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-License: MIT/X11 (BSD like)
  FIXME
 
 Files: core/src/processing/core/PShapeSVG.java
@@ -1027,33 +963,6 @@ Copyright: 2012, THE PACKAGE'S HOLDER
 License: UNKNOWN
  FIXME
 
-Files: build/shared/reference.zip
-Copyright: BY-–(åXÅÉZ{d˝’€S[“ÖRˆKwÑ‘Ì·<ı€Úz“‚¯›∫˚¡ã˛Ïo‰p≥3˝t{¥ó¬‡‰∫~ºçómlxq˙}Å}˝…5∫‚NÕØÇ◊ûIoqûãNÛ¸=Gl3€‡ãã_¢ÄÌ°Árà≥i‘‹±"ˇÌŸˇPK    úKÔ@\Ù“•>  +    reference/Return.htmlUT	 ó≈Pó≈Pux ˆ  ˆ  ùX[s€∂~Æ~≈ñôFÈåIJ∂€N$Y3éc◊iù÷µ’ì”ßDÇ"j`APîíÊøw )…7uO,ÿÀ∑Ï.<˘˙ÌØg≥?Æœ!5y◊øøπzwûÜéŒ¬ÌÏ-¸ˇrˆ˛
-  vkƒWêSÓ⁄	IIΩ$0*ª{{·´»<ˆ◊6F’Œ^’î1–Ÿ: UA¢)yÓX:œœ®ˇñH#;Õé ∏A¶ÇZ≈åÃ∏n≥aíÀzÖ≠),ÕßxGΩ‰>ï2C¬#W
-  ê≤≠‘"≈Ωπïc’RöÙã3K`IÆ`, íÚﬂ{Ó
-  ÷ÔÀ7°HÔ4mAzITºLPv[c¡ç|q¶wó,˝ˇ˛PK    óKÔ@8F0≤  ≈.    reference/Libraries.htmlUT	 ç≈Pç≈Pux ˆ  ˆ  ≠ZkS€H∫˛|¯Ωû:„§
-License: UNKNOWN
- FIXME
-
-Files: license.txt
-Copyright: 1989, 1991 Free Software Foundation, Inc
-  1991, 1999 Free Software Foundation, Inc
-  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY
-  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-  HOLDERS AND/OR
-  HOLDERS AND/OR OTHER PARTIES
-  holder or
-  holder saying it may be distributed
-  holder who places the Library under this License may add
-  holder who places the Program under this License
-  law:
-  law: that is to say, a work containing the Library or a
-  notices, you must include the
-  the
-  the software, and
-License: UNKNOWN
- FIXME
-
 Files: hardware/arduino/bootloaders/stk500v2/License.txt
 Copyright: 1989, 1991 Free Software Foundation, Inc
   HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
@@ -1062,6 +971,13 @@ Copyright: 1989, 1991 Free Software Foundation, Inc
   holder who places the Program under this License
   law:
   the software, and
+License: UNKNOWN
+ FIXME
+
+Files: build/shared/lib/about.jpg
+Copyright: IÜ ⁄Â\}Ë‹~Ùn‘Ë vv4«9 0õˆ¿≤oq*û¬ÓµhW ñG?¡ÅYêùßÍ{†ò[ı‘qÛspÔÚìK˙Ïv_ˇ DäØÀˆ◊nw Qœq¯Y¡EóÊ äkk}<≈kkÆû5G„lıˇ †±Ìèd~kˇ ƒˇ H⁄toÛ˛ﬂ˘4Ñó÷ˇ ⁄éååÏÏÀ|‹“Ànõ›öﬂ¯ƒ“‚;c∂ªw‡<~ÔΩÚE˛ø-ˇ mS"d‹yàÌyÎ◊'^ñ›ájSá˝UvË´I“$C•*Sr¨96Îjúüò‡C2Ïáy^‘!J i·`Êr3å\ûlÜË™	?^ù¥ùç.„Ó~›Ì.No∫3q∞8ò˛Ù≥»±≠¸#sõ|(∑f:('J˘k˝DøX
+  vaR≤ÎuÔÃ&ˇ #í¿√ƒ~;ÑY6 -,ÚXI"É}ä™Hé2@$nf{ƒj◊xæ‘ÓNsö«ÓèPe∆2·±|>?≥ccH WœöY_+)QäF˛\QBò„,˚«Á•(}Å$s! ì√äO" JåG^∫Ù≤tØãπ‚∏–_€≠sBäbR@BFÒàLÒD"íu?ŸV≈A–˝„Ù÷ôÌÎÕQÓØiﬂKﬂzÜæ¡˙(Â…>‡§¿ƒ˚H* H˚¥∫—∂Õ•è€MI	"&ÎQ‹ûÅı”˛JÉ∆„V˙~öíHDO%¯í@H¯èÏ”6∂Ôã⁄X}ï>p$àê£$ßëÈ¯∑Üã¯‘v‹[ƒT¬èÔÇAÁƒD`60$¸µ-mQ ~Ó´}/R
+  µÒ≠◊í/„Û)¨LTÚåùÅ#q1TöryŸ9âF±ƒä§“‹ª.4ß_˙ãt)∞’ÙXp≈õ.zñÛ¶H—Å#m£.V¬◊øÒ˜$h,∑’Û;ã?;∂∞{ZUàq¸~V\ÒH_1qñPÁqR†b∆PR>‚◊
 License: UNKNOWN
  FIXME
 
@@ -1159,14 +1075,23 @@ Copyright: would work a little better.
 License: UNKNOWN
  FIXME
 
-Files: build/shared/lib/about.jpg
-Copyright: µÒ≠◊í/„Û)¨LTÚåùÅ#q1TöryŸ9âF±ƒä§“‹ª.4ß_˙ãt)∞’ÙXp≈õ.zñÛ¶H—Å#m£.V¬◊øÒ˜$h,∑’Û;ã?;∂∞{ZUàq¸~V\ÒH_1qñPÁqR†b∆PR>‚◊
+Files: build/linux/dist/gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz
+Copyright: Ñ¨¯zj!¢œ.:á¶≥óq{…/§h
+  †r¢uAËHù„ ~b√b#øD	‡˛yÑMÿMﬂµ(GW@ã)Â|∑Æ› ƒ√ƒeõRa«∫V¬éÂ_ù∏Ë€‡%!_Oë
+  ¶87∞9yª†oÙ|ÀÒÄ?
+  À¨kËRÙñõ≥NŒ¨πö4ÎÛ™;√™Z3Ùæ≠Ä≤Á{oÖùª|ÎÃYFıïY&¬¢c±ˆ¶_LQÀΩçéıMz⁄™∆gX7—ú™iÍ¯õ>ê¶Nùëaßx<qcB:Í& Ó•l˙˜'cÈW$¶üBzy\˙˘ù“G¶ÙîÓmMR|À(“»xAbE3ö)„cqô;'§˚ê~•Û(Cc≤7…î±niíâÜ•O'!ﬁÃìäöVD∫Ûê_HÍÅ!Î#– àΩëÜçyñ¯yÅm®Ê}‡<∆¢+QŸ≠'"ë*é´º≥£ø‹—_¢ø _=‚x¸§∫é\G’¸fujÜçjØrû2Iò^¶ÖUπ÷bZäP -€L-'#Ñ<{⁄·è∑1U-8™ıﬂÑ¸ûfıµ¯îˆ®’_ÁN.cÚ\ñYÁ?ÊæAÀ≥™3xÏ{¢*éÙ°,Ñ≈‘ÇFUxöµ‚SjcAyaêÚZ/à#ËƒàÛ-¥é‘r≈ŸL†|S§[3Pï>õ@”ñËñÅœi˛≈˜,Õ◊˙∆K±lß“_ ˇ¿Ó‘UW£~Qoq£IdSûx‘¶Æ·qQèñ„lz›)‡x–}´÷}÷ƒ≈&FsÈ¥¥ﬁ¥∂¿ÍØqwßÂ“Ö¨¯±Ëµi6†Ûz»I4;d6ögä≥Fû◊@ù¡9ã˛÷1Í-ÆÇ∆E√E•4„∑k√¸«ˇ¸£†ï“)˚!B›G†¢ºã˜…eEÒëã	+	ﬁä4±‚®ﬂZæÆÂŸ¥îÁ–ËTj4òb%Ú<KµQ-ï›Å:áQù·Kt%
+  Ò÷p _∫CHÊ∫ldp_˚GiÏ€\÷~†Nˇ™‚ÖÊÈXXì§‹wΩÕc·|Nî¿˙Ö2›∆É∫‰æ≠òó€0÷≤œπç"Ñ›ØGŸÕ…á/kê`	t™°x1åm ^âòÛfwµëìBÂ≠∂&ÕëˇÆ<˛}≥ÜH<R%7e4 =jºêË˘P¢ËAª8bdà) ŸªWprÈ˚N±Oml”Ù}Ü'/DΩ•Oì∆D›çÇ«IºêÈ.»Yƒﬁ¢O‰œQ
+  Úlj±Ycì ·≠˚‘o|vSëÕ«bøÿŒ0¶å=r_é!uy0ˆÈÛ«ÚΩÛ€*bÙÜìH[ige|H—Ä:Hã:—ÊfûäG®b8iéñ?r3´“∑†ˆ◊^#^ÜôX¨Ø)k=(<	ëîÛÛ≥Òôxˆ+K≥ÀÀÑQDl˜¥È	.ñÓÈb¡÷6‘'Dquoõ'JnÛÅÆÌ≠ı®Mm™Ækà„ï\œZë!K`œÆ
+License: UNKNOWN
+ FIXME
+
+Files: build/shared/reference.zip
+Copyright: ñôú[{Zat∞a:Z<çcèNÂÚ QY¶™∫0ı∂˙ÆE≤Úá˝éß?µÀ´7ó?ûΩ˛Óc¸„∑ÉW’ÕÚ/…ä_>˛tˆˆ
 License: UNKNOWN
  FIXME
 
 Files: debian/icons/256x256/apps/arduino.png
 Copyright: 5π\ó÷˙˝è˝…óéze‡®ÉÄÔ˚wx æWÙ˝%˚á2ãyƒ$ü(‹ñ28˘# áãJr¥üKRYLAáÒ[@òòw¥π»u™ñfHô‰∏Çú‡ÜÒ≥‹_Ú0öùéQ˛≠)¡y	3t~ÅHﬁ/Ó4T¨”I._É4âïá §'ìœ!ÈΩëÑ	I~Ú§Ï?éMƒø3:—=[àS?&‚Í$Qp÷Koﬂ6∞iFoR˘tcS¶=ªg`˚F…˜;4è”U  ZÎJJ
-  ÍøyOOÿìŒ&|÷a
 License: UNKNOWN
  FIXME
 
