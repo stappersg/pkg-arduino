@@ -1,3 +1,10 @@
+arduino (1:1.0.4+dfsg-2) UNRELEASED; urgency=low
+
+  * Create symoblic link /usr/share/arduino/harware/tools/avr to /usr
+    Thanks to Alessandro Ghedini (Closes: #704001)
+
+ -- Scott Howard <showard@debian.org>  Tue, 26 Mar 2013 14:43:23 -0400
+
 arduino (1:1.0.4+dfsg-1) experimental; urgency=low
 
   * New upstream release.
