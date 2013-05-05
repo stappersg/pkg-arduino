@@ -1,9 +1,10 @@
-arduino (1:1.0.4+dfsg-2) UNRELEASED; urgency=low
+arduino (1:1.0.4+dfsg-2) unstable; urgency=low
 
+  * Merge from experimental
   * Create symoblic link /usr/share/arduino/harware/tools/avr to /usr
     Thanks to Alessandro Ghedini (Closes: #704001)
 
- -- Scott Howard <showard@debian.org>  Tue, 26 Mar 2013 14:43:23 -0400
+ -- Scott Howard <showard@debian.org>  Sun, 05 May 2013 14:46:53 -0400
 
 arduino (1:1.0.4+dfsg-1) experimental; urgency=low
 
