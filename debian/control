@@ -5,10 +5,10 @@ Maintainer: Scott Howard <showard@debian.org>
 Uploaders: Philip Hands <phil@hands.com>
 Build-Depends: debhelper (>= 8), javahelper, default-jdk,
  librxtx-java (>= 2.2pre2-3), libjna-java, ant
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 Homepage: http://www.arduino.cc
-Vcs-Git: git://git.debian.org/collab-maint/arduino.git
-Vcs-Browser: http://git.debian.org/?p=collab-maint/arduino.git
+Vcs-Git: git://anonscm.debian.org/collab-maint/arduino.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/arduino.git
 
 
 Package: arduino

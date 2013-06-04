@@ -1,0 +1,16 @@
+Description: typos in example file
+Author: Scott Howard <showard@debian.org>
+
+Index: arduino/libraries/Robot_Motor/examples/Robot_IR_Array_Test/Robot_IR_Array_Test.ino
+===================================================================
+--- arduino.orig/libraries/Robot_Motor/examples/Robot_IR_Array_Test/Robot_IR_Array_Test.ino	2013-06-04 13:21:52.963608085 -0400
++++ arduino/libraries/Robot_Motor/examples/Robot_IR_Array_Test/Robot_IR_Array_Test.ino	2013-06-04 15:28:03.403788007 -0400
+@@ -19,7 +19,7 @@
+ void loop(){
+   bar=String(""); // empty the string
+   // read the sensors and add them to the string
+-  bar=bar+RobotMotor.readIR(0)+' '+RobotMotor.readIR(1)+' '+RobotMotor.readIR(2)+' '+RobotMotor.readIR(3)+' '+RobotMotor.readIR(4);
++  bar=bar+RobotMotor.IRread(0)+' '+RobotMotor.IRread(1)+' '+RobotMotor.IRread(2)+' '+RobotMotor.IRread(3)+' '+RobotMotor.IRread(4);
+   // print out the values
+   Serial.println(bar);
+   delay(100);

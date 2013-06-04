@@ -1,7 +1,17 @@
-arduino (1:1.0.5+dfsg2-1) UNRELEASED; urgency=low
+arduino (1:1.0.5+dfsg2-1) unstable; urgency=low
 
   * New upstream release
   * removed debian/patches/fr_fix.diff, applied upstream
+  * Added Keywords to arduino.desktop
+  * SV 3.9.4 no changes
+  * Vcs-* changed to cannonical URLs
+  * New patches:
+    - debian/patches/Adafruit_GFX.patch: fixed typo
+    - debian/patches/const_progmem.patch: PROGMEM variables must be
+      consts
+    - debian/patches/depricated_typedef_support.patch: enable
+      compatibility support for avr-libc depricated typedefs
+    - debian/patches/roboIRread.patch: fixed typos
 
  -- Scott Howard <showard@debian.org>  Tue, 04 Jun 2013 11:58:36 -0400
 
