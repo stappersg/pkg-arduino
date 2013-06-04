@@ -14,11 +14,13 @@ Files: app/.classpath
  app/src/processing/app/I18n.java
  app/src/processing/app/Resources.java
  app/src/processing/app/WebServer.java
+ app/src/processing/app/helpers/FileUtils.java
  app/src/processing/app/i18n_update.py
  app/src/processing/app/i18n_update.sh
  app/src/processing/app/syntax/im/CompositionTextManager.java
  app/src/processing/app/syntax/im/CompositionTextPainter.java
  app/src/processing/app/syntax/im/InputMethodSupport.java
+ app/src/processing/app/tools/ZipDeflater.java
  app/src/processing/app/windows/Advapi32.java
  app/src/processing/app/windows/Options.java
  app/src/processing/app/windows/Registry.java
@@ -109,7 +111,6 @@ Files: app/.classpath
  debian/icons/32x32/apps/arduino.png
  debian/icons/48x48/apps/arduino.png
  debian/linkjars
- debian/patches/fr_fix.diff
  debian/patches/install_jar_links.patch
  debian/patches/no-caller-saves.patch
  debian/patches/permission_fix.patch
@@ -136,6 +137,11 @@ Files: app/.classpath
  hardware/arduino/bootloaders/bt/ATmegaBOOT_168.hex
  hardware/arduino/bootloaders/bt/ATmegaBOOT_168_atmega328_bt.hex
  hardware/arduino/bootloaders/bt/Makefile
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina-Robot-Control.hex
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina-Robot-Motor.hex
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina-Robot.txt
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Makefile
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/README.md
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina-LilyPadUSB.hex
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Makefile
  hardware/arduino/bootloaders/caterina-LilyPadUSB/Readme.txt
@@ -191,6 +197,16 @@ Files: app/.classpath
  hardware/arduino/cores/arduino/main.cpp
  hardware/arduino/cores/arduino/new.cpp
  hardware/arduino/cores/arduino/new.h
+ hardware/arduino/cores/robot/Arduino.h
+ hardware/arduino/cores/robot/Client.h
+ hardware/arduino/cores/robot/IPAddress.cpp
+ hardware/arduino/cores/robot/Platform.h
+ hardware/arduino/cores/robot/Server.h
+ hardware/arduino/cores/robot/USBAPI.h
+ hardware/arduino/cores/robot/binary.h
+ hardware/arduino/cores/robot/main.cpp
+ hardware/arduino/cores/robot/new.cpp
+ hardware/arduino/cores/robot/new.h
  hardware/arduino/firmwares/atmegaxxu2/Arduino-COMBINED-dfu-usbserial-atmega16u2-Mega2560-Rev3.hex
  hardware/arduino/firmwares/atmegaxxu2/Arduino-COMBINED-dfu-usbserial-atmega16u2-MegaADK-Rev3.hex
  hardware/arduino/firmwares/atmegaxxu2/Arduino-COMBINED-dfu-usbserial-atmega16u2-Uno-Rev3.hex
@@ -220,6 +236,47 @@ Files: app/.classpath
  libraries/LiquidCrystal/LiquidCrystal.cpp
  libraries/LiquidCrystal/LiquidCrystal.h
  libraries/LiquidCrystal/keywords.txt
+ libraries/Robot_Control/Adafruit_GFX.cpp
+ libraries/Robot_Control/Adafruit_GFX.h
+ libraries/Robot_Control/ArduinoRobot.cpp
+ libraries/Robot_Control/ArduinoRobot.h
+ libraries/Robot_Control/Arduino_LCD.cpp
+ libraries/Robot_Control/Arduino_LCD.h
+ libraries/Robot_Control/Compass.cpp
+ libraries/Robot_Control/Compass.h
+ libraries/Robot_Control/EEPROM_I2C.cpp
+ libraries/Robot_Control/EEPROM_I2C.h
+ libraries/Robot_Control/EasyTransfer2.cpp
+ libraries/Robot_Control/Melody.cpp
+ libraries/Robot_Control/Motors.cpp
+ libraries/Robot_Control/Multiplexer.cpp
+ libraries/Robot_Control/Multiplexer.h
+ libraries/Robot_Control/RobotSdCard.cpp
+ libraries/Robot_Control/Sensors.cpp
+ libraries/Robot_Control/Squawk.cpp
+ libraries/Robot_Control/Squawk.h
+ libraries/Robot_Control/SquawkSD.cpp
+ libraries/Robot_Control/SquawkSD.h
+ libraries/Robot_Control/communication.cpp
+ libraries/Robot_Control/glcdfont.c
+ libraries/Robot_Control/helper.cpp
+ libraries/Robot_Control/information.cpp
+ libraries/Robot_Control/keyboard.cpp
+ libraries/Robot_Control/lcd.cpp
+ libraries/Robot_Control/utility/RobotTextManager.cpp
+ libraries/Robot_Control/utility/RobotTextManager.h
+ libraries/Robot_Control/utility/VirtualKeyboard.cpp
+ libraries/Robot_Control/utility/VirtualKeyboard.h
+ libraries/Robot_Control/utility/scripts_Hello_User.h
+ libraries/Robot_Motor/ArduinoRobotMotorBoard.cpp
+ libraries/Robot_Motor/ArduinoRobotMotorBoard.h
+ libraries/Robot_Motor/EasyTransfer2.cpp
+ libraries/Robot_Motor/LineFollow.h
+ libraries/Robot_Motor/Multiplexer.cpp
+ libraries/Robot_Motor/Multiplexer.h
+ libraries/Robot_Motor/examples/Robot_IR_Array_Test/Robot_IR_Array_Test.ino
+ libraries/Robot_Motor/examples/Robot_Motor_Core/Robot_Motor_Core.ino
+ libraries/Robot_Motor/lineFollow.cpp
  libraries/SD/examples/CardInfo/CardInfo.ino
  libraries/SD/keywords.txt
  libraries/SPI/examples/BarometricPressureSensor/BarometricPressureSensor.ino
@@ -234,6 +291,20 @@ Files: app/.classpath
  libraries/Stepper/examples/stepper_oneStepAtATime/stepper_oneStepAtATime.ino
  libraries/Stepper/examples/stepper_speedControl/stepper_speedControl.ino
  libraries/Stepper/keywords.txt
+ libraries/TFT/README.md
+ libraries/TFT/TFT.cpp
+ libraries/TFT/TFT.h
+ libraries/TFT/examples/Arduino/TFTBitmapLogo/arduino.bmp
+ libraries/TFT/examples/Esplora/EsploraTFTBitmapLogo/arduino.bmp
+ libraries/TFT/keywords.txt
+ libraries/TFT/utility/Adafruit-README.txt
+ libraries/TFT/utility/Adafruit_GFX.cpp
+ libraries/TFT/utility/Adafruit_GFX.h
+ libraries/TFT/utility/Adafruit_ST7735.cpp
+ libraries/TFT/utility/Adafruit_ST7735.h
+ libraries/TFT/utility/PImage.h
+ libraries/TFT/utility/glcdfont.c
+ libraries/TFT/utility/keywords.txt
  libraries/Wire/keywords.txt
 Copyright: *No copyright*
 License: UNKNOWN
@@ -328,6 +399,33 @@ Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  libraries/LiquidCrystal/examples/SerialDisplay/SerialDisplay.ino
  libraries/LiquidCrystal/examples/TextDirection/TextDirection.ino
  libraries/LiquidCrystal/examples/setCursor/setCursor.ino
+ libraries/Robot_Control/examples/explore/R01_Logo/R01_Logo.ino
+ libraries/Robot_Control/examples/explore/R02_Line_Follow/R02_Line_Follow.ino
+ libraries/Robot_Control/examples/explore/R03_Disco_Bot/R03_Disco_Bot.ino
+ libraries/Robot_Control/examples/explore/R04_Compass/R04_Compass.ino
+ libraries/Robot_Control/examples/explore/R05_Inputs/R05_Inputs.ino
+ libraries/Robot_Control/examples/explore/R06_Wheel_Calibration/R06_Wheel_Calibration.ino
+ libraries/Robot_Control/examples/explore/R07_Runaway_Robot/R07_Runaway_Robot.ino
+ libraries/Robot_Control/examples/explore/R08_Remote_Control/R08_Remote_Control.ino
+ libraries/Robot_Control/examples/explore/R09_Picture_Browser/R09_Picture_Browser.ino
+ libraries/Robot_Control/examples/explore/R10_Rescue/R10_Rescue.ino
+ libraries/Robot_Control/examples/explore/R11_Hello_User/R11_Hello_User.ino
+ libraries/Robot_Control/examples/learn/AllIOPorts/AllIOPorts.ino
+ libraries/Robot_Control/examples/learn/Beep/Beep.ino
+ libraries/Robot_Control/examples/learn/CleanEEPROM/CleanEEPROM.ino
+ libraries/Robot_Control/examples/learn/Compass/Compass.ino
+ libraries/Robot_Control/examples/learn/IRArray/IRArray.ino
+ libraries/Robot_Control/examples/learn/LCDDebugPrint/LCDDebugPrint.ino
+ libraries/Robot_Control/examples/learn/LCDPrint/LCDPrint.ino
+ libraries/Robot_Control/examples/learn/LCDWriteText/LCDWriteText.ino
+ libraries/Robot_Control/examples/learn/LineFollowWithPause/LineFollowWithPause.ino
+ libraries/Robot_Control/examples/learn/Melody/Melody.ino
+ libraries/Robot_Control/examples/learn/MotorTest/MotorTest.ino
+ libraries/Robot_Control/examples/learn/SpeedByPotentiometer/SpeedByPotentiometer.ino
+ libraries/Robot_Control/examples/learn/TurnTest/TurnTest.ino
+ libraries/Robot_Control/examples/learn/TurnTest/TurnTest.ino.orig
+ libraries/Robot_Control/examples/learn/keyboardTest/keyboardTest.ino
+ libraries/Robot_Control/examples/learn/keyboardTest/keyboardTest.ino.orig
  libraries/SD/examples/Datalogger/Datalogger.ino
  libraries/SD/examples/DumpFile/DumpFile.ino
  libraries/SD/examples/Files/Files.ino
@@ -335,6 +433,19 @@ Files: build/shared/examples/01.Basics/AnalogReadSerial/AnalogReadSerial.ino
  libraries/SD/examples/listfiles/listfiles.ino
  libraries/Servo/examples/Sweep/Sweep.ino
  libraries/Stepper/examples/MotorKnob/MotorKnob.ino
+ libraries/TFT/examples/Arduino/TFTBitmapLogo/TFTBitmapLogo.ino
+ libraries/TFT/examples/Arduino/TFTColorPicker/TFTColorPicker.ino
+ libraries/TFT/examples/Arduino/TFTDisplayText/TFTDisplayText.ino
+ libraries/TFT/examples/Arduino/TFTEtchASketch/TFTEtchASketch.ino
+ libraries/TFT/examples/Arduino/TFTGraph/TFTGraph.ino
+ libraries/TFT/examples/Arduino/TFTPong/TFTPong.ino
+ libraries/TFT/examples/Esplora/EsploraTFTBitmapLogo/EsploraTFTBitmapLogo.ino
+ libraries/TFT/examples/Esplora/EsploraTFTColorPicker/EsploraTFTColorPicker.ino
+ libraries/TFT/examples/Esplora/EsploraTFTEtchASketch/EsploraTFTEtchASketch.ino
+ libraries/TFT/examples/Esplora/EsploraTFTGraph/EsploraTFTGraph.ino
+ libraries/TFT/examples/Esplora/EsploraTFTHorizion/EsploraTFTHorizion.ino
+ libraries/TFT/examples/Esplora/EsploraTFTPong/EsploraTFTPong.ino
+ libraries/TFT/examples/Esplora/EsploraTFTTemp/EsploraTFTTemp.ino
  libraries/Wire/examples/SFRRanger_reader/SFRRanger_reader.ino
  libraries/Wire/examples/digital_potentiometer/digital_potentiometer.ino
  libraries/Wire/examples/master_reader/master_reader.ino
@@ -387,6 +498,31 @@ Copyright: 2012, THE PACKAGE'S HOLDER
 License: UNKNOWN
  FIXME
 
+Files: libraries/Robot_Control/Fat16.cpp
+ libraries/Robot_Control/Fat16.h
+ libraries/Robot_Control/Fat16Config.h
+ libraries/Robot_Control/Fat16mainpage.h
+ libraries/Robot_Control/Fat16util.h
+ libraries/Robot_Control/FatStructs.h
+ libraries/Robot_Control/SdCard.cpp
+ libraries/Robot_Control/SdCard.h
+ libraries/Robot_Control/SdInfo.h
+ libraries/SD/utility/FatStructs.h
+ libraries/SD/utility/Sd2Card.cpp
+ libraries/SD/utility/Sd2Card.h
+ libraries/SD/utility/Sd2PinMap.h
+ libraries/SD/utility/SdFat.h
+ libraries/SD/utility/SdFatUtil.h
+ libraries/SD/utility/SdFatmainpage.h
+ libraries/SD/utility/SdFile.cpp
+ libraries/SD/utility/SdInfo.h
+ libraries/SD/utility/SdVolume.cpp
+Copyright: 2008, William Greiman
+  2009, William Greiman
+  2010, William Greiman
+License: GPL-3+
+ FIXME
+
 Files: app/src/processing/app/EditorConsole.java
  app/src/processing/app/EditorHeader.java
  app/src/processing/app/EditorListener.java
@@ -411,6 +547,28 @@ Copyright: 2001-03 Massachusetts Institute of Technology
   2004-09 Ben Fry and Casey Reas
   2004-10 Ben Fry and Casey Reas
 License: GPL-2+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/wiring.c
+ hardware/arduino/cores/arduino/wiring_analog.c
+ hardware/arduino/cores/arduino/wiring_digital.c
+ hardware/arduino/cores/arduino/wiring_private.h
+ hardware/arduino/cores/arduino/wiring_pulse.c
+ hardware/arduino/cores/arduino/wiring_shift.c
+ hardware/arduino/cores/robot/wiring.c
+ hardware/arduino/cores/robot/wiring_analog.c
+ hardware/arduino/cores/robot/wiring_digital.c
+ hardware/arduino/cores/robot/wiring_private.h
+ hardware/arduino/cores/robot/wiring_pulse.c
+ hardware/arduino/cores/robot/wiring_shift.c
+ hardware/arduino/variants/eightanaloginputs/pins_arduino.h
+ hardware/arduino/variants/leonardo/pins_arduino.h
+ hardware/arduino/variants/mega/pins_arduino.h
+ hardware/arduino/variants/micro/pins_arduino.h
+ hardware/arduino/variants/standard/pins_arduino.h
+Copyright: 2005-2006, David A. Mellis
+  2007, David A. Mellis
+License: LGPL-2.1+
  FIXME
 
 Files: app/src/processing/app/Commander.java.disabled
@@ -497,6 +655,38 @@ Copyright: 2012
 License: UNKNOWN
  FIXME
 
+Files: hardware/arduino/cores/arduino/HardwareSerial.cpp
+ hardware/arduino/cores/arduino/HardwareSerial.h
+ hardware/arduino/cores/robot/HardwareSerial.cpp
+ hardware/arduino/cores/robot/HardwareSerial.h
+ libraries/Robot_Control/Wire.cpp
+ libraries/Robot_Control/Wire.h
+ libraries/Robot_Control/utility/twi.c
+ libraries/Robot_Control/utility/twi.h
+ libraries/Wire/Wire.cpp
+ libraries/Wire/Wire.h
+ libraries/Wire/utility/twi.c
+ libraries/Wire/utility/twi.h
+Copyright: 2006, Nicholas Zambetti. All right reserved
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.c
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.h
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.c
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.h
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
+ hardware/arduino/bootloaders/caterina/Caterina.c
+ hardware/arduino/bootloaders/caterina/Caterina.h
+ hardware/arduino/bootloaders/caterina/Descriptors.c
+ hardware/arduino/bootloaders/caterina/Descriptors.h
+Copyright: 2011, Dean Camera (dean [at
+License: UNKNOWN
+ FIXME
+
 Files: app/src/processing/app/syntax/CTokenMarker.java
  app/src/processing/app/syntax/DefaultInputHandler.java
  app/src/processing/app/syntax/InputHandler.java
@@ -512,22 +702,6 @@ Files: app/src/processing/app/syntax/CTokenMarker.java
 Copyright: 1998-1999, Slava Pestov
   1999, Slava Pestov
 License: UNKNOWN
- FIXME
-
-Files: hardware/arduino/cores/arduino/wiring.c
- hardware/arduino/cores/arduino/wiring_analog.c
- hardware/arduino/cores/arduino/wiring_digital.c
- hardware/arduino/cores/arduino/wiring_private.h
- hardware/arduino/cores/arduino/wiring_pulse.c
- hardware/arduino/cores/arduino/wiring_shift.c
- hardware/arduino/variants/eightanaloginputs/pins_arduino.h
- hardware/arduino/variants/leonardo/pins_arduino.h
- hardware/arduino/variants/mega/pins_arduino.h
- hardware/arduino/variants/micro/pins_arduino.h
- hardware/arduino/variants/standard/pins_arduino.h
-Copyright: 2005-2006, David A. Mellis
-  2007, David A. Mellis
-License: LGPL-2.1+
  FIXME
 
 Files: hardware/arduino/firmwares/atmegaxxu2/arduino-usbdfu/Arduino-usbdfu.c
@@ -546,32 +720,32 @@ Copyright: 2010, Dean Camera (dean [at
 License: UNKNOWN
  FIXME
 
-Files: libraries/SD/utility/FatStructs.h
- libraries/SD/utility/Sd2Card.cpp
- libraries/SD/utility/Sd2Card.h
- libraries/SD/utility/Sd2PinMap.h
- libraries/SD/utility/SdFat.h
- libraries/SD/utility/SdFatUtil.h
- libraries/SD/utility/SdFatmainpage.h
- libraries/SD/utility/SdFile.cpp
- libraries/SD/utility/SdInfo.h
- libraries/SD/utility/SdVolume.cpp
-Copyright: 2008, William Greiman
-  2009, William Greiman
-  2010, William Greiman
-License: GPL-3+
+Files: hardware/arduino/cores/arduino/CDC.cpp
+ hardware/arduino/cores/arduino/HID.cpp
+ hardware/arduino/cores/arduino/USBCore.cpp
+ hardware/arduino/cores/arduino/USBCore.h
+ hardware/arduino/cores/arduino/USBDesc.h
+ hardware/arduino/cores/robot/CDC.cpp
+ hardware/arduino/cores/robot/HID.cpp
+ hardware/arduino/cores/robot/USBCore.cpp
+ hardware/arduino/cores/robot/USBCore.h
+ hardware/arduino/cores/robot/USBDesc.h
+Copyright: 2010, Peter Barrett
+  2011, Peter Barrett
+License: ISC
  FIXME
 
-Files: hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
- hardware/arduino/bootloaders/caterina/Caterina.c
- hardware/arduino/bootloaders/caterina/Caterina.h
- hardware/arduino/bootloaders/caterina/Descriptors.c
- hardware/arduino/bootloaders/caterina/Descriptors.h
-Copyright: 2011, Dean Camera (dean [at
-License: UNKNOWN
+Files: hardware/arduino/cores/arduino/Print.cpp
+ hardware/arduino/cores/arduino/Print.h
+ hardware/arduino/cores/arduino/Stream.cpp
+ hardware/arduino/cores/arduino/Stream.h
+ hardware/arduino/cores/robot/Print.cpp
+ hardware/arduino/cores/robot/Print.h
+ hardware/arduino/cores/robot/Stream.cpp
+ hardware/arduino/cores/robot/Stream.h
+Copyright: 2008, David A. Mellis. All right reserved
+  2010, David A. Mellis. All right reserved
+License: LGPL-2.1+
  FIXME
 
 Files: core/src/processing/core/PGraphics2D.java
@@ -587,26 +761,6 @@ Copyright: 2005-08 Ben Fry and Casey Reas
 License: LGPL-2.1+
  FIXME
 
-Files: hardware/arduino/cores/arduino/HardwareSerial.cpp
- hardware/arduino/cores/arduino/HardwareSerial.h
- libraries/Wire/Wire.cpp
- libraries/Wire/Wire.h
- libraries/Wire/utility/twi.c
- libraries/Wire/utility/twi.h
-Copyright: 2006, Nicholas Zambetti. All right reserved
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/CDC.cpp
- hardware/arduino/cores/arduino/HID.cpp
- hardware/arduino/cores/arduino/USBCore.cpp
- hardware/arduino/cores/arduino/USBCore.h
- hardware/arduino/cores/arduino/USBDesc.h
-Copyright: 2010, Peter Barrett
-  2011, Peter Barrett
-License: ISC
- FIXME
-
 Files: app/src/processing/app/SerialException.java
  app/src/processing/app/SerialNotFoundException.java
  app/src/processing/app/debug/Sizer.java
@@ -617,13 +771,21 @@ Copyright: 2006, David A. Mellis
 License: GPL-2+
  FIXME
 
-Files: hardware/arduino/cores/arduino/Print.cpp
- hardware/arduino/cores/arduino/Print.h
- hardware/arduino/cores/arduino/Stream.cpp
- hardware/arduino/cores/arduino/Stream.h
-Copyright: 2008, David A. Mellis. All right reserved
-  2010, David A. Mellis. All right reserved
+Files: hardware/arduino/cores/arduino/WInterrupts.c
+ hardware/arduino/cores/arduino/WMath.cpp
+ hardware/arduino/cores/robot/WInterrupts.c
+ hardware/arduino/cores/robot/WMath.cpp
+Copyright: 2004-05 Hernando Barragan
+  2004-06 Hernando Barragan
 License: LGPL-2.1+
+ FIXME
+
+Files: libraries/Robot_Control/SPI.cpp
+ libraries/Robot_Control/SPI.h
+ libraries/SPI/SPI.cpp
+ libraries/SPI/SPI.h
+Copyright: 2010, Cristian Maglie <c.maglie@bug.st>
+License: UNKNOWN
  FIXME
 
 Files: core/license.txt
@@ -654,6 +816,36 @@ Files: libraries/Firmata/Firmata.cpp
  libraries/Firmata/examples/OldStandardFirmata/OldStandardFirmata.ino
 Copyright: 2006-2008, Hans-Christoph Steiner.
 License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/avr-libc/realloc.c
+ hardware/arduino/cores/arduino/avr-libc/stdlib_private.h
+Copyright: 2004, 2010 Joerg Wunsch
+  2004, Joerg Wunsch
+  HOLDERS AND CONTRIBUTORS "AS IS"
+  OWNER OR CONTRIBUTORS BE
+  holders nor the names of
+License: BSD-2-clause
+ FIXME
+
+Files: hardware/arduino/cores/arduino/IPAddress.h
+ hardware/arduino/cores/robot/IPAddress.h
+Copyright: 2011, Adrian McEwen
+  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+License: Expat
+ FIXME
+
+Files: hardware/arduino/cores/arduino/Udp.h
+ hardware/arduino/cores/robot/Udp.h
+Copyright: 2008, Bjoern Hartmann
+  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+License: Expat
+ FIXME
+
+Files: libraries/Robot_Control/EasyTransfer2.h
+ libraries/Robot_Motor/EasyTransfer2.h
+Copyright: *No copyright*
+License: GPL
  FIXME
 
 Files: app/src/processing/app/Base.java
@@ -690,10 +882,45 @@ Copyright: 2001-04 Massachusetts Institute of Technology
 License: LGPL-2.1
  FIXME
 
-Files: hardware/arduino/cores/arduino/WInterrupts.c
- hardware/arduino/cores/arduino/WMath.cpp
-Copyright: 2004-05 Hernando Barragan
-  2004-06 Hernando Barragan
+Files: hardware/arduino/cores/arduino/Tone.cpp
+ hardware/arduino/cores/robot/Tone.cpp
+Copyright: *No copyright*
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/WCharacter.h
+ hardware/arduino/cores/robot/WCharacter.h
+Copyright: 2010, Hernando Barragan. All right reserved
+  == 0 ? false : true);
+  || isdigit)
+  || islower)
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/Printable.h
+ hardware/arduino/cores/robot/Printable.h
+Copyright: 2011, Adrian McEwen. All right reserved
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/variants/robot_control/pins_arduino.h
+ hardware/arduino/variants/robot_motor/pins_arduino.h
+Copyright: 2012, D. Cuartielles, N. de la Riva, I. Gallego, E. Gallego
+  2913, D. Cuartielles, X. Yang (Arduino Verkstad)
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/WString.cpp
+ hardware/arduino/cores/robot/WString.cpp
+Copyright: 2009-10 Hernando Barragan.
+  2011, Paul Stoffregen, paul@pjrc.com
+License: LGPL-2.1+
+ FIXME
+
+Files: hardware/arduino/cores/arduino/WString.h
+ hardware/arduino/cores/robot/WString.h
+Copyright: 2009-10 Hernando Barragan. All right reserved
+  2011, Paul Stoffregen, paul@pjrc.com
 License: LGPL-2.1+
  FIXME
 
@@ -701,12 +928,6 @@ Files: libraries/Servo/Servo.cpp
  libraries/Servo/Servo.h
 Copyright: 2009, Michael Margolis. All right reserved
 License: LGPL-2.1+
- FIXME
-
-Files: libraries/SPI/SPI.cpp
- libraries/SPI/SPI.h
-Copyright: 2010, Cristian Maglie <c.maglie@bug.st>
-License: UNKNOWN
  FIXME
 
 Files: app/src/processing/app/Resources_ja.po
@@ -721,6 +942,14 @@ Copyright: 2012, www.wiznet.co.kr
 License: UNKNOWN
  FIXME
 
+Files: hardware/arduino/cores/arduino/avr-libc/sectionname.h
+Copyright: 2009, Atmel Corporation
+  HOLDERS AND CONTRIBUTORS "AS IS"
+  OWNER OR CONTRIBUTORS BE
+  holders nor the names of
+License: BSD-2-clause
+ FIXME
+
 Files: hardware/arduino/bootloaders/optiboot/boot.h
 Copyright: 2002-2007, Eric B. Weddington
   HOLDERS AND CONTRIBUTORS "AS IS"
@@ -729,7 +958,7 @@ Copyright: 2002-2007, Eric B. Weddington
 License: BSD-2-clause
  FIXME
 
-Files: hardware/arduino/cores/arduino/malloc.c
+Files: hardware/arduino/cores/arduino/avr-libc/malloc.c
 Copyright: 2002, 2004, 2010, Joerg Wunsch
   2010, Gerben van den Broeke
   HOLDERS AND CONTRIBUTORS "AS IS"
@@ -738,16 +967,12 @@ Copyright: 2002, 2004, 2010, Joerg Wunsch
 License: BSD-2-clause
  FIXME
 
-Files: hardware/arduino/cores/arduino/IPAddress.h
-Copyright: 2011, Adrian McEwen
-  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-License: Expat
- FIXME
-
-Files: hardware/arduino/cores/arduino/Udp.h
-Copyright: 2008, Bjoern Hartmann
-  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-License: Expat
+Files: libraries/TFT/utility/Adafruit-license.txt
+Copyright: 2012, Adafruit Industries.
+  HOLDER BE LIABLE FOR ANY
+  HOLDERS ''AS IS'' AND ANY
+  holders nor the names of its
+License: BSD-3-clause
  FIXME
 
 Files: hardware/arduino/bootloaders/stk500v2/stk500boot.c
@@ -790,6 +1015,11 @@ Copyright: 2001-04 Massachusetts Institute of Technology
 License: GPL-2+
  FIXME
 
+Files: app/src/processing/app/helpers/filefilters/OnlyDirs.java
+Copyright: 2011, Cristian Maglie
+License: GPL-2+
+ FIXME
+
 Files: hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c
 Copyright: 2003, Jason P. Kyle */
 License: GPL-2+
@@ -804,24 +1034,6 @@ Files: core/src/processing/core/PFont.java
 Copyright: 2001-04 Massachusetts Institute of Technology
   2004-10 Ben Fry & Casey Reas
 License: LGPL-2.01
- FIXME
-
-Files: hardware/arduino/cores/arduino/Tone.cpp
-Copyright: *No copyright*
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/WCharacter.h
-Copyright: 2010, Hernando Barragan. All right reserved
-  == 0 ? false : true);
-  || isdigit)
-  || islower)
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/Printable.h
-Copyright: 2011, Adrian McEwen. All right reserved
-License: LGPL-2.1+
  FIXME
 
 Files: libraries/Esplora/Esplora.h
@@ -845,18 +1057,6 @@ Copyright: 2006-2008, Hans-Christoph Steiner.
   2009, Shigeru Kobayashi.
   2009-2011, Jeff Hoefs.
   2010-2011, Paul Stoffregen.
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/WString.cpp
-Copyright: 2009-10 Hernando Barragan.
-  2011, Paul Stoffregen, paul@pjrc.com
-License: LGPL-2.1+
- FIXME
-
-Files: hardware/arduino/cores/arduino/WString.h
-Copyright: 2009-10 Hernando Barragan. All right reserved
-  2011, Paul Stoffregen, paul@pjrc.com
 License: LGPL-2.1+
  FIXME
 
@@ -1095,8 +1295,18 @@ Copyright: 5π\ó÷˙˝è˝…óéze‡®ÉÄÔ˚wx æWÙ˝%˚á2ãyƒ$ü(‹ñ28˘# áãJr¥üKRYLAáÒ[@òòw¥π»u
 License: UNKNOWN
  FIXME
 
+Files: build/linux/dist/node-v0.8.19-linux-x86.tar.gz
+Copyright: –EPÙí
+License: UNKNOWN
+ FIXME
+
 Files: debian/arduino.sharedmimeinfo
 Copyright: ŸÖÿµÿØÿ± Arduino</comment>
+License: UNKNOWN
+ FIXME
+
+Files: build/shared/lib/arduino_icon.ico
+Copyright: ˇ¢ú ˇ¢õ ˇ¢ú ˇ£ú ˇØ ˇ‹⁄üˇÛÛﬂˇˇˇˇˇ˘˘Ôˇ‡ﬁØˇ¥Ø@ˇôì ˇôì ˇöî ˇõï ˇÖˇZW
 License: UNKNOWN
  FIXME
 

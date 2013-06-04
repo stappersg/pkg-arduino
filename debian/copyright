@@ -39,16 +39,19 @@ Files: libraries/* hardware/*
 Copyright: 2009-2012, Arduino (TM)
 License: LGPL-2.1+
 
-Files: hardware/arduino/firmwares/atmegaxxu2/*
-       hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
-       hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
-       hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
-       hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
-       hardware/arduino/bootloaders/caterina/Caterina.c
-       hardware/arduino/bootloaders/caterina/Caterina.h
-       hardware/arduino/bootloaders/caterina/Descriptors.c
-       hardware/arduino/bootloaders/caterina/Descriptors.h
-Copyright: Dean Camera, 2010
+Files: hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.c
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.h
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.c
+ hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.h
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
+ hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
+ hardware/arduino/bootloaders/caterina/Caterina.c
+ hardware/arduino/bootloaders/caterina/Caterina.h
+ hardware/arduino/bootloaders/caterina/Descriptors.c
+ hardware/arduino/bootloaders/caterina/Descriptors.h
+Copyright: Dean Camera, 2010-2011
 License:
   Permission to use, copy, modify, distribute, and sell this 
   software and its documentation for any purpose is hereby granted
@@ -68,8 +71,8 @@ License:
   arising out of or in connection with the use or performance of
   this software.
 
-Files: build/shared/examples/*
-Copyright: 2009-2012, Arduino(TM)
+Files: build/shared/examples/* libraries/*/examples/*
+Copyright: 2009-2013, Arduino(TM)
 License: public-domain
  This example code is in the public domain.
 
@@ -112,22 +115,72 @@ Files: libraries/EEPROM/* libraries/Sprite/*
 Copyright: 2006, David A. Mellis
 License: LGPL-2.1+
 
-Files: hardware/arduino/cores/arduino/*
+Files: libraries/Robot_*/*
+Copyright: 2008-2010, William Greiman
+           2006, Nicholas Zambetti
+License: GPL-3+
+
+Files: libraries/SD/utility/*
+Copyright: 2008-2010, William Greiman
+License: GPL-3+
+
+Files: hardware/arduino/cores/*
 Copyright: 2006, Nicholas Zambetti
-           2005-08, David A. Mellis
+           2005-10, David A. Mellis
            2004-05, Hernando Barragan
 License: LGPL-2.1+
 
-Files: hardware/arduino/cores/arduino/malloc.c
+Files: libraries/TFT/*
+Copyright: 2012, Adafruit Industries.
+License: BSD
+
+Files: hardware/arduino/cores/arduino/avr-libc/sectionname.h
+Copyright: 2009, Atmel Corporation
+License: BSD
+
+Files: hardware/arduino/variants/*
+Copyright: 2012, D. Cuartielles, N. de la Riva, I. Gallego, E. Gallego
+  2913, D. Cuartielles, X. Yang (Arduino Verkstad)
+License: LGPL-2.1+
+
+Files: hardware/arduino/cores/arduino/CDC.cpp
+ hardware/arduino/cores/arduino/HID.cpp
+ hardware/arduino/cores/arduino/USBCore.cpp
+ hardware/arduino/cores/arduino/USBCore.h
+ hardware/arduino/cores/arduino/USBDesc.h
+ hardware/arduino/cores/robot/CDC.cpp
+ hardware/arduino/cores/robot/HID.cpp
+ hardware/arduino/cores/robot/USBCore.cpp
+ hardware/arduino/cores/robot/USBCore.h
+ hardware/arduino/cores/robot/USBDesc.h
+ hardware/arduino/bootloaders/diskloader/src/USB*
+Copyright: 2010-2011, Peter Barrett
+License: ISC
+ Permission to use, copy, modify, and/or distribute this software for  
+ any purpose with or without fee is hereby granted, provided that the  
+ above copyright notice and this permission notice appear in all copies.  
+ .
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL  
+ WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED  
+ WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR  
+ BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES  
+ OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,  
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,  
+ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS  
+ SOFTWARE.
+
+Files: hardware/arduino/cores/arduino/avr-libc/malloc.c
 Copyright: 2002, 2004, 2010, Joerg Wunsch
   2010, Gerben van den Broeke
 License: BSD
 
 Files: hardware/arduino/cores/arduino/IPAddress.h
+       hardware/arduino/cores/robot/IPAddress.h
 Copyright: 2011, Adrian McEwen
 License: Expat
 
 Files: hardware/arduino/cores/arduino/Udp.h
+       hardware/arduino/cores/robot/Udp.h
 Copyright: 2008, Bjoern Hartmann
 License: Expat
 
@@ -213,6 +266,10 @@ License: GPL-2+
 Files: app/src/processing/app/tools/DiscourseFormat.java
 Copyright: 2005-06, Ignacio Manuel Gonzalez Moreta
            2006-08, Ben Fry and Casey Reas
+License: GPL-2+
+
+Files: app/src/processing/app/helpers/filefilters/OnlyDirs.java
+Copyright: 2011, Cristian Maglie
 License: GPL-2+
 
 Files: hardware/arduino/bootloaders/atmega/ATmegaBOOT_168.c
@@ -324,22 +381,6 @@ License: MIT
 Files: reference/*
 Copyright: 2009-2012 Arduino Team
 License: CC-BY-SA-3.0
-
-Files: hardware/arduino/bootloaders/diskloader/src/USB*
-Copyright: 2010 Peter Barret
-License: ISC
-  Permission to use, copy, modify, and/or distribute this software for  
-  any purpose with or without fee is hereby granted, provided that the  
-  above copyright notice and this permission notice appear in all copies.  
-  .
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL  
-  WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED  
-  WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR  
-  BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES  
-  OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,  
-  WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,  
-  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS  
-  SOFTWARE.  
 
 Files: examples/Analog/*
 Copyright: 2008-2009, Tom Igoe
