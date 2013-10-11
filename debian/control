@@ -14,8 +14,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/arduino.git
 
 Package: arduino
 Architecture: all
-Depends: default-jre | java6-runtime, libjna-java,
- librxtx-java (>= 2.2pre2-3), ${misc:Depends},
+Depends: ${java:Depends}, ${misc:Depends},
  arduino-core (= ${binary:Version})
 Recommends: extra-xdg-menus, policykit-1
 Description: AVR development board IDE and built-in libraries

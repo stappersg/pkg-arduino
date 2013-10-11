@@ -57,7 +57,7 @@ override_dh_install:
     debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh
 
 override_jh_depends:
-#jh_depends can't resolve symlinks
+	jh_depends -jdefault
 
 copyright_check:
 	${MAKE} -f /usr/share/cdbs/1/rules/utils.mk debian/stamp-copyright-check
