@@ -1,10 +1,10 @@
 Description: newer gcc requires PROGMEM variables to be consts
 Author: Scott Howard <showard@debian.org>
 
-Index: arduino/libraries/Robot_Control/glcdfont.c
+Index: arduino/libraries/Robot_Control/arch/avr/glcdfont.c
 ===================================================================
---- arduino.orig/libraries/Robot_Control/glcdfont.c	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/Robot_Control/glcdfont.c	2013-06-04 15:58:54.879832010 -0400
+--- arduino.orig/libraries/Robot_Control/arch/avr/glcdfont.c	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/Robot_Control/arch/avr/glcdfont.c	2013-10-11 12:27:53.078742645 -0400
 @@ -6,7 +6,7 @@
  
  // standard ascii 5x7 font
@@ -14,10 +14,10 @@ Index: arduino/libraries/Robot_Control/glcdfont.c
          0x00, 0x00, 0x00, 0x00, 0x00,   
  	0x3E, 0x5B, 0x4F, 0x5B, 0x3E, 	
  	0x3E, 0x6B, 0x4F, 0x6B, 0x3E, 	
-Index: arduino/libraries/TFT/utility/glcdfont.c
+Index: arduino/libraries/TFT/src/utility/glcdfont.c
 ===================================================================
---- arduino.orig/libraries/TFT/utility/glcdfont.c	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/TFT/utility/glcdfont.c	2013-06-04 15:58:54.879832010 -0400
+--- arduino.orig/libraries/TFT/src/utility/glcdfont.c	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/TFT/src/utility/glcdfont.c	2013-10-11 12:27:53.078742645 -0400
 @@ -8,7 +8,7 @@
  
  // standard ascii 5x7 font
@@ -27,11 +27,11 @@ Index: arduino/libraries/TFT/utility/glcdfont.c
          0x00, 0x00, 0x00, 0x00, 0x00,   
  	0x3E, 0x5B, 0x4F, 0x5B, 0x3E, 	
  	0x3E, 0x6B, 0x4F, 0x6B, 0x3E, 	
-Index: arduino/libraries/TFT/utility/Adafruit_ST7735.cpp
+Index: arduino/libraries/TFT/src/utility/Adafruit_ST7735.cpp
 ===================================================================
---- arduino.orig/libraries/TFT/utility/Adafruit_ST7735.cpp	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/TFT/utility/Adafruit_ST7735.cpp	2013-06-04 15:58:57.000000000 -0400
-@@ -97,7 +97,7 @@
+--- arduino.orig/libraries/TFT/src/utility/Adafruit_ST7735.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/TFT/src/utility/Adafruit_ST7735.cpp	2013-10-11 12:27:53.078742645 -0400
+@@ -100,7 +100,7 @@
  // formatting -- storage-wise this is hundreds of bytes more compact
  // than the equivalent code.  Companion function follows.
  #define DELAY 0x80
@@ -40,7 +40,7 @@ Index: arduino/libraries/TFT/utility/Adafruit_ST7735.cpp
    Bcmd[] = {                  // Initialization commands for 7735B screens
      18,                       // 18 commands in list:
      ST7735_SWRESET,   DELAY,  //  1: Software reset, no args, w/delay
-@@ -231,7 +231,7 @@
+@@ -234,7 +234,7 @@
  
  // Companion code to the above tables.  Reads and issues
  // a series of LCD commands stored in PROGMEM byte array.
@@ -49,19 +49,19 @@ Index: arduino/libraries/TFT/utility/Adafruit_ST7735.cpp
  
    uint8_t  numCommands, numArgs;
    uint16_t ms;
-@@ -256,7 +256,7 @@
+@@ -259,7 +259,7 @@
  
  
  // Initialization code common to both 'B' and 'R' type displays
 -void Adafruit_ST7735::commonInit(uint8_t *cmdList) {
 +void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
  
-   constructor(ST7735_TFTWIDTH, ST7735_TFTHEIGHT);
-   colstart  = rowstart = 0; // May be overridden in init func
-Index: arduino/libraries/TFT/utility/Adafruit_ST7735.h
+   colstart = rowstart = 0; // May be overridden in init func
+ 
+Index: arduino/libraries/TFT/src/utility/Adafruit_ST7735.h
 ===================================================================
---- arduino.orig/libraries/TFT/utility/Adafruit_ST7735.h	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/TFT/utility/Adafruit_ST7735.h	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/TFT/src/utility/Adafruit_ST7735.h	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/TFT/src/utility/Adafruit_ST7735.h	2013-10-11 12:27:53.082742645 -0400
 @@ -129,8 +129,8 @@
    void     spiwrite(uint8_t),
             writecommand(uint8_t c),
@@ -73,10 +73,10 @@ Index: arduino/libraries/TFT/utility/Adafruit_ST7735.h
  //uint8_t  spiread(void);
  
    boolean  hwSPI;
-Index: arduino/libraries/Robot_Control/Squawk.cpp
+Index: arduino/libraries/Robot_Control/arch/avr/Squawk.cpp
 ===================================================================
---- arduino.orig/libraries/Robot_Control/Squawk.cpp	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/Robot_Control/Squawk.cpp	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/Robot_Control/arch/avr/Squawk.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/Robot_Control/arch/avr/Squawk.cpp	2013-10-11 12:27:53.082742645 -0400
 @@ -81,7 +81,7 @@
  uint8_t pcm = 128;
  
@@ -102,10 +102,10 @@ Index: arduino/libraries/Robot_Control/Squawk.cpp
 -}
 \ No newline at end of file
 +}
-Index: arduino/libraries/Robot_Control/SquawkSD.cpp
+Index: arduino/libraries/Robot_Control/arch/avr/SquawkSD.cpp
 ===================================================================
---- arduino.orig/libraries/Robot_Control/SquawkSD.cpp	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/Robot_Control/SquawkSD.cpp	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/Robot_Control/arch/avr/SquawkSD.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/Robot_Control/arch/avr/SquawkSD.cpp	2013-10-11 12:27:53.082742645 -0400
 @@ -13,7 +13,7 @@
  
  static StreamFile file;
@@ -122,10 +122,10 @@ Index: arduino/libraries/Robot_Control/SquawkSD.cpp
 -}*/
 \ No newline at end of file
 +}*/
-Index: arduino/libraries/Robot_Control/utility/scripts_Hello_User.h
+Index: arduino/libraries/Robot_Control/arch/avr/utility/scripts_Hello_User.h
 ===================================================================
---- arduino.orig/libraries/Robot_Control/utility/scripts_Hello_User.h	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/Robot_Control/utility/scripts_Hello_User.h	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/Robot_Control/arch/avr/utility/scripts_Hello_User.h	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/Robot_Control/arch/avr/utility/scripts_Hello_User.h	2013-10-11 12:27:53.082742645 -0400
 @@ -4,20 +4,20 @@
  //as the ram of Arduino is very tiny, keeping too many string in it
  //can kill the program
@@ -167,10 +167,10 @@ Index: arduino/libraries/Robot_Control/utility/scripts_Hello_User.h
 -*/
 \ No newline at end of file
 +*/
-Index: arduino/libraries/GSM/GSM3ShieldV1BaseProvider.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1BaseProvider.cpp	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1BaseProvider.cpp	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.cpp	2013-10-11 12:27:53.082742645 -0400
 @@ -12,7 +12,7 @@
  	return theGSM3ShieldV1ModemCore.getCommandError();
  };
@@ -180,10 +180,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1BaseProvider.cpp
  {
  	int i=0;
  	char c;
-Index: arduino/libraries/GSM/GSM3ShieldV1BaseProvider.h
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.h
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1BaseProvider.h	2013-06-04 15:58:54.891832010 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1BaseProvider.h	2013-06-04 15:58:54.883832010 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.h	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1BaseProvider.h	2013-10-11 12:27:53.082742645 -0400
 @@ -54,7 +54,7 @@
  		@param str			PROGMEN
  		@param auxLocate	Buffer where to locate strings
@@ -200,10 +200,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1BaseProvider.h
 -#endif
 \ No newline at end of file
 +#endif
-Index: arduino/libraries/GSM/GSM3ShieldV1AccessProvider.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1AccessProvider.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1AccessProvider.cpp	2013-03-18 21:49:27.515574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1AccessProvider.cpp	2013-06-04 16:00:44.043834605 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1AccessProvider.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1AccessProvider.cpp	2013-10-11 12:27:53.082742645 -0400
 @@ -6,8 +6,8 @@
  #define __TOUTMODEMCONFIGURATION__ 5000//equivalent to 30000 because of time in interrupt routine.
  #define __TOUTAT__ 1000
@@ -215,10 +215,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1AccessProvider.cpp
  
  
  GSM3ShieldV1AccessProvider::GSM3ShieldV1AccessProvider(bool debug)
-Index: arduino/libraries/GSM/GSM3ShieldV1DataNetworkProvider.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1DataNetworkProvider.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1DataNetworkProvider.cpp	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1DataNetworkProvider.cpp	2013-06-04 15:59:25.059832727 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1DataNetworkProvider.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1DataNetworkProvider.cpp	2013-10-11 12:27:53.082742645 -0400
 @@ -1,8 +1,8 @@
  #include <GSM3ShieldV1DataNetworkProvider.h>
  #include <Arduino.h>
@@ -230,10 +230,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1DataNetworkProvider.cpp
  
  //Attach GPRS main function.	
  GSM3_NetworkStatus_t GSM3ShieldV1DataNetworkProvider::attachGPRS(char* apn, char* user_name, char* password, bool synchronous)
-Index: arduino/libraries/GSM/GSM3ShieldV1MultiClientProvider.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1MultiClientProvider.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1MultiClientProvider.cpp	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1MultiClientProvider.cpp	2013-06-04 16:01:16.647835379 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1MultiClientProvider.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1MultiClientProvider.cpp	2013-10-11 12:27:53.086742645 -0400
 @@ -1,7 +1,7 @@
  #include <GSM3ShieldV1MultiClientProvider.h>
  #include <GSM3ShieldV1ModemCore.h>
@@ -243,10 +243,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1MultiClientProvider.cpp
  
  #define __TOUTFLUSH__ 10000
  
-Index: arduino/libraries/GSM/GSM3ShieldV1MultiServerProvider.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1MultiServerProvider.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1MultiServerProvider.cpp	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1MultiServerProvider.cpp	2013-06-04 16:02:37.907837311 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1MultiServerProvider.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1MultiServerProvider.cpp	2013-10-11 12:27:53.086742645 -0400
 @@ -4,7 +4,7 @@
  
  #define __NCLIENTS_MAX__ 3
@@ -256,10 +256,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1MultiServerProvider.cpp
  
  GSM3ShieldV1MultiServerProvider::GSM3ShieldV1MultiServerProvider()
  {
-Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1ModemCore.cpp	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp	2013-06-04 17:03:11.463923667 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.cpp	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.cpp	2013-10-11 12:27:53.086742645 -0400
 @@ -82,6 +82,13 @@
  }
  
@@ -283,10 +283,10 @@ Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp
  {
  	int i=0;
  	char c;
-Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.h
+Index: arduino/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.h
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1ModemCore.h	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1ModemCore.h	2013-06-04 17:03:10.503923645 -0400
+--- arduino.orig/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.h	2013-10-11 12:27:53.094742645 -0400
++++ arduino/libraries/GSM/arch/avr/GSM3ShieldV1ModemCore.h	2013-10-11 12:27:53.086742645 -0400
 @@ -167,7 +167,7 @@
  			@param CR			Carriadge return adding automatically
  			@return size

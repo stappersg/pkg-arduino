@@ -3,12 +3,19 @@ Description: Arduino copies precompiled binaries into the build tree,
 Author: Scott Howard <showard@debian.org>
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2012-03-11 19:15:03.000000000 -0400
-+++ arduino/build/build.xml	2012-03-11 19:18:01.245235543 -0400
-@@ -353,24 +353,9 @@
+--- arduino.orig/build/build.xml	2013-10-11 11:59:47.478682781 -0400
++++ arduino/build/build.xml	2013-10-11 12:03:24.954690505 -0400
+@@ -473,18 +473,6 @@
    </target>
  
    <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
+-    <!-- Unzip ARM tools -->
+-    <antcall target="unzip-arm-toolchain">
+-      <param name="dist_file" value="gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz" />
+-      <param name="dist_url" value="http://arduino.googlecode.com/files/gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz" />
+-      <param name="dist_check_file" value="g++_arm_none_eabi" />
+-    </antcall>
+-
 -    <!-- Unzip AVR tools -->
 -    <exec executable="tar" dir="linux/work/hardware">
 -      <arg value="-xjf"/>
@@ -17,16 +24,32 @@ Index: arduino/build/build.xml
    </target>
  
    <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
--    <copy tofile="linux/work/hardware/tools/avrdude" file="linux/dist/tools/avrdude64" overwrite="true" />
--    <copy tofile="linux/work/lib/librxtxSerial.so" file="linux/dist/lib/librxtxSerial64.so" overwrite="true" />
--
--    <chmod perm="755" file="linux/work/hardware/tools/avrdude" />
--
--    <!-- Unzip AVR tools -->
+@@ -495,16 +483,9 @@
+ 
+     <!-- Unzip ARM tools -->
+     <antcall target="unzip-arm-toolchain">
+-      <param name="dist_file" value="gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz" />
+-      <param name="dist_url" value="http://arduino.googlecode.com/files/gcc-arm-none-eabi-4.4.1-2010q1-188-linux32.tar.gz" />
+-      <param name="dist_check_file" value="g++_arm_none_eabi" />
+     </antcall>
+ 
+     <!-- Unzip AVR tools -->
 -    <exec executable="tar" dir="linux/work/hardware">
 -      <arg value="-xjf"/>
 -      <arg value="../../avr_tools_linux64.tar.bz2"/>
 -    </exec>
    </target>
-   
-   <target name="linux32-run" depends="linux32-build" 
+ 
+   <target name="linux32-run" depends="linux32-build" description="Run Linux (32-bit) version">
+@@ -541,11 +522,6 @@
+     </fail>
+ 
+     <!-- Unzip toolchain to the destination folder -->
+-    <exec executable="tar">
+-      <arg value="xfz"/>
+-      <arg value="${staging_folder}/dist/${dist_file}"/>
+-      <arg value="--directory=${staging_folder}/work/${staging_hardware_folder}/tools/"/>
+-    </exec>
+   </target>
+ 
+   <target name="linux-dist" depends="build"

@@ -1,31 +1,22 @@
 Description: newer avr-libc debricated some typedefs, this enables compatabillity
 Author: Scott Howard <showard@debian.org>
 
-Index: arduino/app/src/processing/app/debug/Compiler.java
+Index: arduino/hardware/arduino/avr/platform.txt
 ===================================================================
---- arduino.orig/app/src/processing/app/debug/Compiler.java	2013-06-04 15:41:53.987807747 -0400
-+++ arduino/app/src/processing/app/debug/Compiler.java	2013-06-04 15:43:19.791809786 -0400
-@@ -553,6 +553,7 @@
-       "-DARDUINO=" + Base.REVISION,
-       "-DUSB_VID=" + boardPreferences.get("build.vid"),
-       "-DUSB_PID=" + boardPreferences.get("build.pid"),
-+      "-D__PROG_TYPES_COMPAT__",
-     }));
- 
-     for (int i = 0; i < includePaths.size(); i++) {
-@@ -583,6 +584,7 @@
-       "-DUSB_VID=" + boardPreferences.get("build.vid"),
-       "-DUSB_PID=" + boardPreferences.get("build.pid"),
-       "-DARDUINO=" + Base.REVISION, 
-+      "-D__PROG_TYPES_COMPAT__",
-     }));
- 		
-     for (int i = 0; i < includePaths.size(); i++) {
-@@ -616,6 +618,7 @@
-       "-DUSB_VID=" + boardPreferences.get("build.vid"),
-       "-DUSB_PID=" + boardPreferences.get("build.pid"),      
-       "-DARDUINO=" + Base.REVISION,
-+      "-D__PROG_TYPES_COMPAT__",
-     }));
- 
-     for (int i = 0; i < includePaths.size(); i++) {
+--- arduino.orig/hardware/arduino/avr/platform.txt	2013-10-11 11:56:38.146676057 -0400
++++ arduino/hardware/arduino/avr/platform.txt	2013-10-11 12:31:45.822750910 -0400
+@@ -14,12 +14,12 @@
+ # Default "compiler.path" is correct, change only if you want to overidde the initial value
+ #compiler.path={ide.path}/tools/avr/bin/..
+ compiler.c.cmd=avr-gcc
+-compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD
++compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD -D__PROG_TYPES_COMPAT__
+ compiler.c.elf.flags=-Os -Wl,--gc-sections
+ compiler.c.elf.cmd=avr-gcc
+ compiler.S.flags=-c -g -assembler-with-cpp
+ compiler.cpp.cmd=avr-g++
+-compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD
++compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD -D__PROG_TYPES_COMPAT__
+ compiler.ar.cmd=avr-ar
+ compiler.ar.flags=rcs
+ compiler.objcopy.cmd=avr-objcopy

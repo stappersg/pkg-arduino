@@ -4,8 +4,5 @@ wrapper_for_deb.patch
 remove_copying_binaries.patch
 permission_fix.patch
 gcc47_avr.patch
-no-caller-saves.patch
-Adafruit_GFX.patch
 const_progmem.patch
 depricated_typedef_support.patch
-roboIRread.patch

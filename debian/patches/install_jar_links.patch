@@ -4,14 +4,14 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2012-03-11 19:09:34.365223497 -0400
-+++ arduino/build/build.xml	2012-03-11 19:15:03.717231325 -0400
-@@ -21,7 +21,7 @@
- 	     value="linux64"><os family="unix" arch="amd64" /></condition>
+--- arduino.orig/build/build.xml	2013-10-11 11:59:27.918682086 -0400
++++ arduino/build/build.xml	2013-10-11 11:59:27.910682086 -0400
+@@ -35,7 +35,7 @@
+   </condition>
  
    <!-- Libraries required for running arduino -->
 -  <fileset dir=".." id="runtime.jars">
 +  <fileset dir=".." id="runtime.jars" followsymlinks="no">
      <include name="core/core.jar" />
      <include name="app/pde.jar" />
-     <include name="app/lib/ecj.jar" />
+     <include name="app/lib/commons-codec-1.7.jar" />
