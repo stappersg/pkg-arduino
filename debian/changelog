@@ -1,3 +1,9 @@
+arduino (1:1.5.4.2+dfsg-1) UNRELEASED; urgency=low
+
+  * New upstream release (Closes: #721742)
+
+ -- Scott Howard <showard@debian.org>  Fri, 11 Oct 2013 10:42:57 -0400
+
 arduino (1:1.0.5+dfsg2-1) unstable; urgency=low
 
   * New upstream release

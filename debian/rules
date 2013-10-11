@@ -50,25 +50,21 @@ override_jh_depends:
 copyright_check:
 	${MAKE} -f /usr/share/cdbs/1/rules/utils.mk debian/stamp-copyright-check
 	rm debian/stamp-copyright-check
-    
-DESTDIR=$(CURDIR)/debian/arduino-$(SVNTAG)
-TARFILE=arduino_$(SVNTAG)+dfsg.orig.tar.gz
+
+DESTDIR=$(CURDIR)/debian/Arduino-1.5.4-r2
+#DESTDIR=$(CURDIR)/debian/Arduino-$(SVNTAG)
+TARGZFILE=arduino_$(SVNTAG).orig.tar.gz
+TARXZFILE=arduino_$(SVNTAG)+dfsg.orig.tar.xz
 
 get-orig-source:
-	wget http://arduino.googlecode.com/files/arduino-$(SVNTAG)-src.tar.gz
-	#wget http://files.arduino.cc/downloads/arduino-1.0.1-rc2-src.tar.gz #used for RC
-	#mv arduino-1.0.1-rc2-src.tar.gz arduino-1.0.1~rc2-src.tar.gz #used for RC
-	jh_repack --upstream-version $(SVNTAG) arduino-$(SVNTAG)-src.tar.gz;\
-	tar xzf arduino-$(SVNTAG)-src.tar.gz -C debian/;\
-	#mv debian/arduino-1.0.1-rc2 debian/arduino-1.0.1~rc2 #used for RC
-	#remove junk
-	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore -or -iname *.bz2 | xargs -n1 rm -f;\
+	uscan --download-current-version --rename
+	jh_repack --version $(SVNTAG) ../arduino_$(SVNTAG)
+	tar -xzf ../$(TARGZFILE) -C debian/
+	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore -or -iname *.bz2 -or -iname *macosx* -or -iname *windows* | xargs -n1 rm -rf;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
-	#precompiled avr32 binaries, no sane build system
-	rm -rf $(DESTDIR)/hardware/arduino/firmwares/wifishield;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
-	find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname key*.gz -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
-	
-	tar zcf $(CURDIR)/../$(TARFILE) -C $(CURDIR)/debian arduino-$(SVNTAG);\
+	#find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname key*.gz -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
+	tar Jcf $(CURDIR)/../$(TARXZFILE) -C $(CURDIR)/debian Arduino-1.5.4-r2;\
 	rm -fr $(DESTDIR);\
-	rm -fr arduino-$(SVNTAG)-src.tar.gz
+	rm -fr ../$(TARGZFILE)
+

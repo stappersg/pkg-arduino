@@ -1,5 +1,5 @@
 version=3
 opts=\
-dversionmangle=s/.dfsg//,\
-uversionmangle=s/00/0\./ \
-http://code.google.com/p/arduino/downloads/list?can=1 .*/arduino-(\d[\d\.]*)-src\.(?:zip|tgz|tbz2|txz|tar\.gz|tar\.bz2|tar\.xz)
+dversionmangle=s/\+dfsg//,\
+uversionmangle=s/00/0\./;s/\-r/\./ \
+https://github.com/arduino/Arduino/tags .*/(\d[\d\.].*)\.tar\.gz
