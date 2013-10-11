@@ -4,7 +4,14 @@
 # export DH_VERBOSE=1
 
 export JAVA_HOME=/usr/lib/jvm/default-java
-export CLASSPATH=/usr/share/java/jna.jar:/usr/share/java/RXTXcomm.jar
+export CLASSPATH=\
+/usr/share/java/jna.jar:\
+/usr/share/java/RXTXcomm.jar:\
+/usr/share/java/jsch.jar:\
+/usr/share/java/jmdns.jar:\
+/usr/share/java/commons-logging.jar:\
+/usr/share/java/commons-httpclient.jar:\
+/usr/share/java/commons-exec.jar
 
 SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/[0-9]*:\([0-9].*\)+dfsg-[0-9]/\1/')
 
@@ -39,10 +46,15 @@ override_dh_compress:
 
 override_dh_install:
 	find build/linux/work -type d -empty -delete
-	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh
+	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh -Xelf -X.a -X.lib
 	mkdir -p debian/arduino-core/usr/share/arduino/lib
 	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
-	chmod +x debian/arduino-core/usr/share/arduino/hardware/arduino/bootloaders/optiboot/makeall
+	chmod +x \
+    debian/arduino-core/usr/share/arduino/hardware/arduino/avr/bootloaders/optiboot/makeall \
+    debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade.sh \
+    debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade_mac.sh \
+    debian/arduino-core/usr/share/arduino/hardware/arduino/sam/system/CMSIS/CMSIS/Documentation/DSP_Lib/html/installdox \
+    debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh
 
 override_jh_depends:
 #jh_depends can't resolve symlinks

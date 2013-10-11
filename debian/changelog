@@ -1,15 +1,11 @@
-arduino (1:1.5.4.2+dfsg-1ubuntu1) UNRELEASED; urgency=low
+arduino (1:1.5.4.2+dfsg-1) experimental; urgency=low
 
   * New upstream release (Closes: #721742)
   * Refreshed patches:
-	deleted:    debian/patches/Adafruit_GFX.patch (accepted upstream)
-	modified:   debian/patches/const_progmem.patch
-	modified:   debian/patches/depricated_typedef_support.patch
-	modified:   debian/patches/gcc47_avr.patch
-	modified:   debian/patches/install_jar_links.patch
-	deleted:    debian/patches/no-caller-saves.patch (AVR bug, needs testing)
-	modified:   debian/patches/remove_copying_binaries.patch
-	deleted:    debian/patches/roboIRread.patch (accepted upstream)
+      deleted:    debian/patches/Adafruit_GFX.patch (accepted upstream)
+      deleted:    debian/patches/no-caller-saves.patch (AVR bug, needs testing,
+                  possibly reapply)
+      deleted:    debian/patches/roboIRread.patch (accepted upstream)
 
  -- Scott Howard <showard@debian.org>  Fri, 11 Oct 2013 12:36:34 -0400
 

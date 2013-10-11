@@ -1,0 +1,26 @@
+Description: Don't use precombiled bossa or adk2tool binaries.
+Author: Scott Howard <showard@debian.org>
+
+Index: arduino/build/build.xml
+===================================================================
+--- arduino.orig/build/build.xml	2013-10-11 13:00:12.706811530 -0400
++++ arduino/build/build.xml	2013-10-11 13:56:19.118931087 -0400
+@@ -456,18 +456,6 @@
+     <copy todir="linux/work" file="linux/dist/arduino" />
+     <chmod perm="755" file="linux/work/arduino" />
+ 
+-    <mkdir dir="linux/work/hardware/tools" />
+-    <copy file="linux/dist/tools/adk2install" todir="linux/work/hardware/tools" />
+-    <copy file="linux/dist/tools/adk2tool" todir="linux/work/hardware/tools" />
+-    <copy file="linux/dist/tools/avrdude${arch-bits}" tofile="linux/work/hardware/tools/avrdude" />
+-    <copy file="linux/dist/tools/avrdude.conf" todir="linux/work/hardware/tools" />
+-    <copy file="linux/dist/tools/bossac${arch-bits}" tofile="linux/work/hardware/tools/bossac" />
+-
+-    <chmod perm="755" file="linux/work/hardware/tools/avrdude" />
+-    <chmod perm="755" file="linux/work/hardware/tools/bossac" />
+-    <chmod perm="755" file="linux/work/hardware/tools/adk2tool" />
+-    <chmod perm="755" file="linux/work/hardware/tools/adk2install" />
+-
+     <copy todir="linux/work" file="linux/dist/arduino" />
+     <chmod perm="755" file="linux/work/arduino" />
+   </target>
