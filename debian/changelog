@@ -1,3 +1,9 @@
+arduino (1:1.5.4.2+dfsg-2) experimental; urgency=low
+
+  * Don't distribute sourceless minified .js files (Closes: #735229)
+
+ -- Scott Howard <showard@debian.org>  Mon, 13 Jan 2014 22:41:05 -0500
+
 arduino (1:1.5.4.2+dfsg-1) experimental; urgency=low
 
   * New upstream release (Closes: #721742)
