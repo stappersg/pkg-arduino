@@ -9,3 +9,4 @@ depricated_typedef_support.patch
 no-macosx-windows-build.patch
 adk2install_bssoc.patch
 no-caller-saves.patch
+zepto_js.patch

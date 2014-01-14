@@ -2,6 +2,7 @@ arduino (1:1.5.6+dfsg-1) UNRELEASED; urgency=low
 
   * Remove dependency and link to rxtx, upstream uses libjssc-java now
   * arduino-core recommends bossa-cli
+  * debian/patches/zepto_js.patch, adds source code for zepto.js
 
  -- Scott Howard <showard@debian.org>  Mon, 30 Dec 2013 12:30:57 -0500
 
