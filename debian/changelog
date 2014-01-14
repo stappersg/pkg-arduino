@@ -1,3 +1,10 @@
+arduino (1:1.5.6+dfsg-1) UNRELEASED; urgency=low
+
+  * Remove dependency and link to rxtx, upstream uses libjssc-java now
+  * arduino-core recommends bossa-cli
+
+ -- Scott Howard <showard@debian.org>  Mon, 30 Dec 2013 12:30:57 -0500
+
 arduino (1:1.5.4.2+dfsg-2) experimental; urgency=low
 
   * Use jh_depends to manage dependencies.

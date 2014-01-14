@@ -6,7 +6,7 @@
 export JAVA_HOME=/usr/lib/jvm/default-java
 export CLASSPATH=\
 /usr/share/java/jna.jar:\
-/usr/share/java/RXTXcomm.jar:\
+/usr/share/java/jssc.jar:\
 /usr/share/java/jsch.jar:\
 /usr/share/java/jmdns.jar:\
 /usr/share/java/commons-logging.jar:\

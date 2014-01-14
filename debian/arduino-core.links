@@ -1,5 +1,6 @@
 /etc/avrdude.conf /usr/share/arduino/hardware/tools/avrdude.conf
 /usr/bin/avrdude /usr/share/arduino/hardware/tools/avrdude
+/usr/bin/bossac /usr/share/arduino/hardware/tools/bossac
 /usr/share/doc/arduino-core/examples /usr/share/arduino/examples
 /usr/share/doc/arduino-core/reference /usr/share/arduino/reference
 /usr/bin /usr/share/arduino/hardware/tools/avr/bin
