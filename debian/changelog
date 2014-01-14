@@ -5,6 +5,14 @@ arduino (1:1.5.6+dfsg-1) UNRELEASED; urgency=low
 
  -- Scott Howard <showard@debian.org>  Mon, 30 Dec 2013 12:30:57 -0500
 
+arduino (1:1.5.4.2+dfsg-3) experimental; urgency=low
+
+  * Don't distribute sourceless minified .js files (Closes: #735229)
+    - needs libraries/Bridge/examples/TemperatureWebPanel/www/zepto.min.js
+  * Debian S-V 3.9.5, no changes
+
+ -- Scott Howard <showard@debian.org>  Mon, 13 Jan 2014 23:02:40 -0500
+
 arduino (1:1.5.4.2+dfsg-2) experimental; urgency=low
 
   * Use jh_depends to manage dependencies.
