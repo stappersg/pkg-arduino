@@ -1,6 +1,7 @@
 arduino (1:1.5.4.2+dfsg-3) experimental; urgency=low
 
   * Don't distribute sourceless minified .js files (Closes: #735229)
+    - needs libraries/Bridge/examples/TemperatureWebPanel/www/zepto.min.js
   * Debian S-V 3.9.5, no changes
 
  -- Scott Howard <showard@debian.org>  Mon, 13 Jan 2014 23:02:40 -0500
