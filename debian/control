@@ -6,7 +6,7 @@ Uploaders: Philip Hands <phil@hands.com>
 Build-Depends: debhelper (>= 8), javahelper, default-jdk,
  librxtx-java (>= 2.2pre2-3), libjna-java, libjsch-java, libjmdns-java,
  libcommons-logging-java, libcommons-httpclient-java, libcommons-exec-java, ant
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://www.arduino.cc
 Vcs-Git: git://anonscm.debian.org/collab-maint/arduino.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/arduino.git
