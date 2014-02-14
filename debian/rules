@@ -44,6 +44,11 @@ override_dh_install:
 	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
 	chmod +x debian/arduino-core/usr/share/arduino/hardware/arduino/bootloaders/optiboot/makeall
 
+override_dh_installdocs:
+	dh_installdocs
+	#Delete links to fetch web based icon (privacy violation, thanks lintian)
+	sed -i '/favicon\.png/d' debian/arduino-core/usr/share/doc/arduino-core/reference/*.html
+
 override_jh_depends:
 #jh_depends can't resolve symlinks
 
