@@ -6,6 +6,13 @@ arduino (1:1.5.6+dfsg-1) UNRELEASED; urgency=low
 
  -- Scott Howard <showard@debian.org>  Mon, 30 Dec 2013 12:30:57 -0500
 
+arduino (1:1.0.5+dfsg2-2) unstable; urgency=low
+
+  * remove link to web-based icons in documentation. Fixes privacy
+    violation, thanks lintian.
+
+ -- Scott Howard <showard@debian.org>  Fri, 14 Feb 2014 16:41:41 -0500
+
 arduino (1:1.5.4.2+dfsg-3) experimental; urgency=low
 
   * Don't distribute sourceless minified .js files (Closes: #735229)

@@ -56,6 +56,11 @@ override_dh_install:
     debian/arduino-core/usr/share/arduino/hardware/arduino/sam/system/CMSIS/CMSIS/Documentation/DSP_Lib/html/installdox \
     debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh
 
+override_dh_installdocs:
+	dh_installdocs
+	#Delete links to fetch web based icon (privacy violation, thanks lintian)
+	sed -i '/favicon\.png/d' debian/arduino-core/usr/share/doc/arduino-core/reference/*.html
+
 override_jh_depends:
 	jh_depends -jdefault
 
