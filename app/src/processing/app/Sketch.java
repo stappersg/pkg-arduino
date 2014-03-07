@@ -23,6 +23,7 @@
 
 package processing.app;
 
+import cc.arduino.packages.BoardPort;
 import cc.arduino.packages.UploaderAndMonitorFactory;
 
 import cc.arduino.packages.Uploader;
@@ -30,13 +31,13 @@ import processing.app.debug.*;
 import processing.app.debug.Compiler;
 import processing.app.forms.PasswordAuthorizationDialog;
 import processing.app.helpers.PreferencesMap;
+import processing.app.helpers.FileUtils;
 import processing.app.packages.Library;
 import processing.app.packages.LibraryList;
 import processing.app.preproc.*;
 import processing.core.*;
 import static processing.app.I18n._;
 
-import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -96,6 +97,12 @@ public class Sketch {
   private LibraryList importedLibraries;
 
   /**
+   * File inside the build directory that contains the build options
+   * used for the last build.
+   */
+  static final String BUILD_PREFS_FILE = "buildprefs.txt";
+
+  /**
    * path is location of the main .pde file, because this is also
    * simplest to use when opening the file from the finder/explorer.
    */
@@ -150,7 +157,7 @@ public class Sketch {
    * Another exception is when an external editor is in use,
    * in which case the load happens each time "run" is hit.
    */
-  protected void load() {
+  protected void load() throws IOException {
     codeFolder = new File(folder, "code");
     dataFolder = new File(folder, "data");
 
@@ -186,10 +193,16 @@ public class Sketch {
           if (Sketch.isSanitaryName(base)) {
             code[codeCount++] =
               new SketchCode(new File(folder, filename), extension);
+          } else {
+            editor.console.message(I18n.format("File name {0} is invalid: ignored", filename), true, false);
           }
         }
       }
     }
+
+    if (codeCount == 0)
+      throw new IOException(_("No valid code files found"));
+
     // Remove any code that wasn't proper
     code = (SketchCode[]) PApplet.subset(code, 0, codeCount);
 
@@ -794,58 +807,29 @@ public class Sketch {
    * because they can cause trouble.
    */
   protected boolean saveAs() throws IOException {
-    String newParentDir = null;
-    String newName = null;
+    JFileChooser fd = new JFileChooser();
+    fd.setDialogTitle(_("Save sketch folder as..."));
+    fd.setDialogType(JFileChooser.SAVE_DIALOG);
 
-    /*
-      JFileChooser fc = new JFileChooser();
-      fc.setDialogTitle("Save sketch folder as...");
-      if (isReadOnly() || isUntitled()) {
-        // default to the sketchbook folder
-        fc.setCurrentDirectory(new File(Preferences.get("sketchbook.path")));
-      } else {
-        // default to the parent folder of where this was
-        fc.setCurrentDirectory(folder.getParentFile());
-      }
-      // can't do this, will try to save into itself by default
-      //fc.setSelectedFile(folder);
-      int result = fc.showSaveDialog(editor);
-      if (result == JFileChooser.APPROVE_OPTION) {
-        File selection = fc.getSelectedFile();
-        newParentDir = selection.getParent();
-        newName = selection.getName();
-      }
-    */
-
-    // get new name for folder
-    FileDialog fd = new FileDialog(editor,
-                                   _("Save sketch folder as..."),
-                                   FileDialog.SAVE);
     if (isReadOnly() || isUntitled()) {
       // default to the sketchbook folder
-      fd.setDirectory(Base.getSketchbookFolder().getAbsolutePath());
+      fd.setSelectedFile(new File(Base.getSketchbookFolder().getAbsolutePath(), folder.getName()));
     } else {
       // default to the parent folder of where this was
-      fd.setDirectory(folder.getParent());
+      fd.setSelectedFile(folder);
     }
-    String oldName = folder.getName();
-    fd.setFile(oldName);
 
-    fd.setVisible(true);
-    newParentDir = fd.getDirectory();
-    newName = fd.getFile();
+    int returnVal = fd.showSaveDialog(editor);
 
-    // user canceled selection
-    if (newName == null) return false;
-    newName = Sketch.checkName(newName);
+    if (returnVal != JFileChooser.APPROVE_OPTION) {
+      return false;
+    }
 
-    File newFolder = new File(newParentDir, newName);
-//    String newPath = newFolder.getAbsolutePath();
-//    String oldPath = folder.getAbsolutePath();
+    File selectedFile = fd.getSelectedFile();
 
-//    if (newPath.equals(oldPath)) {
-//      return false;  // Can't save a sketch over itself
-//    }
+    String newName = Sketch.checkName(selectedFile.getName());
+
+    File newFolder = new File(selectedFile.getParentFile(), newName);
 
     // make sure there doesn't exist a .cpp file with that name already
     // but ignore this situation for the first tab, since it's probably being
@@ -970,23 +954,25 @@ public class Sketch {
     // get a dialog, select a file to add to the sketch
     String prompt =
       _("Select an image or other data file to copy to your sketch");
-    //FileDialog fd = new FileDialog(new Frame(), prompt, FileDialog.LOAD);
-    FileDialog fd = new FileDialog(editor, prompt, FileDialog.LOAD);
-    fd.setVisible(true);
+    JFileChooser fd = new JFileChooser(Preferences.get("last.folder"));
+    fd.setDialogTitle(prompt);
 
-    String directory = fd.getDirectory();
-    String filename = fd.getFile();
-    if (filename == null) return;
+    int returnVal = fd.showOpenDialog(editor);
+
+    if (returnVal != JFileChooser.APPROVE_OPTION) {
+      return;
+    }
 
     // copy the file into the folder. if people would rather
     // it move instead of copy, they can do it by hand
-    File sourceFile = new File(directory, filename);
+    File sourceFile = fd.getSelectedFile();
 
     // now do the work of adding the file
     boolean result = addFile(sourceFile);
 
     if (result) {
       editor.statusNotice(_("One file added to the sketch."));
+      Preferences.set("last.folder", sourceFile.getAbsolutePath());
     }
   }
 
@@ -1202,12 +1188,12 @@ public class Sketch {
   /**
    * Cleanup temporary files used during a build/run.
    */
-  protected void cleanup() {
+  protected void cleanup(boolean force) {
     // if the java runtime is holding onto any files in the build dir, we
     // won't be able to delete them, so we need to force a gc here
     System.gc();
 
-    if (deleteFilesOnNextBuild) {
+    if (force) {
       // delete the entire directory and all contents
       // when we know something changed and all objects
       // need to be recompiled, or if the board does not
@@ -1219,8 +1205,6 @@ public class Sketch {
       // work because the build dir won't exist at startup, so the classloader
       // will ignore the fact that that dir is in the CLASSPATH in run.sh
       Base.removeDescendants(tempBuildFolder);
-
-      deleteFilesOnNextBuild = false;
     } else {
       // delete only stale source files, from the previously
       // compiled sketch.  This allows multiple windows to be
@@ -1271,18 +1255,11 @@ public class Sketch {
    */
   //protected String compile() throws RunnerException {
 
-  // called when any setting changes that requires all files to be recompiled
-  public static void buildSettingChanged() {
-    deleteFilesOnNextBuild = true;
-  }
-
-  private static boolean deleteFilesOnNextBuild = true;
-
   /**
    * When running from the editor, take care of preparations before running
    * the build.
    */
-  public void prepare() {
+  public void prepare() throws IOException {
     // make sure the user didn't hide the sketch folder
     ensureExistence();
 
@@ -1306,12 +1283,6 @@ public class Sketch {
       load();
     }
 
-    // in case there were any boogers left behind
-    // do this here instead of after exiting, since the exit
-    // can happen so many different ways.. and this will be
-    // better connected to the dataFolder stuff below.
-    cleanup();
-
 //    // handle preprocessing the main file's code
 //    return build(tempBuildFolder.getAbsolutePath());
   }
@@ -1332,11 +1303,11 @@ public class Sketch {
    * @param buildPath Location to copy all the .java files
    * @return null if compilation failed, main class name if not
    */
-  public String preprocess(String buildPath) throws RunnerException {
-    return preprocess(buildPath, new PdePreprocessor());
+  public void preprocess(String buildPath) throws RunnerException {
+    preprocess(buildPath, new PdePreprocessor());
   }
 
-  public String preprocess(String buildPath, PdePreprocessor preprocessor) throws RunnerException {
+  public void preprocess(String buildPath, PdePreprocessor preprocessor) throws RunnerException {
     // make sure the user didn't hide the sketch folder
     ensureExistence();
 
@@ -1392,18 +1363,12 @@ public class Sketch {
     // 2. run preproc on that code using the sugg class name
     //    to create a single .java file and write to buildpath
 
-    String primaryClassName = null;
-
     try {
       // Output file
       File streamFile = new File(buildPath, name + ".cpp");
       FileOutputStream outputStream = new FileOutputStream(streamFile);
       preprocessor.write(outputStream);
       outputStream.close();
-
-      // store this for the compiler and the runtime
-      primaryClassName = name + ".cpp";
-
     } catch (FileNotFoundException fnfe) {
       fnfe.printStackTrace();
       String msg = _("Build folder disappeared or could not be written");
@@ -1424,10 +1389,7 @@ public class Sketch {
 
     importedLibraries = new LibraryList();
     for (String item : preprocessor.getExtraImports()) {
-
       Library lib = Base.importToLibraryTable.get(item);
-      //If needed can Debug libraryPath here
-
       if (lib != null && !importedLibraries.contains(lib)) {
         importedLibraries.add(lib);
       }
@@ -1455,7 +1417,6 @@ public class Sketch {
         sc.addPreprocOffset(headerOffset);
       }
     }
-    return primaryClassName;
   }
 
 
@@ -1548,6 +1509,46 @@ public class Sketch {
     return build(tempBuildFolder.getAbsolutePath(), verbose);
   }
 
+  /**
+   * Check if the build preferences used on the previous build in
+   * buildPath match the ones given.
+   */
+  protected boolean buildPreferencesChanged(File buildPrefsFile, String newBuildPrefs) {
+    // No previous build, so no match
+    if (!buildPrefsFile.exists())
+      return true;
+
+    String previousPrefs;
+    try {
+      previousPrefs = FileUtils.readFileToString(buildPrefsFile);
+    } catch (IOException e) {
+      System.err.println(_("Could not read prevous build preferences file, rebuilding all"));
+      return true;
+    }
+
+    if (!previousPrefs.equals(newBuildPrefs)) {
+      System.out.println(_("Build options changed, rebuilding all"));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Returns the build preferences of the given compiler as a string.
+   * Only includes build-specific preferences, to make sure unrelated
+   * preferences don't cause a rebuild (in particular preferences that
+   * change on every start, like last.ide.xxx.daterun). */
+  protected String buildPrefsString(Compiler compiler) {
+    PreferencesMap buildPrefs = compiler.getBuildPreferences();
+    String res = "";
+    SortedSet<String> treeSet = new TreeSet<String>(buildPrefs.keySet());
+    for (String k : treeSet) {
+      if (k.startsWith("build.") || k.startsWith("compiler.") || k.startsWith("recipes."))
+        res += k + " = " + buildPrefs.get(k) + "\n";
+    }
+    return res;
+  }
 
   /**
    * Preprocess and compile all the code for this sketch.
@@ -1559,14 +1560,33 @@ public class Sketch {
    * @return null if compilation failed, main class name if not
    */
   public String build(String buildPath, boolean verbose) throws RunnerException {
+    String primaryClassName = name + ".cpp";
+    Compiler compiler = new Compiler(this, buildPath, primaryClassName);
+    File buildPrefsFile = new File(buildPath, BUILD_PREFS_FILE);
+    String newBuildPrefs = buildPrefsString(compiler);
+
+    // Do a forced cleanup (throw everything away) if the previous
+    // build settings do not match the previous ones
+    boolean prefsChanged = buildPreferencesChanged(buildPrefsFile, newBuildPrefs);
+    cleanup(prefsChanged);
+
+    if (prefsChanged) {
+      try {
+        PrintWriter out = new PrintWriter(buildPrefsFile);
+        out.print(newBuildPrefs);
+        out.close();
+      } catch (IOException e) {
+        System.err.println(_("Could not write build preferences file"));
+      }
+    }
+
     // run the preprocessor
     editor.status.progressUpdate(20);
-    String primaryClassName = preprocess(buildPath);
+    preprocess(buildPath);
 
     // compile the program. errors will happen as a RunnerException
     // that will bubble up to whomever called build().
-    Compiler compiler = new Compiler();
-    if (compiler.compile(this, buildPath, primaryClassName, verbose)) {
+    if (compiler.compile(verbose)) {
       size(compiler.getBuildPreferences());
       return primaryClassName;
     }
@@ -1670,7 +1690,14 @@ public class Sketch {
     TargetPlatform target = Base.getTargetPlatform();
     String board = Preferences.get("board");
 
-    Uploader uploader = new UploaderAndMonitorFactory().newUploader(target.getBoards().get(board), Preferences.get("serial.port"));
+    BoardPort boardPort = Base.getDiscoveryManager().find(Preferences.get("serial.port"));
+
+    if (boardPort == null) {
+      editor.statusError(I18n.format("Board at {0} is not available", Preferences.get("serial.port")));
+      return false;
+    }
+
+    Uploader uploader = new UploaderAndMonitorFactory().newUploader(target.getBoards().get(board), boardPort);
 
     boolean success = false;
     do {
@@ -2000,7 +2027,7 @@ public class Sketch {
       String msg =
         _("The sketch name had to be modified. Sketch names can only consist\n" +
           "of ASCII characters and numbers (but cannot start with a number).\n" +
-          "They should also be less less than 64 characters long.");
+          "They should also be less than 64 characters long.");
       System.out.println(msg);
     }
     return newName;

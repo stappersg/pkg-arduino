@@ -93,25 +93,31 @@ public class Preferences {
 
   Language languages[] = {
       new Language(_("System Default"), "", ""),
+      new Language(_("Albanian"), "shqip", "sq"),
       new Language(_("Arabic"), "العربية", "ar"),
       new Language(_("Aragonese"), "Aragonés", "an"),
+      new Language(_("Belarusian"), "Беларуская мова", "be"),
       new Language(_("Bulgarian"), "български", "bg"),
       new Language(_("Catalan"), "Català", "ca"),
-      new Language(_("Croatian"), "Hrvatski", "hr_HR"),
-      new Language(_("Czech"), "český", "cs_CZ"),
       new Language(_("Chinese Simplified"), "简体中文", "zh_CN"),
       new Language(_("Chinese Traditional"), "繁體中文", "zh_TW"),
+      new Language(_("Croatian"), "Hrvatski", "hr_HR"),
+      new Language(_("Czech"), "český", "cs_CZ"),
       new Language(_("Danish"), "Dansk", "da_DK"),
       new Language(_("Dutch"), "Nederlands", "nl"),
       new Language(_("English"), "English", "en"),
+      new Language(_("English (United Kingdom)"), "English (United Kingdom)", "en_GB"),
       new Language(_("Estonian"), "Eesti", "et"),
-      new Language(_("Filipino"), "Pilipino", "tl"),
+      new Language(_("Estonian (Estonia)"), "Eesti keel", "et_EE"),
+      new Language(_("Filipino"), "Pilipino", "fil"),
+      new Language(_("Finnish"), "Suomi", "fi"),
       new Language(_("French"), "Français", "fr"),
       new Language(_("Canadian French"), "Canadienne-français", "fr_CA"),
       new Language(_("Galician"), "Galego", "gl"),
       new Language(_("Georgian"), "საქართველოს", "ka_GE"),
       new Language(_("German"), "Deutsch", "de_DE"),
       new Language(_("Greek"), "ελληνικά", "el_GR"),
+      new Language(_("Hebrew"), "עברית", "he"),
       new Language(_("Hindi"), "हिंदी", "hi"),
       new Language(_("Hungarian"), "Magyar", "hu"),
       new Language(_("Indonesian"), "Bahasa Indonesia", "id"),
@@ -120,7 +126,6 @@ public class Preferences {
       new Language(_("Korean"), "한국어", "ko_KR"),
       new Language(_("Latvian"), "Latviešu", "lv_LV"),
       new Language(_("Lithuaninan"), "Lietuvių Kalba", "lt_LT"),
-      new Language(_("Marathi"), "मराठी", "mr"),
       new Language(_("Norwegian Bokmål"), "Norsk bokmål", "nb_NO"),
       new Language(_("Persian"), "فارسی", "fa"),
       new Language(_("Polish"), "Język Polski", "pl"),
@@ -128,15 +133,20 @@ public class Preferences {
       new Language(_("Portuguese (Portugal)"), "Português (Portugal)", "pt_PT"),
       new Language(_("Romanian"), "Română", "ro"),
       new Language(_("Russian"), "Русский", "ru"),
+      new Language(_("Slovenian"), "Slovenščina", "sl_SI"),
       new Language(_("Spanish"), "Español", "es"),
+      new Language(_("Swedish"), "Svenska", "sv"),
       new Language(_("Tamil"), "தமிழ்", "ta"),
       new Language(_("Turkish"), "Türk", "tr"),
-      new Language(_("Ukrainian"), "Український", "uk"), };
+      new Language(_("Ukrainian"), "Український", "uk"), 
+      new Language(_("Vietnamese"), "Tiếng Việt", "vi"), 
+      };
 
+  // Incomplete languages 
   Language missingLanguages[] = {
       new Language(_("Armenian"), "Հայերեն", "hy"),
       new Language(_("Asturian"), "Asturianu", "ast"),
-      new Language(_("Belarusian"), "Беларуская мова", "be"),
+      new Language(_("Basque"), "Euskara", "eu"),
       new Language(_("Bosnian"), "Bosanski", "bs"),
       new Language(_("Burmese (Myanmar)"), "ဗမာစကား", "my_MM"),
       new Language(_("Chinese (China)"), "", "zh_CN"),
@@ -144,16 +154,12 @@ public class Preferences {
       new Language(_("Chinese (Taiwan)"), "", "zh_TW"),
       new Language(_("Chinese (Taiwan) (Big5)"), "", "zh_TW.Big5"),
       new Language(_("Dutch (Netherlands)"), "Nederlands", "nl_NL"),
-      new Language(_("English (United Kingdom)"), "English (United Kingdom)", "en_GB"),
-      new Language(_("Estonian (Estonia)"), "Eesti keel", "et_EE"),
-      new Language(_("Finnish"), "Suomi", "fi"),
-      new Language(_("Hebrew"), "עברית", "he"),
       new Language(_("Nepali"), "नेपाली", "ne"),
-      new Language(_("Norwegian"), "Norsk", "no_NB"),
+      new Language(_("N'Ko"), "ߒߞߏ", "nqo"),
+      new Language(_("Marathi"), "मराठी", "mr"),
       new Language(_("Portugese"), "Português", "pt"),
-      new Language(_("Slovenian"), "Slovenščina", "sl_SL"),
-      new Language(_("Swedish"), "Svenska", "sv"),
-      new Language(_("Vietnamese"), "Tiếng Việt", "vi"), };
+      new Language(_("Persian (Iran)"), "فارسی (Iran)", "fa_IR"),
+      };
 
   /**
    * Standardized width for buttons. Mac OS X 10.3 wants 70 as its default,
@@ -192,6 +198,7 @@ public class Preferences {
   JCheckBox exportSeparateBox;
   JCheckBox verboseCompilationBox;
   JCheckBox verboseUploadBox;
+  JCheckBox displayLineNumbersBox;
   JCheckBox verifyUploadBox;
   JCheckBox externalEditorBox;
   JCheckBox memoryOverrideBox;
@@ -215,7 +222,7 @@ public class Preferences {
   static File preferencesFile;
 
 
-  static protected void init(String commandLinePrefs) {
+  static protected void init(String args[]) {
 
     // start by loading the defaults, in case something
     // important was deleted from the user prefs
@@ -228,7 +235,6 @@ public class Preferences {
 
     // set some runtime constants (not saved on preferences file)
     File hardwareFolder = Base.getHardwareFolder();
-    table.put("runtime.hardware.path", hardwareFolder.getAbsolutePath());
     table.put("runtime.ide.path", hardwareFolder.getParentFile().getAbsolutePath());
     table.put("runtime.ide.version", "" + Base.REVISION);
     
@@ -248,41 +254,31 @@ public class Preferences {
     // clone the hash table
     defaults = new Hashtable<String, String>(table);
 
-    // Load a prefs file if specified on the command line
-    if (commandLinePrefs != null) {
-      try {
-        load(new FileInputStream(commandLinePrefs));
+    // next load user preferences file
+    preferencesFile = Base.getSettingsFile(PREFS_FILE);
 
-      } catch (Exception poe) {
-        Base.showError(_("Error"),
-                       I18n.format(
-			 _("Could not read preferences from {0}"),
-			 commandLinePrefs
-		       ), poe);
+    // load a preferences file if specified on the command line
+    if (args != null) {
+      for (int i = 0; i < args.length - 1; i++) {
+        if (args[i].equals("--preferences-file"))
+          preferencesFile = new File(args[i + 1]);
       }
-    } else if (!Base.isCommandLine()) {
-      // next load user preferences file
-      preferencesFile = Base.getSettingsFile(PREFS_FILE);
-      if (!preferencesFile.exists()) {
-        // create a new preferences file if none exists
-        // saves the defaults out to the file
-        save();
+    }
 
-      } else {
-        // load the previous preferences file
-
-        try {
-          load(new FileInputStream(preferencesFile));
-
-        } catch (Exception ex) {
-          Base.showError(_("Error reading preferences"),
-			 I18n.format(
-			   _("Error reading the preferences file. " +
-			     "Please delete (or move)\n" +
-			     "{0} and restart Arduino."),
-			   preferencesFile.getAbsolutePath()
-			 ), ex);
-        }
+    if (!preferencesFile.exists()) {
+      // create a new preferences file if none exists
+      // saves the defaults out to the file
+      save();
+    } else {
+      // load the previous preferences file
+      try {
+        load(new FileInputStream(preferencesFile));
+      } catch (Exception ex) {
+        Base.showError(_("Error reading preferences"),
+                       I18n.format(_("Error reading the preferences file. "
+                                       + "Please delete (or move)\n"
+                                       + "{0} and restart Arduino."),
+                                   preferencesFile.getAbsolutePath()), ex);
       }
     }
 
@@ -430,6 +426,15 @@ public class Preferences {
     box.setBounds(left, top, d.width, d.height);
     top += d.height + GUI_BETWEEN;
 
+	// [ ] Display line numbers
+    
+    displayLineNumbersBox = new JCheckBox(_("Display line numbers"));
+    pain.add(displayLineNumbersBox);
+    d = displayLineNumbersBox.getPreferredSize();
+    displayLineNumbersBox.setBounds(left, top, d.width + 10, d.height);
+    right = Math.max(right, left + d.width);
+    top += d.height + GUI_BETWEEN;
+	
     // [ ] Verify code after upload
     
     verifyUploadBox = new JCheckBox(_("Verify code after upload"));
@@ -623,6 +628,7 @@ public class Preferences {
     // put each of the settings into the table
     setBoolean("build.verbose", verboseCompilationBox.isSelected());
     setBoolean("upload.verbose", verboseUploadBox.isSelected());
+    setBoolean("editor.linenumbers", displayLineNumbersBox.isSelected());
     setBoolean("upload.verify", verifyUploadBox.isSelected());
     
 //    setBoolean("sketchbook.closing_last_window_quits",
@@ -691,6 +697,7 @@ public class Preferences {
     // set all settings entry boxes to their actual status
     verboseCompilationBox.setSelected(getBoolean("build.verbose"));
     verboseUploadBox.setSelected(getBoolean("upload.verbose"));
+    displayLineNumbersBox.setSelected(getBoolean("editor.linenumbers"));
     verifyUploadBox.setSelected(getBoolean("upload.verify"));
 
     //closingLastQuitsBox.
@@ -816,17 +823,15 @@ public class Preferences {
   //static public String get(String attribute) {
   //return get(attribute, null);
   //}
-  
-  static public String get(String attribute /*, String defaultValue */) {
-    return table.get(attribute);
-    /*
-    //String value = (properties != null) ?
-    //properties.getProperty(attribute) : applet.getParameter(attribute);
-    String value = properties.getProperty(attribute);
 
-    return (value == null) ?
-      defaultValue : value;
-    */
+  static public String get(String attribute) {
+    return table.get(attribute);
+  }
+
+  static public String get(String attribute, String defaultValue) {
+    String value = get(attribute);
+
+    return (value == null) ? defaultValue : value;
   }
 
   public static boolean has(String key) {

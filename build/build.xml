@@ -27,6 +27,9 @@
   <condition property="staging_hardware_folder" value="hardware"><equals arg1="${platform}" arg2="linux32" /></condition>
   <condition property="staging_hardware_folder" value="hardware"><equals arg1="${platform}" arg2="linux64" /></condition>
 
+  <condition property="launch4j-download-unpack-target-name" value="launch4j-windows"><os family="windows" /></condition>
+  <property name="launch4j-download-unpack-target-name" value="launch4j-linux"/>
+
   <condition property="arch-bits" value="32">
     <equals arg1="${platform}" arg2="linux32"/>
   </condition>
@@ -46,7 +49,7 @@
     <include name="app/lib/jmdns-3.4.1.jar" />
     <include name="app/lib/jna.jar" />
     <include name="app/lib/jsch-0.1.50.jar" />
-    <include name="app/lib/RXTXcomm.jar" />
+    <include name="app/lib/jssc-2.8.0.jar" />
     <include name="app/lib/ant.jar" />
     <include name="app/lib/ant-launcher.jar" />
   </fileset>
@@ -259,6 +262,11 @@
       <fileset dir="macosx/work/Arduino.app/Contents/Resources/Java/hardware/tools" includes="**/man/**/*"/>
       <fileset dir="macosx/work/Arduino.app/Contents/Resources/Java/hardware/tools" includes="**/man"/>
     </delete>
+
+    <get src="http://downloads.arduino.cc/libastylej-2.03.zip" dest="macosx" usetimestamp="true" skipexisting="true"/>
+    <unzip src="macosx/libastylej-2.03.zip" dest="macosx" overwrite="true"/>
+    <copy file="macosx/libastylej/libastylej.jnilib" todir="macosx/work/Arduino.app/Contents/Resources/Java/lib/" />
+    <chmod perm="755" file="macosx/work/Arduino.app/Contents/Resources/Java/lib/libastylej.jnilib" />
   </target>
 
   <target name="macosx-run" depends="macosx-build" description="Run Mac OS X version">
@@ -470,6 +478,11 @@
 
     <copy todir="linux/work" file="linux/dist/arduino" />
     <chmod perm="755" file="linux/work/arduino" />
+
+    <get src="http://downloads.arduino.cc/libastylej-2.03.zip" dest="linux" usetimestamp="true" skipexisting="true" />
+    <unzip src="linux/libastylej-2.03.zip" dest="linux" overwrite="true"/>
+    <copy file="linux/libastylej/libastylej${arch-bits}.so" tofile="linux/work/lib/libastylej.so" />
+    <chmod perm="755" file="linux/work/lib/libastylej.so" />
   </target>
 
   <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
@@ -485,11 +498,11 @@
       <arg value="-xjf"/>
       <arg value="../../avr_tools_linux32.tar.bz2"/>
     </exec>
+
   </target>
 
   <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
     <copy tofile="linux/work/hardware/tools/avrdude" file="linux/dist/tools/avrdude64" overwrite="true" />
-    <copy tofile="linux/work/lib/librxtxSerial.so" file="linux/dist/lib/librxtxSerial64.so" overwrite="true" />
 
     <chmod perm="755" file="linux/work/hardware/tools/avrdude" />
 
@@ -626,6 +639,20 @@
     <fail message="wrong platform (${os.name})" />
   </target>
 
+  <target name="download-launch4j-windows">
+    <get src="http://switch.dl.sourceforge.net/project/launch4j/launch4j-3/3.0.2/launch4j-3.0.2-win32.zip" dest="windows" usetimestamp="true" skipexisting="true" verbose="true" />
+    <unzip dest="windows/launcher/" src="windows/launch4j-3.0.2-win32.zip" overwrite="true"/>
+  </target>
+
+  <target name="download-launch4j-linux">
+    <get src="http://switch.dl.sourceforge.net/project/launch4j/launch4j-3/3.0.2/launch4j-3.0.2-linux.tgz" dest="windows" usetimestamp="true" skipexisting="true" verbose="true" />
+
+    <exec executable="tar" dir="windows/launcher">
+      <arg value="-xzf"/>
+      <arg value="../launch4j-3.0.2-linux.tgz"/>
+    </exec>
+  </target>
+
   <target name="windows-build"
 	  depends="revision-check, windows-checkos, subprojects-build"
 	  description="Build windows version">
@@ -643,6 +670,7 @@
     </copy>
 
     <fixcrlf file="windows/work/revisions.txt" eol="dos"/>
+    <fixcrlf file="windows/work/lib/formatter.conf" eol="dos"/>
 
     <copy todir="windows/work">
       <fileset dir="windows/dist" includes="*.dll" />
@@ -653,11 +681,16 @@
     </copy>
 
     <!-- Unzip AVR tools -->
-    <unzip dest="windows/work/hardware" src="windows/avr_tools.zip" overwrite="false"/>
+    <get src="http://downloads.arduino.cc/WinAVR-20081205-arduino-2.zip" dest="windows" usetimestamp="true" skipexisting="true" verbose="true" />
+    <unzip dest="windows/work/hardware" src="windows/WinAVR-20081205-arduino-2.zip" overwrite="false"/>
 
     <copy todir="windows/work/hardware/tools/avr/avr/include/avr">
       <fileset file="windows/eeprom.h" />
     </copy>
+
+    <get src="http://downloads.arduino.cc/libastylej-2.03.zip" dest="windows" usetimestamp="true" skipexisting="true" />
+    <unzip src="windows/libastylej-2.03.zip" dest="windows" overwrite="true"/>
+    <copy file="windows/libastylej/AStylej.dll" todir="windows/work/lib" />
 
     <!-- Copy bossac.exe tool -->
     <copy todir="windows/work/hardware/tools">
@@ -673,6 +706,8 @@
       <param name="target.path" value="windows/work" />
     </antcall>
 
+    <antcall target="download-${launch4j-download-unpack-target-name}" />
+
     <property name="launch4j.dir" value="windows/launcher/launch4j/" />
     <taskdef name="launch4j"
 	     classname="net.sf.launch4j.ant.Launch4jTask"
@@ -680,11 +715,12 @@
 
     <copy todir="windows/work">
       <fileset dir="windows/launcher"
-	       includes="about.bmp, application.ico, config.xml"/>
+	       includes="about.bmp, application.ico, config.xml, config_debug.xml"/>
     </copy>
     <launch4j configFile="windows/work/config.xml" />
+    <launch4j configFile="windows/work/config_debug.xml" />
     <delete dir="windows/work"
-	    includes="about.bmp, application.ico, config.xml" />
+	    includes="about.bmp, application.ico, config.xml, config_debug.xml" />
 
     <!-- cygwin requires html, dll, and exe to have the +x flag -->
     <chmod perm="755">
@@ -712,9 +748,7 @@
   <target name="windows-dist" depends="windows-build"
 	  description="Create .zip files of windows version">
 
-    <!--get src="http://dev.processing.org/build/jre-tools-6u18-windows-i586.zip" 
-	 dest="windows/jre.zip" 
-	 usetimestamp="true" /-->
+    <get src="http://downloads.arduino.cc/jre_7u40_windows_i586.zip" dest="windows/jre.zip" usetimestamp="true" skipexisting="true" />
 
     <unzip dest="windows/work" src="windows/jre.zip" overwrite="false"/>
 
