@@ -68,7 +68,7 @@ copyright_check:
 	${MAKE} -f /usr/share/cdbs/1/rules/utils.mk debian/stamp-copyright-check
 	rm debian/stamp-copyright-check
 
-DESTDIR=$(CURDIR)/debian/Arduino-1.5.4-r2
+DESTDIR=$(CURDIR)/debian/Arduino-1.5.6-r2
 #DESTDIR=$(CURDIR)/debian/Arduino-$(SVNTAG)
 TARGZFILE=arduino_$(SVNTAG).orig.tar.gz
 TARXZFILE=arduino_$(SVNTAG)+dfsg.orig.tar.xz
@@ -81,7 +81,7 @@ get-orig-source:
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	#find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname key*.gz -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
-	tar Jcf $(CURDIR)/../$(TARXZFILE) -C $(CURDIR)/debian Arduino-1.5.4-r2;\
+	tar Jcf $(CURDIR)/../$(TARXZFILE) -C $(CURDIR)/debian Arduino-1.5.6-r2;\
 	rm -fr $(DESTDIR);\
 	rm -fr ../$(TARGZFILE)
 

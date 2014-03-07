@@ -1,10 +1,11 @@
-arduino (1:1.5.6+dfsg-1) UNRELEASED; urgency=low
+arduino (1:1.5.6.2+dfsg-1) UNRELEASED; urgency=low
 
+  * New upstream release
   * Remove dependency and link to rxtx, upstream uses libjssc-java now
   * arduino-core recommends bossa-cli
   * debian/patches/zepto_js.patch, adds source code for zepto.js
 
- -- Scott Howard <showard@debian.org>  Mon, 30 Dec 2013 12:30:57 -0500
+ -- Scott Howard <showard@debian.org>  Fri, 07 Mar 2014 12:17:38 -0500
 
 arduino (1:1.0.5+dfsg2-2) unstable; urgency=low
 
