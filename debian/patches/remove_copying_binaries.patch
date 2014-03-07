@@ -3,9 +3,9 @@ Description: Arduino copies precompiled binaries into the build tree,
 Author: Scott Howard <showard@debian.org>
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2013-10-11 11:59:47.478682781 -0400
-+++ arduino/build/build.xml	2013-10-11 12:03:24.954690505 -0400
-@@ -473,18 +473,6 @@
+--- arduino.orig/build/build.xml	2014-03-07 12:29:00.584123631 -0500
++++ arduino/build/build.xml	2014-03-07 12:29:40.620124583 -0500
+@@ -486,18 +486,6 @@
    </target>
  
    <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">
@@ -21,10 +21,10 @@ Index: arduino/build/build.xml
 -      <arg value="-xjf"/>
 -      <arg value="../../avr_tools_linux32.tar.bz2"/>
 -    </exec>
+ 
    </target>
  
-   <target name="linux64-build" depends="linux-build" description="Build linux (64-bit) version">
-@@ -495,16 +483,9 @@
+@@ -508,16 +496,9 @@
  
      <!-- Unzip ARM tools -->
      <antcall target="unzip-arm-toolchain">
@@ -41,7 +41,7 @@ Index: arduino/build/build.xml
    </target>
  
    <target name="linux32-run" depends="linux32-build" description="Run Linux (32-bit) version">
-@@ -541,11 +522,6 @@
+@@ -554,11 +535,6 @@
      </fail>
  
      <!-- Unzip toolchain to the destination folder -->

@@ -6,8 +6,8 @@ Bug-Upstream: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50925
 
 Index: arduino/hardware/arduino/avr/platform.txt
 ===================================================================
---- arduino.orig/hardware/arduino/avr/platform.txt	2013-10-11 16:33:26.255265888 -0400
-+++ arduino/hardware/arduino/avr/platform.txt	2013-10-11 16:34:41.603268564 -0400
+--- arduino.orig/hardware/arduino/avr/platform.txt	2014-03-07 12:45:02.892146502 -0500
++++ arduino/hardware/arduino/avr/platform.txt	2014-03-07 12:45:31.816147189 -0500
 @@ -14,12 +14,12 @@
  # Default "compiler.path" is correct, change only if you want to overidde the initial value
  #compiler.path={ide.path}/tools/avr/bin/..
@@ -16,7 +16,7 @@ Index: arduino/hardware/arduino/avr/platform.txt
 +compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD -D__PROG_TYPES_COMPAT__ -fno-caller-saves
  compiler.c.elf.flags=-Os -Wl,--gc-sections
  compiler.c.elf.cmd=avr-gcc
- compiler.S.flags=-c -g -assembler-with-cpp
+ compiler.S.flags=-c -g -x assembler-with-cpp
  compiler.cpp.cmd=avr-g++
 -compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD -D__PROG_TYPES_COMPAT__
 +compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD -D__PROG_TYPES_COMPAT__ -fno-caller-saves

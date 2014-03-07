@@ -4,9 +4,9 @@ Description: Uses pkexec to add user to groups dailout and tty
 Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652523
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2011-12-27 12:17:18.675536651 -0500
-+++ arduino/build/linux/dist/arduino	2011-12-27 12:17:29.255536904 -0500
-@@ -1,4 +1,18 @@
+--- arduino.orig/build/linux/dist/arduino	2014-03-07 12:30:01.992125091 -0500
++++ arduino/build/linux/dist/arduino	2014-03-07 12:31:08.584126673 -0500
+@@ -1,4 +1,17 @@
 -#!/bin/sh
 +#!/bin/bash
 +
@@ -22,7 +22,6 @@ Index: arduino/build/linux/dist/arduino
 +	pkexec /usr/bin/arduino-add-groups
 +    fi
 +fi
-+
-  
- APPDIR=/usr/share/arduino
  
+ CURDIR=`pwd`
+ APPDIR=/usr/share/arduino

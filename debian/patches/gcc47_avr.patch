@@ -4,8 +4,8 @@ Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=677294
 Author: Andy Brown <http://andybrown.me.uk/wk/>
 Index: arduino/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp
 ===================================================================
---- arduino.orig/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp	2013-10-11 12:09:04.030702547 -0400
-+++ arduino/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp	2013-10-11 12:09:04.022702547 -0400
+--- arduino.orig/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp	2014-03-07 12:50:11.796153843 -0500
++++ arduino/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp	2014-03-07 12:50:11.784153843 -0500
 @@ -1,3 +1,5 @@
 +#define __AVR_LIBC_DEPRECATED_ENABLE__
 +
@@ -14,9 +14,9 @@ Index: arduino/hardware/arduino/avr/cores/arduino/HardwareSerial.cpp
    Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
 Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp
 ===================================================================
---- arduino.orig/hardware/arduino/avr/cores/arduino/IPAddress.cpp	2013-10-11 12:09:04.030702547 -0400
-+++ arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp	2013-10-11 12:09:04.022702547 -0400
-@@ -4,42 +4,42 @@
+--- arduino.orig/hardware/arduino/avr/cores/arduino/IPAddress.cpp	2014-03-07 12:50:11.796153843 -0500
++++ arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp	2014-03-07 12:51:39.968155939 -0500
+@@ -22,42 +22,42 @@
  
  IPAddress::IPAddress()
  {
@@ -39,7 +39,7 @@ Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp
  IPAddress::IPAddress(uint32_t address)
  {
 -    memcpy(_address, &address, sizeof(_address));
-+	_address.a32=address;
++    _address.a32=address;
  }
  
  IPAddress::IPAddress(const uint8_t *address)
@@ -58,18 +58,18 @@ Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp
  IPAddress& IPAddress::operator=(uint32_t address)
  {
 -    memcpy(_address, (const uint8_t *)&address, sizeof(_address));
-+	_address.a32=address;
++    _address.a32=address;
      return *this;
  }
  
- bool IPAddress::operator==(const uint8_t* addr)
+ bool IPAddress::operator==(const uint8_t* addr) const
  {
 -    return memcmp(addr, _address, sizeof(_address)) == 0;
 +    return memcmp(addr, _address.a8, sizeof(_address)) == 0;
  }
  
  size_t IPAddress::printTo(Print& p) const
-@@ -47,10 +47,10 @@
+@@ -65,10 +65,10 @@
      size_t n = 0;
      for (int i =0; i < 3; i++)
      {
@@ -84,9 +84,9 @@ Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.cpp
  
 Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.h
 ===================================================================
---- arduino.orig/hardware/arduino/avr/cores/arduino/IPAddress.h	2013-10-11 12:09:04.030702547 -0400
-+++ arduino/hardware/arduino/avr/cores/arduino/IPAddress.h	2013-10-11 12:09:04.022702547 -0400
-@@ -33,12 +33,16 @@
+--- arduino.orig/hardware/arduino/avr/cores/arduino/IPAddress.h	2014-03-07 12:50:11.796153843 -0500
++++ arduino/hardware/arduino/avr/cores/arduino/IPAddress.h	2014-03-07 12:50:11.788153843 -0500
+@@ -27,12 +27,16 @@
  
  class IPAddress : public Printable {
  private:
@@ -105,15 +105,15 @@ Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.h
  
  public:
      // Constructors
-@@ -49,13 +53,13 @@
+@@ -43,13 +47,13 @@
  
      // Overloaded cast operator to allow IPAddress objects to be used where a pointer
      // to a four-byte uint8_t array is expected
--    operator uint32_t() { return *((uint32_t*)_address); };
--    bool operator==(const IPAddress& addr) { return (*((uint32_t*)_address)) == (*((uint32_t*)addr._address)); };
+-    operator uint32_t() const { return *((uint32_t*)_address); };
+-    bool operator==(const IPAddress& addr) const { return (*((uint32_t*)_address)) == (*((uint32_t*)addr._address)); };
 +    operator uint32_t() { return _address.a32; }
 +    bool operator==(const IPAddress& addr) { return _address.a32 == addr._address.a32; };
-     bool operator==(const uint8_t* addr);
+     bool operator==(const uint8_t* addr) const;
  
      // Overloaded index operator to allow getting and setting individual octets of the address
 -    uint8_t operator[](int index) const { return _address[index]; };
@@ -123,23 +123,10 @@ Index: arduino/hardware/arduino/avr/cores/arduino/IPAddress.h
  
      // Overloaded copy operators to allow initialisation of IPAddress objects from other types
      IPAddress& operator=(const uint8_t *address);
-Index: arduino/hardware/arduino/avr/cores/arduino/Print.cpp
-===================================================================
---- arduino.orig/hardware/arduino/avr/cores/arduino/Print.cpp	2013-10-11 12:09:04.030702547 -0400
-+++ arduino/hardware/arduino/avr/cores/arduino/Print.cpp	2013-10-11 12:09:04.022702547 -0400
-@@ -41,7 +41,7 @@
- 
- size_t Print::print(const __FlashStringHelper *ifsh)
- {
--  const char PROGMEM *p = (const char PROGMEM *)ifsh;
-+  const char * __attribute__((progmem)) p = (const char * ) ifsh;
-   size_t n = 0;
-   while (1) {
-     unsigned char c = pgm_read_byte(p++);
 Index: arduino/libraries/Ethernet/src/Ethernet.cpp
 ===================================================================
---- arduino.orig/libraries/Ethernet/src/Ethernet.cpp	2013-10-11 12:09:04.030702547 -0400
-+++ arduino/libraries/Ethernet/src/Ethernet.cpp	2013-10-11 12:09:04.026702547 -0400
+--- arduino.orig/libraries/Ethernet/src/Ethernet.cpp	2014-03-07 12:50:11.796153843 -0500
++++ arduino/libraries/Ethernet/src/Ethernet.cpp	2014-03-07 12:50:11.788153843 -0500
 @@ -62,9 +62,9 @@
  {
    W5100.init();

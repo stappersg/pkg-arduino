@@ -4,9 +4,9 @@ Author: Scott Howard <showard314@gmail.com>
 
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2013-10-11 11:59:27.918682086 -0400
-+++ arduino/build/build.xml	2013-10-11 11:59:27.910682086 -0400
-@@ -35,7 +35,7 @@
+--- arduino.orig/build/build.xml	2014-03-07 12:27:40.840121736 -0500
++++ arduino/build/build.xml	2014-03-07 12:27:40.832121736 -0500
+@@ -38,7 +38,7 @@
    </condition>
  
    <!-- Libraries required for running arduino -->

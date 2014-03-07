@@ -3,9 +3,9 @@ Author: Scott Howard <showard@debian.org>
 
 Index: arduino/build/build.xml
 ===================================================================
---- arduino.orig/build/build.xml	2013-10-11 13:00:12.706811530 -0400
-+++ arduino/build/build.xml	2013-10-11 13:56:19.118931087 -0400
-@@ -456,18 +456,6 @@
+--- arduino.orig/build/build.xml	2014-03-07 12:44:52.344146251 -0500
++++ arduino/build/build.xml	2014-03-07 12:44:52.336146251 -0500
+@@ -464,18 +464,6 @@
      <copy todir="linux/work" file="linux/dist/arduino" />
      <chmod perm="755" file="linux/work/arduino" />
  
@@ -23,4 +23,4 @@ Index: arduino/build/build.xml
 -
      <copy todir="linux/work" file="linux/dist/arduino" />
      <chmod perm="755" file="linux/work/arduino" />
-   </target>
+ 
