@@ -1,0 +1,18 @@
+Description: don't download libastylj.so
+Author: Scott Howard <showard@debian.org>
+
+Index: arduino/build/build.xml
+===================================================================
+--- arduino.orig/build/build.xml	2014-03-07 14:42:19.536313738 -0500
++++ arduino/build/build.xml	2014-03-07 14:43:44.576315759 -0500
+@@ -467,10 +467,6 @@
+     <copy todir="linux/work" file="linux/dist/arduino" />
+     <chmod perm="755" file="linux/work/arduino" />
+ 
+-    <get src="http://downloads.arduino.cc/libastylej-2.03.zip" dest="linux" usetimestamp="true" skipexisting="true" />
+-    <unzip src="linux/libastylej-2.03.zip" dest="linux" overwrite="true"/>
+-    <copy file="linux/libastylej/libastylej${arch-bits}.so" tofile="linux/work/lib/libastylej.so" />
+-    <chmod perm="755" file="linux/work/lib/libastylej.so" />
+   </target>
+ 
+   <target name="linux32-build" depends="linux-build" description="Build linux (32-bit) version">

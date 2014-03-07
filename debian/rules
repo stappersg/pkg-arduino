@@ -19,11 +19,13 @@ SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/[0-9]
 	dh $@ --with javahelper
 
 override_dh_clean:
+	-mkdir build/windows #build.xml needs this
 	rm -rf build/linux/work/hardware/tools
 	cd core/methods && ant clean
 	cd build && ant clean
 	rm -f debian/permission-checker/*.class
 	dh_clean
+	rm -r build/windows #debian doesn't need this
 
 override_jh_build:
 	jh_linkjars
@@ -54,7 +56,8 @@ override_dh_install:
     debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade.sh \
     debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade_mac.sh \
     debian/arduino-core/usr/share/arduino/hardware/arduino/sam/system/CMSIS/CMSIS/Documentation/DSP_Lib/html/installdox \
-    debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh
+    debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh \
+    debian/arduino-core/usr/share/arduino/format.every.sketch.sh
 
 override_dh_installdocs:
 	dh_installdocs
