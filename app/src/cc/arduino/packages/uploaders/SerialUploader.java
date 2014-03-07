@@ -22,8 +22,6 @@
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  
-  $Id$
 */
 
 package cc.arduino.packages.uploaders;
@@ -89,15 +87,13 @@ public class SerialUploader extends Uploader {
           // otherwise assert DTR, which would cancel the WDT reset if
           // it happened within 250 ms. So we wait until the reset should
           // have already occured before we start scanning.
-          if (!Base.isMacOS())
-            Thread.sleep(300);
-
+          Thread.sleep(300);
           uploadPort = waitForUploadPort(uploadPort, before);
         } else {
           Thread.sleep(400);
         }
       } catch (SerialException e) {
-        throw new RunnerException(e.getMessage());
+        throw new RunnerException(e);
       } catch (InterruptedException e) {
         throw new RunnerException(e.getMessage());
       }
