@@ -15,8 +15,8 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/arduino.git
 Package: arduino
 Architecture: all
 Depends: ${java:Depends}, ${misc:Depends},
- arduino-core (= ${binary:Version})
-Recommends: extra-xdg-menus, policykit-1
+ arduino-core (= ${binary:Version}), libastylej-jni
+Recommends: extra-xdg-menus, policykit-1, astyle
 Description: AVR development board IDE and built-in libraries
  Arduino is an open-source electronics prototyping platform based on
  flexible, easy-to-use hardware and software. It's intended for artists,
@@ -31,7 +31,7 @@ Description: AVR development board IDE and built-in libraries
 Package: arduino-core
 Architecture: all
 Depends: ${misc:Depends}, gcc-avr (>= 4.7.0), avrdude, gcc, avr-libc (>= 1.8.0)
-Recommends: bossa-cli, astyle
+Recommends: bossa-cli
 Suggests: arduino-mk
 Description: Code, examples, and libraries for the Arduino platform
  Arduino is an open hardware microcontroller platform.  This package contains

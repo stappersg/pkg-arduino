@@ -13,19 +13,19 @@ export CLASSPATH=\
 /usr/share/java/commons-httpclient.jar:\
 /usr/share/java/commons-exec.jar
 
-SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/[0-9]*:\([0-9].*\)+dfsg-[0-9]/\1/')
+SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/[0-9]*:\([0-9].*\)+dfsg2-[0-9]/\1/')
 
 %:
 	dh $@ --with javahelper
 
 override_dh_clean:
-	-mkdir build/windows #build.xml needs this
+	-mkdir build/windows build/macosx #build.xml needs this
 	rm -rf build/linux/work/hardware/tools
 	cd core/methods && ant clean
 	cd build && ant clean
 	rm -f debian/permission-checker/*.class
 	dh_clean
-	rm -r build/windows #debian doesn't need this
+	rm -r build/windows build/macosx #debian doesn't need this
 
 override_jh_build:
 	jh_linkjars
@@ -48,7 +48,7 @@ override_dh_compress:
 
 override_dh_install:
 	find build/linux/work -type d -empty -delete
-	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh -Xelf -X.a -X.lib -X.min.js
+	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh -X.elf -X.a -X.lib -X.min.js
 	mkdir -p debian/arduino-core/usr/share/arduino/lib
 	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
 	chmod +x \
@@ -56,8 +56,7 @@ override_dh_install:
     debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade.sh \
     debian/arduino-core/usr/share/arduino/hardware/arduino/avr/firmwares/wifishield/scripts/ArduinoWifiShield_upgrade_mac.sh \
     debian/arduino-core/usr/share/arduino/hardware/arduino/sam/system/CMSIS/CMSIS/Documentation/DSP_Lib/html/installdox \
-    debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh \
-    debian/arduino-core/usr/share/arduino/format.every.sketch.sh
+    debian/arduino-core/usr/share/arduino/libraries/WiFi/extras/scripts/ArduinoWifiShield_upgrade.sh
 
 override_dh_installdocs:
 	dh_installdocs
@@ -74,13 +73,16 @@ copyright_check:
 DESTDIR=$(CURDIR)/debian/Arduino-1.5.6-r2
 #DESTDIR=$(CURDIR)/debian/Arduino-$(SVNTAG)
 TARGZFILE=arduino_$(SVNTAG).orig.tar.gz
-TARXZFILE=arduino_$(SVNTAG)+dfsg.orig.tar.xz
+TARXZFILE=arduino_$(SVNTAG)+dfsg2.orig.tar.xz
 
 get-orig-source:
 	uscan --download-current-version --rename
 	jh_repack --version $(SVNTAG) ../arduino_$(SVNTAG)
 	tar -xzf ../$(TARGZFILE) -C debian/
-	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so -or -iname .cvsignore -or -iname *.bz2 -or -iname *macosx* -or -iname *windows* | xargs -n1 rm -rf;\
+	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so\
+                        -or -iname .cvsignore -or -iname *.bz2 -or -iname *macosx*\
+                        -or -iname *windows* -or iname *.exe -or -iname *.dll -or -iname *.elf\
+                        -or -iname *.min.js | xargs -n1 rm -rf;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	#find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname key*.gz -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
