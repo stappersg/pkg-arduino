@@ -80,9 +80,9 @@ get-orig-source:
 	jh_repack --version $(SVNTAG) ../arduino_$(SVNTAG)
 	tar -xzf ../$(TARGZFILE) -C debian/
 	find $(DESTDIR) -type f -iname *.jar -or -iname *.tgz -or -iname *.so\
-                        -or -iname .cvsignore -or -iname *.bz2 -or -iname *macosx*\
-                        -or -iname *windows* -or iname *.exe -or -iname *.dll -or -iname *.elf\
-                        -or -iname *.min.js | xargs -n1 rm -rf;\
+                    -or -iname .cvsignore -or -iname *.bz2 -or -iname *macosx*\
+                    -or -iname *windows* -or -iname *.exe -or -iname *.dll\
+                    -or -iname *.elf -or -iname *.min.js | xargs -n1 rm -rf;\
 	rm -rf $(DESTDIR)/build/linux/dist/tools;\
 	#upstream set a bunch of files as execultable that should not be. remove the -x bit
 	#find $(DESTDIR) -type f -iname *.jpg -or -iname *.java -or -iname *.pde -or -iname *.h -or -iname *.cpp -or -iname *.c -or -iname makefile -or -iname key*.txt -or -iname key*.gz -or -iname pref*.txt -or -iname '*.txt' -print0 | xargs -0 chmod -x;\
