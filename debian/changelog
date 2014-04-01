@@ -1,4 +1,4 @@
-arduino (1:1.5.6.2+dfsg2-1) UNRELEASED; urgency=low
+arduino (1:1.5.6.2+dfsg2-1) unstable; urgency=low
 
   * New upstream release
   * Remove dependency and link to rxtx, upstream uses libjssc-java now
