@@ -1,3 +1,9 @@
+arduino (2:1.0.5+dfsg2-1) unstable; urgency=low
+
+  * Bump epoch to fix versioning problems with arduino-mk
+
+ -- Scott Howard <showard@debian.org>  Wed, 02 Apr 2014 16:17:49 -0400
+
 arduino (1:1.5.6.2+really1.0.5-1) unstable; urgency=low
 
   * Replace accidental upload to unstable.
