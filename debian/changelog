@@ -1,3 +1,9 @@
+arduino (2:1.5.6.2+sdfsg2-2) experimental; urgency=low
+
+  * Bump epoch to fix versioning problem with arduino-mk
+
+ -- Scott Howard <showard@debian.org>  Wed, 02 Apr 2014 16:50:56 -0400
+
 arduino (1:1.5.6.2+sdfsg2-1) experimental; urgency=low
 
   * Place arduino 1.5.6 into experimental.
