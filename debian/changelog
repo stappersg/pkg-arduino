@@ -1,4 +1,4 @@
-arduino (2:1.0.5+dfsg2-1) unstable; urgency=low
+arduino (2:1.0.5+dfsg2-3) unstable; urgency=low
 
   * Bump epoch to fix versioning problems with arduino-mk
 
