@@ -1,3 +1,10 @@
+arduino (2:1.5.6.2+sdfsg2-3) experimental; urgency=low
+
+  * debian/patches/system_libastylej.patch: use system libastylej
+    upstream uses a patched version that changed java package name.
+
+ -- Scott Howard <showard@debian.org>  Sun, 06 Apr 2014 18:33:35 -0400
+
 arduino (2:1.5.6.2+sdfsg2-2) experimental; urgency=low
 
   * Bump epoch to fix versioning problem with arduino-mk
