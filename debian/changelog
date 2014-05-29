@@ -1,3 +1,10 @@
+arduino (2:1.0.5+dfsg2-4) unstable; urgency=medium
+
+  * Add revisions.txt to distribution (LP: #1319627)
+  * DSV 3.9.5 no changes
+
+ -- Scott Howard <showard@debian.org>  Thu, 29 May 2014 16:58:21 -0400
+
 arduino (2:1.0.5+dfsg2-3) unstable; urgency=low
 
   * Bump epoch to fix versioning problems with arduino-mk
