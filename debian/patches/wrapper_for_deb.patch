@@ -1,23 +1,24 @@
 Description: Tells the wrapper where to look for things in debian.
 Author: Scott Howard <showard314@gmail.com>
+Last-Update: 2017-05-21
 
 Index: arduino/build/linux/dist/arduino
 ===================================================================
---- arduino.orig/build/linux/dist/arduino	2012-11-05 13:55:44.000000000 -0500
-+++ arduino/build/linux/dist/arduino	2012-11-05 14:09:21.032594011 -0500
+--- arduino.orig/build/linux/dist/arduino
++++ arduino/build/linux/dist/arduino
 @@ -1,6 +1,6 @@
- #!/bin/sh
-  
+ #!/usr/bin/env bash
+ 
 -APPDIR="$(dirname -- "$(readlink -f -- "${0}")" )"
 +APPDIR=/usr/share/arduino
  
- cd "$APPDIR"
-  
-@@ -14,7 +14,7 @@
+ for LIB in \
+     "$APPDIR"/java/lib/rt.jar \
+@@ -12,7 +12,7 @@ do
  done
  export CLASSPATH
  
--LD_LIBRARY_PATH=`pwd`/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+-LD_LIBRARY_PATH=$APPDIR/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 +LD_LIBRARY_PATH="/usr/lib/jni${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
  export LD_LIBRARY_PATH
  
