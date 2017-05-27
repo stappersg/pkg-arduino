@@ -1,5 +1,5 @@
-version=3
-opts=\
-dversionmangle=s/.dfsg//,\
-uversionmangle=s/00/0\./ \
-http://code.google.com/p/arduino/downloads/list?can=1 .*/arduino-(\d[\d\.]*)-src\.(?:zip|tgz|tbz2|txz|tar\.gz|tar\.bz2|tar\.xz)
+# uscan watch file
+version=4
+opts="filenamemangle=s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%arduino-$1.tar.gz%" \
+    https://github.com/arduino/arduino/tags \
+    (?:.*?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate
