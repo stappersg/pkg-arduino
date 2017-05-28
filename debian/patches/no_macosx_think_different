@@ -1,0 +1,27 @@
+Description: no Mac OS X  Think Different
+  It was a build error
+Forwarded: probably should
+Author: Geert Stappers <stappers@stappers.nl>
+Last-Updated: 2017-05-27
+
+--- arduino.orig/app/src/processing/app/Base.java
++++ arduino/app/src/processing/app/Base.java
+@@ -49,7 +49,6 @@ import processing.app.helpers.filefilter
+ import processing.app.helpers.filefilters.OnlyFilesWithExtension;
+ import processing.app.javax.swing.filechooser.FileNameExtensionFilter;
+ import processing.app.legacy.PApplet;
+-import processing.app.macosx.ThinkDifferent;
+ import processing.app.packages.LibraryList;
+ import processing.app.packages.UserLibrary;
+ import processing.app.syntax.PdeKeywords;
+@@ -132,10 +131,6 @@ public class Base {
+     }
+     System.setProperty("java.net.useSystemProxies", "true");
+ 
+-    if (OSUtils.isMacOS()) {
+-      ThinkDifferent.init();
+-    }
+-
+     try {
+       INSTANCE = new Base(args);
+     } catch (Throwable e) {

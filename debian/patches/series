@@ -9,3 +9,4 @@ gcc47_avr.patch
 ## const_progmem.patch
 ## depricated_typedef_support.patch
 ## roboIRread.patch
+no_macosx_think_different
