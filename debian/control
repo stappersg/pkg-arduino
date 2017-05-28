@@ -7,6 +7,7 @@ Build-Depends: debhelper (>= 8)
  , javahelper , default-jdk
  , librxtx-java (>= 2.2pre2-3) , libjna-java, ant
  , libastyle-dev
+ , unzip
 Standards-Version: 3.9.5
 Homepage: http://www.arduino.cc
 Vcs-Git: git://anonscm.debian.org/collab-maint/arduino.git
