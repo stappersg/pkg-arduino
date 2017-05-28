@@ -11,3 +11,4 @@ gcc47_avr.patch
 ## depricated_typedef_support.patch
 ## roboIRread.patch
 no_macosx_think_different
+seperate_reference

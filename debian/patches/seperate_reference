@@ -1,0 +1,46 @@
+Description: arduino reference seperated
+  Patch which prevents some downloads during build.
+  .
+  How to include the "deleted" data again
+  is another question.
+Author: Geert Stappers <stappers@debian.org>
+Forwarded: not needed
+Last-Updated: 2017-05-27
+
+Index: arduino/build/build.xml
+===================================================================
+--- arduino.orig/build/build.xml
++++ arduino/build/build.xml
+@@ -195,29 +195,9 @@
+   </target>
+ 
+   <target name="assemble-docs" unless="no_docs">
+-      <!-- Unzip documentation -->
+-      <antcall target="unzip">
+-        <param name="archive_file" value="shared/reference-1.6.6-3.zip" />
+-        <param name="archive_url" value="https://downloads.arduino.cc/reference-1.6.6-3.zip" />
+-        <param name="final_folder" value="${target.path}/reference/www.arduino.cc" />
+-        <param name="dest_folder" value="${target.path}/reference/" />
+-      </antcall>
+-      <antcall target="unzip">
+-        <param name="archive_file" value="shared/Galileo_help_files-1.6.2.zip" />
+-        <param name="archive_url" value="https://downloads.arduino.cc/Galileo_help_files-1.6.2.zip" />
+-        <param name="final_folder" value="${target.path}/reference/Galileo_help_files" />
+-        <param name="dest_folder" value="${target.path}/reference/" />
+-      </antcall>
+-      <antcall target="unzip">
+-        <param name="archive_file" value="shared/Edison_help_files-1.6.2.zip" />
+-        <param name="archive_url" value="https://downloads.arduino.cc/Edison_help_files-1.6.2.zip" />
+-        <param name="final_folder" value="${target.path}/reference/Edison_help_files" />
+-        <param name="dest_folder" value="${target.path}/reference/" />
+-      </antcall>
+-
+-      <!-- Fix wrong permissions from zip file root folder -->
+-      <chmod perm="755" dir="${target.path}/reference/Galileo_help_files" />
+-      <chmod perm="755" dir="${target.path}/reference/Edison_help_files" />
++      <!-- Inform user somehow on this intervention on upstream idea -->
++      <echo file="${target.path}/reference/fyi.txt"
++	      message="No downloads done during build of Arduino IDE ..." />
+   </target>
+ 
+   <!-- copy library folder -->
