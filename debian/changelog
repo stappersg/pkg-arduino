@@ -1,3 +1,23 @@
+arduino (2:1.8.2-0.1) UNRELEASED; urgency=medium
+
+  [ Geert Stappers ]
+  * Non-maintainer upload.
+  * New upstream version (Closes: #780706)
+  * watch file revisited, s/google code/git hub/
+  * removed '+dfsg2' because I didn't understand why it is there
+  * README.source:  new file, to document some how our workflow
+  * raised compat version from 8 to 9
+  * control:
+    - build depend on libastyle-dev
+    - build depend on unzip
+  * Various patches refreshed
+  * New patches:
+    - Libastyle is packaged
+    - No Mac OS X  Think Different
+    - Seperate reference
+
+ -- Geert Stappers <stappers@debian.org>  Sat, 28 May 2017 15:35:19 +0200
+
 arduino (2:1.6.8-0) UNRELEASED; urgency=medium
 
   * Never uploaded.
