@@ -1,0 +1,36 @@
+
+For my co-maintainers and my future self.
+
+
+With
+  uscan
+you can get upstream tarball.
+If not, decrease temporary the version in top of debian/change
+and `uscan` again.
+Or in verbose mode, `uscan -v`, to see what is going on.
+
+Import by
+  debian/script/import ../arduino*VERSION*tar*z
+
+Then "git stuff"
+  git add .
+  git tag | grep upstream
+  git tag upstream/$VERSION
+
+
+Now the real thing
+
+The upstream arduino assumes there is Internet connection during build.
+That would be moving target for source code inspection.
+Most files in debian/patches/ cope with it.
+
+
+We have / had  in May 2017  Debian packaging and upstream
+in the same git branch. And use "git tags"
+
+
+  git push ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
+  git push --tags ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
+
+
+Please keep this file in shape
