@@ -1,3 +1,11 @@
+arduino (2:1.6.8-0) UNRELEASED; urgency=medium
+
+  * Never uploaded.
+  * Used as exercise for 1.8.2
+  * Note: 'dfsg' is gone from the debian version
+
+ -- Geert Stappers <stappers@debian.org>  Sun, 28 May 2017 12:26:50 +0200
+
 arduino (2:1.0.5+dfsg2-4) unstable; urgency=medium
 
   * Add revisions.txt to distribution (LP: #1319627)
