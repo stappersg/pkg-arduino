@@ -1,3 +1,4 @@
+libastyle_is_packaged
 remove_update_warning.patch
 install_jar_links.patch
 wrapper_for_deb.patch
