@@ -258,8 +258,8 @@ Index: arduino/libraries/GSM/GSM3ShieldV1MultiServerProvider.cpp
  {
 Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1ModemCore.cpp	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp	2013-06-04 17:03:11.463923667 -0400
+--- arduino.orig/libraries/GSM/src/GSM3ShieldV1ModemCore.cpp
++++ arduino/libraries/GSM/src/GSM3ShieldV1ModemCore.cpp
 @@ -82,6 +82,13 @@
  }
  
@@ -285,8 +285,8 @@ Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.cpp
  	char c;
 Index: arduino/libraries/GSM/GSM3ShieldV1ModemCore.h
 ===================================================================
---- arduino.orig/libraries/GSM/GSM3ShieldV1ModemCore.h	2013-03-18 21:49:27.519574917 -0400
-+++ arduino/libraries/GSM/GSM3ShieldV1ModemCore.h	2013-06-04 17:03:10.503923645 -0400
+--- arduino.orig/libraries/GSM/src/GSM3ShieldV1ModemCore.h
++++ arduino/libraries/GSM/src/GSM3ShieldV1ModemCore.h
 @@ -167,7 +167,7 @@
  			@param CR			Carriadge return adding automatically
  			@return size

@@ -7,9 +7,9 @@ Index: arduino/build/build.xml
 ===================================================================
 --- arduino.orig/build/build.xml
 +++ arduino/build/build.xml
-@@ -707,39 +707,9 @@
+@@ -717,39 +717,9 @@
    </target>
-
+ 
    <target name="linux32-build" depends="linux-libastyle-x86" description="Build linux (32-bit) version">
 -    <antcall target="linux-jvm-${linux-bundle-jvm-task}">
 -      <param name="JVM" value="${LINUX32_BUNDLED_JVM}"/>
@@ -27,7 +27,7 @@ Index: arduino/build/build.xml
 -      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
 -    </antcall>
    </target>
-
+ 
    <target name="linux64-build" depends="linux-libastyle-x86" description="Build linux (64-bit) version">
 -    <antcall target="linux-jvm-${linux-bundle-jvm-task}">
 -      <param name="JVM" value="${LINUX64_BUNDLED_JVM}"/>
@@ -45,5 +45,5 @@ Index: arduino/build/build.xml
 -      <param name="arduinoOTA_version" value="${arduinoOTA-VERSION}"/>
 -    </antcall>
    </target>
-
+ 
    <target name="linux-jvm-noop"/>

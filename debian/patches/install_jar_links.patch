@@ -9,7 +9,7 @@ Index: arduino/build/build.xml
 +++ arduino/build/build.xml
 @@ -92,7 +92,7 @@
    <property name="arduinoOTA-VERSION" value="1.1.1" />
-
+ 
    <!-- Libraries required for running arduino -->
 -  <fileset dir=".." id="runtime.jars">
 +  <fileset dir=".." id="runtime.jars" followsymlinks="no">

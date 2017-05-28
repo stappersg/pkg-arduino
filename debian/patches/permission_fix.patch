@@ -8,7 +8,7 @@ Index: arduino/build/linux/dist/arduino
 +++ arduino/build/linux/dist/arduino
 @@ -1,5 +1,18 @@
  #!/usr/bin/env bash
-
+ 
 +if [[ `id -u` -ne 0 ]]; then
 +#    for group in dialout tty; do
 +    for group in dialout; do
@@ -23,5 +23,5 @@ Index: arduino/build/linux/dist/arduino
 +fi
 +
  APPDIR=/usr/share/arduino
-
+ 
  for LIB in \
