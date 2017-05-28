@@ -13,7 +13,6 @@ SVNTAG=$(shell dpkg-parsechangelog | grep Version | cut -f2 -d" " | sed 's/[0-9]
 
 override_dh_clean:
 	rm -rf build/linux/work/hardware/tools
-	cd core/methods && ant clean
 	cd build && ant clean
 	rm -f debian/permission-checker/*.class
 	dh_clean
@@ -23,7 +22,6 @@ override_jh_build:
 	mkdir -p build/linux/work/hardware/tools
 	#remove unneeded macosx support
 	rm -rf app/src/processing/app/macosx
-	cd core/methods && ant
 	cd build && ant
 	rm -f build/linux/work/lib/version.txt && echo $(SVNTAG) > build/linux/work/lib/version.txt #comment out after beta
 	javac debian/permission-checker/arduinopc.java
@@ -42,12 +40,12 @@ override_dh_install:
 	dh_install -Xlicense -XLICENSE -XLicense -XMangler/make.sh
 	mkdir -p debian/arduino-core/usr/share/arduino/lib
 	mv debian/arduino/usr/share/arduino/lib/*.txt debian/arduino-core/usr/share/arduino/lib
-	chmod +x debian/arduino-core/usr/share/arduino/hardware/arduino/bootloaders/optiboot/makeall
+	## chmod +x debian/arduino-core/usr/share/arduino/hardware/arduino/bootloaders/optiboot/makeall
 
-override_dh_installdocs:
-	dh_installdocs
+# override_dh_installdocs:
+#	dh_installdocs
 	#Delete links to fetch web based icon (privacy violation, thanks lintian)
-	sed -i '/favicon\.png/d' debian/arduino-core/usr/share/doc/arduino-core/reference/*.html
+	## sed -i '/favicon\.png/d' debian/arduino-core/usr/share/doc/arduino-core/reference/*.html
 
 override_jh_depends:
 #jh_depends can't resolve symlinks
