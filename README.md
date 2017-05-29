@@ -20,7 +20,7 @@ http://github.com/arduino/Arduino/issues
 mailing list:
 https://groups.google.com/a/arduino.cc/forum/#!forum/developers
 
-* If you're interested in modifying or extending the Arduino software, we strongly 
+* If you're interested in modifying or extending the Arduino software, we strongly
 suggest discussing your ideas on the Developers mailing list *before* starting
 to work on them. That way you can coordinate with the Arduino Team and others,
 giving your work a higher chance of being integrated into the official release
@@ -28,9 +28,10 @@ https://groups.google.com/a/arduino.cc/forum/#!forum/developers
 
 Installation
 ------------
-Detailed instructions are in reference/Guide_Windows.html and
-reference/Guide_MacOSX.html.  For Linux, see the Arduino playground:
-http://www.arduino.cc/playground/Learning/Linux
+Detailed instructions for installation in popular operating systems.  
+For Linux: https://www.arduino.cc/en/Guide/Linux (see also the Arduino playground page http://www.arduino.cc/playground/Learning/Linux)   
+For macOS X: https://www.arduino.cc/en/Guide/MacOSX   
+For Windows: https://www.arduino.cc/en/Guide/Windows
 
 Credits
 --------
