@@ -25,8 +25,13 @@ That would be moving target for source code inspection.
 Most files in debian/patches/ cope with it.
 
 
-We have / had  in May 2017  Debian packaging and upstream
-in the same git branch. And use "git tags"
+We have / had  in May 2017 three branches in use:
+ * master
+ * upstream
+ * pristine-tar
+They were update by hand.
+Tooling like "git-buildpackage" might work here.
+Currently, May 2017, not verified. TODO: can gbp be used?
 
 
   git push ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
