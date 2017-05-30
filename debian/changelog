@@ -4,7 +4,7 @@ arduino (2:1.8.2-0.1) UNRELEASED; urgency=medium
   * Non-maintainer upload.
   * New upstream version (Closes: #780706)
   * watch file revisited, s/google code/git hub/
-  * removed '+dfsg2' because I didn't understand why it is there
+  * removed '+dfsg2', created README.Debian-source as placeholder
   * README.source:  new file, to document some how our workflow
   * raised compat version from 8 to 9
   * control:
@@ -16,7 +16,7 @@ arduino (2:1.8.2-0.1) UNRELEASED; urgency=medium
     - No Mac OS X  Think Different
     - Seperate reference
 
- -- Geert Stappers <stappers@debian.org>  Sat, 28 May 2017 15:35:19 +0200
+ -- Geert Stappers <stappers@debian.org>  Tue, 30 May 2017 09:05:00 +0200
 
 arduino (2:1.6.8-0) UNRELEASED; urgency=medium
 
