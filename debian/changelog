@@ -9,6 +9,7 @@ arduino (2:1.8.2+dfsg-0.1) UNRELEASED; urgency=medium
   * raised compat version from 8 to 9
   * control:
     - build depend on libastyle-dev
+    - build depends for .jar files that upstream has in their tarball
     - build depend on unzip
   * Various patches refreshed
   * New patches:
