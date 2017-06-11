@@ -12,3 +12,4 @@ gcc47_avr.patch
 ## roboIRread.patch
 no_macosx_think_different
 seperate_reference
+prevent_build_time_downloads

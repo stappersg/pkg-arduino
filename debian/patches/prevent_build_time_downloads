@@ -1,0 +1,87 @@
+Description: prevent build time downloads
+ upstream build system does several download during build time
+ this patch prevents those downloads
+ todo:
+   * include again the "deleted data" somehow
+   * discuss this with upstream
+Author: Geert Stappers <stappers@debian.org>
+ Origin: <upstream|backport|vendor|other>, <URL, required except if Author is present>
+ Bug: <URL to the upstream bug report if any, implies patch has been forwarded, optional>
+ Bug-<Vendor>: <URL to the vendor bug report if any, optional>
+Forwarded: no
+ Applied-Upstream: <version|URL|commit, identifies patches merged upstream, optional>
+ Reviewed-by: <name and email of a reviewer, optional>
+Last-Update: 2017-06-11
+
+
+--- a/build/build.xml
++++ b/build/build.xml
+@@ -185,13 +185,13 @@
+ 
+     <antcall target="assemble-libraries" />
+ 
+-    <!-- Add WiFi101 updater tool -->
++    <!-- Add WiFi101 updater tool
+     <antcall target="unzip">
+       <param name="archive_file" value="shared/WiFi101-Updater-ArduinoIDE-Plugin-0.9.0.zip" />
+       <param name="archive_url" value="https://github.com/arduino-libraries/WiFi101-FirmwareUpdater-Plugin/releases/download/v0.9.0/WiFi101-Updater-ArduinoIDE-Plugin-0.9.0.zip" />
+       <param name="final_folder" value="${target.path}/tools/WiFi101" />
+       <param name="dest_folder" value="${target.path}/tools/" />
+-    </antcall>
++    </antcall> -->
+   </target>
+ 
+   <target name="assemble-docs" unless="no_docs">
+@@ -227,6 +227,7 @@
+     <attribute name="tag" default="@{version}"/>
+     <attribute name="githubuser" default="arduino-libraries"/>
+     <sequential>
++      <!--
+       <antcall target="unzip">
+         <param name="archive_file" value="@{name}-@{version}.zip"/>
+         <param name="archive_url" value="https://github.com/@{githubuser}/@{name}/archive/@{tag}.zip"/>
+@@ -234,6 +235,10 @@
+         <param name="dest_folder" value="${target.path}/libraries"/>
+       </antcall>
+       <move file="${target.path}/libraries/@{name}-@{version}" tofile="${target.path}/libraries/@{name}"/>
++      -->
++      <echo message="##############" />
++      <echo message="NO download of https://github.com/@{githubuser}/@{name}/archive/@{tag}.zip" />
++      <echo message="##############" />
+     </sequential>
+   </macrodef>
+ 
+@@ -637,6 +642,8 @@
+       <param name="parentdir" value="linux/work" />
+     </antcall>
+ 
++    <echo message="TODO  package a liblistserial-jni" />
++    <!-- (((
+     <antcall target="unzip">
+       <param name="archive_file" value="./liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+       <param name="archive_url" value="https://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+@@ -645,6 +652,7 @@
+     </antcall>
+     <copy file="linux/liblistSerials-${LIBLISTSERIAL-VERSION}/linux${arch-bits}/liblistSerialsj.so" todir="linux/work/lib/" />
+     <chmod perm="755" file="linux/work/lib/liblistSerialsj.so" />
++    ))) -->
+ 
+   </target>
+ 
+@@ -667,6 +675,8 @@
+       <param name="parentdir" value="linux/work" />
+     </antcall>
+ 
++    <echo message="TODO  package a liblistserial-jni" />
++    <!-- (((
+     <antcall target="unzip">
+       <param name="archive_file" value="./liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+       <param name="archive_url" value="https://downloads.arduino.cc/liblistSerials/liblistSerials-${LIBLISTSERIAL-VERSION}.zip" />
+@@ -675,6 +685,7 @@
+     </antcall>
+     <copy file="linux/liblistSerials-${LIBLISTSERIAL-VERSION}/arm/liblistSerialsj.so" todir="linux/work/lib/" />
+     <chmod perm="755" file="linux/work/lib/liblistSerialsj.so" />
++    ))) -->
+ 
+   </target>
+ 
