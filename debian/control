@@ -10,7 +10,6 @@ Build-Depends: debhelper (>= 8)
  , libjssc-java , libjsch-java , libjmdns-java
  , libcommons-logging-java , libcommons-httpclient-java
  , libcommons-exec-java
- , eclipse-platfom
  , unzip
 Standards-Version: 3.9.5
 Homepage: http://www.arduino.cc
