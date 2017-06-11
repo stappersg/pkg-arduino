@@ -3,6 +3,8 @@ Description: arduino reference seperated
   .
   How to include the "deleted" data again
   is another question.
+  See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=864567 for
+  status of 'arduino-reference' in a seperate package.
 Author: Geert Stappers <stappers@debian.org>
 Forwarded: not needed
 Last-Updated: 2017-05-27
