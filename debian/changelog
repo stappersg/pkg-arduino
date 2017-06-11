@@ -1,11 +1,11 @@
-arduino (2:1.8.2-0.1) UNRELEASED; urgency=medium
+arduino (2:1.8.2+dfsg-0.1) UNRELEASED; urgency=medium
 
   [ Geert Stappers ]
   * Non-maintainer upload.
   * New upstream version (Closes: #780706)
   * watch file revisited, s/google code/git hub/
-  * removed '+dfsg2', created README.Debian-source as placeholder
   * README.source:  new file, to document some how our workflow
+  * Documented '+dfsg' in README.source
   * raised compat version from 8 to 9
   * control:
     - build depend on libastyle-dev
