@@ -9,11 +9,9 @@ Author: Geert Stappers <stappers@debian.org>
 Forwarded: not needed
 Last-Updated: 2017-05-27
 
-Index: arduino/build/build.xml
-===================================================================
---- arduino.orig/build/build.xml
-+++ arduino/build/build.xml
-@@ -195,29 +195,9 @@
+--- a/build/build.xml
++++ b/build/build.xml
+@@ -197,29 +197,9 @@
    </target>
  
    <target name="assemble-docs" unless="no_docs">
