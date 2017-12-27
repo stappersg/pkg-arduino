@@ -133,6 +133,10 @@ public class Base {
     System.setProperty("java.net.useSystemProxies", "true");
 
     if (OSUtils.isMacOS()) {
+      System.setProperty("apple.laf.useScreenMenuBar",
+        String.valueOf(!System.getProperty("os.version").startsWith("10.13")
+          || com.apple.eawt.Application.getApplication().isAboutMenuItemPresent()));
+
       ThinkDifferent.init();
     }
 
@@ -261,6 +265,10 @@ public class Base {
     if (!isCommandLine()) {
       rebuildBoardsMenu();
       rebuildProgrammerMenu();
+    } else {
+      TargetBoard lastSelectedBoard = BaseNoGui.getTargetBoard();
+      if (lastSelectedBoard != null)
+        BaseNoGui.selectBoard(lastSelectedBoard);
     }
 
     // Setup board-dependent variables.
@@ -384,6 +392,7 @@ public class Base {
         outputFile = new Compiler(sketch).build(progress -> {}, false);
       } catch (Exception e) {
         // Error during build
+        e.printStackTrace();
         System.exit(1);
       }
 
@@ -518,16 +527,21 @@ public class Base {
     return (opened > 0);
   }
 
+  /**
+   * Store screen dimensions on last close
+   */
+  protected void storeScreenDimensions() {
+    // Save the width and height of the screen
+    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    PreferencesData.setInteger("last.screen.width", screen.width);
+    PreferencesData.setInteger("last.screen.height", screen.height);
+  }
 
   /**
    * Store list of sketches that are currently open.
    * Called when the application is quitting and documents are still open.
    */
   protected void storeSketches() {
-    // Save the width and height of the screen
-    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    PreferencesData.setInteger("last.screen.width", screen.width);
-    PreferencesData.setInteger("last.screen.height", screen.height);
 
     // If there is only one sketch opened save his position as default
     if (editors.size() == 1) {
@@ -899,6 +913,7 @@ public class Base {
     }
 
     if (editors.size() == 1) {
+      storeScreenDimensions();
       storeSketches();
 
       // This will store the sketch count as zero
@@ -945,6 +960,7 @@ public class Base {
   public boolean handleQuit() {
     // If quit is canceled, this will be replaced anyway
     // by a later handleQuit() that is not canceled.
+    storeScreenDimensions();
     storeSketches();
     try {
       Editor.serialMonitor.close();
@@ -956,7 +972,7 @@ public class Base {
       // Save out the current prefs state
       PreferencesData.save();
 
-      if (!OSUtils.isMacOS()) {
+      if (!OSUtils.hasMacOSStyleMenus()) {
         // If this was fired from the menu or an AppleEvent (the Finder),
         // then Mac OS X will send the terminate signal itself.
         System.exit(0);
@@ -1837,6 +1853,24 @@ public class Base {
       dialog.setLocationRelativeTo(activeEditor);
     }
     dialog.setVisible(true);
+  }
+
+  /**
+   * Adjust font size
+   */
+  public void handleFontSizeChange(int change) {
+    String pieces[] = PreferencesData.get("editor.font").split(",");
+    try {
+      int newSize = Integer.parseInt(pieces[2]) + change;
+      if (newSize < 4)
+        newSize = 4;
+      pieces[2] = String.valueOf(newSize);
+    } catch (NumberFormatException e) {
+      // ignore
+      return;
+    }
+    PreferencesData.set("editor.font", StringUtils.join(pieces, ','));
+    getEditors().forEach(Editor::applyPreferences);
   }
 
   // XXX: Remove this method and make librariesIndexer non-static

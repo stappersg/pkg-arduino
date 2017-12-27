@@ -30,6 +30,9 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.MouseWheelEvent;
+
 import java.io.IOException;
 
 import javax.swing.Action;
@@ -64,7 +67,7 @@ import processing.app.tools.DiscourseFormat;
 /**
  * Single tab, editing a single file, in the main window.
  */
-public class EditorTab extends JPanel implements SketchFile.TextStorage {
+public class EditorTab extends JPanel implements SketchFile.TextStorage, MouseWheelListener {
   protected Editor editor;
   protected SketchTextArea textarea;
   protected RTextScrollPane scrollPane;
@@ -106,6 +109,7 @@ public class EditorTab extends JPanel implements SketchFile.TextStorage {
     file.setStorage(this);
     applyPreferences();
     add(scrollPane, BorderLayout.CENTER);
+	textarea.addMouseWheelListener(this);
   }
 
   private RSyntaxDocument createDocument(String contents) {
@@ -147,6 +151,8 @@ public class EditorTab extends JPanel implements SketchFile.TextStorage {
     textArea.setMarkOccurrences(PreferencesData.getBoolean("editor.advanced"));
     textArea.setMarginLineEnabled(false);
     textArea.setCodeFoldingEnabled(PreferencesData.getBoolean("editor.code_folding"));
+    textArea.setAutoIndentEnabled(PreferencesData.getBoolean("editor.indent"));
+    textArea.setCloseCurlyBraces(PreferencesData.getBoolean("editor.auto_close_braces", true));
     textArea.setAntiAliasingEnabled(PreferencesData.getBoolean("editor.antialias"));
     textArea.setTabsEmulated(PreferencesData.getBoolean("editor.tabs.expand"));
     textArea.setTabSize(PreferencesData.getInteger("editor.tabs.size"));
@@ -176,6 +182,18 @@ public class EditorTab extends JPanel implements SketchFile.TextStorage {
     return textArea;
   }
   
+  public void mouseWheelMoved(MouseWheelEvent e) {
+    if (e.isControlDown()) {
+      if (e.getWheelRotation() < 0) {
+        editor.base.handleFontSizeChange(1);
+      } else {
+        editor.base.handleFontSizeChange(-1);
+      }
+    } else {
+      e.getComponent().getParent().dispatchEvent(e);
+    }
+  }
+
   private void configurePopupMenu(final SketchTextArea textarea){
 
     JPopupMenu menu = textarea.getPopupMenu();
