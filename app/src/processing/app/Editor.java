@@ -38,6 +38,7 @@ import processing.app.helpers.DocumentTextChangeListener;
 import processing.app.helpers.Keys;
 import processing.app.helpers.OSUtils;
 import processing.app.helpers.PreferencesMapException;
+import processing.app.helpers.StringReplacer;
 import processing.app.legacy.PApplet;
 import processing.app.syntax.PdeKeywords;
 import processing.app.syntax.SketchTextArea;
@@ -618,7 +619,7 @@ public class Editor extends JFrame implements RunnerListener {
     fileMenu.add(item);
 
     // macosx already has its own preferences and quit menu
-    if (!OSUtils.isMacOS()) {
+    if (!OSUtils.hasMacOSStyleMenus()) {
       fileMenu.addSeparator();
 
       item = newJMenuItem(tr("Preferences"), ',');
@@ -760,6 +761,7 @@ public class Editor extends JFrame implements RunnerListener {
       portMenu = new JMenu(tr("Port"));
     populatePortMenu();
     toolsMenu.add(portMenu);
+    MenuScroller.setScrollerFor(portMenu);
     item = new JMenuItem(tr("Get Board Info"));
     item.addActionListener(e -> handleBoardInfo());
     toolsMenu.add(item);
@@ -1250,7 +1252,7 @@ public class Editor extends JFrame implements RunnerListener {
     menu.add(item);
 
     // macosx already has its own about menu
-    if (!OSUtils.isMacOS()) {
+    if (!OSUtils.hasMacOSStyleMenus()) {
       menu.addSeparator();
       item = new JMenuItem(tr("About Arduino"));
       item.addActionListener(new ActionListener() {
@@ -1344,7 +1346,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     menu.addSeparator();
 
-    JMenuItem commentItem = newJMenuItem(tr("Comment/Uncomment"), '/');
+    JMenuItem commentItem = newJMenuItem(tr("Comment/Uncomment"), PreferencesData.get("editor.keys.shortcut_comment", "/").charAt(0));
     commentItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           getCurrentTab().handleCommentUncomment();
@@ -1370,6 +1372,24 @@ public class Editor extends JFrame implements RunnerListener {
         }
     });
     menu.add(decreseIndentItem);
+
+    menu.addSeparator();
+
+    JMenuItem increaseFontSizeItem = newJMenuItem(tr("Increase Font Size"), '+');
+    increaseFontSizeItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          base.handleFontSizeChange(1);
+        }
+    });
+    menu.add(increaseFontSizeItem);
+
+    JMenuItem decreaseFontSizeItem = newJMenuItem(tr("Decrease Font Size"), '-');
+    decreaseFontSizeItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          base.handleFontSizeChange(-1);
+        }
+    });
+    menu.add(decreaseFontSizeItem);
 
     menu.addSeparator();
 
@@ -1792,7 +1812,7 @@ public class Editor extends JFrame implements RunnerListener {
     String prompt = I18n.format(tr("Save changes to \"{0}\"?  "),
                                 sketch.getName());
 
-    if (!OSUtils.isMacOS()) {
+    if (!OSUtils.hasMacOSStyleMenus()) {
       int result =
         JOptionPane.showConfirmDialog(this, prompt, tr("Close"),
                                       JOptionPane.YES_NO_CANCEL_OPTION,
@@ -1935,12 +1955,25 @@ public class Editor extends JFrame implements RunnerListener {
       return;
     }
     SketchFile current = getCurrentTab().getSketchFile();
-    if (current.isPrimary()) {
-      setTitle(I18n.format(tr("{0} | Arduino {1}"), sketch.getName(),
-                           BaseNoGui.VERSION_NAME_LONG));
+    String customFormat = PreferencesData.get("editor.custom_title_format");
+    if (customFormat != null && !customFormat.trim().isEmpty()) {
+      Map<String, String> titleMap = new HashMap<String, String>();
+      titleMap.put("file", current.getFileName());
+      String path = sketch.getFolder().getAbsolutePath();
+      titleMap.put("folder", path);
+      titleMap.put("path", path);
+      titleMap.put("project", sketch.getName());
+      titleMap.put("version", BaseNoGui.VERSION_NAME_LONG);
+
+      setTitle(StringReplacer.replaceFromMapping(customFormat, titleMap));
     } else {
-      setTitle(I18n.format(tr("{0} - {1} | Arduino {2}"), sketch.getName(),
-                           current.getFileName(), BaseNoGui.VERSION_NAME_LONG));
+      if (current.isPrimary()) {
+        setTitle(I18n.format(tr("{0} | Arduino {1}"), sketch.getName(),
+                             BaseNoGui.VERSION_NAME_LONG));
+      } else {
+        setTitle(I18n.format(tr("{0} - {1} | Arduino {2}"), sketch.getName(),
+                             current.getFileName(), BaseNoGui.VERSION_NAME_LONG));
+      }
     }
   }
 
