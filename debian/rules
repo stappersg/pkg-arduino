@@ -22,6 +22,7 @@ override_dh_clean:
 	rm -rf build/linux/work/hardware/tools
 	cd build && ant clean
 	rm -f debian/permission-checker/*.class
+	jh_clean
 	dh_clean
 
 override_jh_build:
