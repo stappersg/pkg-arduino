@@ -5,12 +5,9 @@ wrapper_for_deb.patch
 remove_copying_binaries.patch
 permission_fix.patch
 gcc47_avr.patch
-## no-caller-saves.patch
-## Adafruit_GFX.patch
-## const_progmem.patch
-## depricated_typedef_support.patch
-## roboIRread.patch
-no_macosx_think_different
-seperate_reference
-prevent_build_time_downloads
-use_old_rsyntaxtextarea
+no_macosx_think_different.patch
+seperate_reference.patch
+prevent_build_time_downloads.patch
+use_old_rsyntaxtextarea.patch
+load-system-astylej.patch
+load-system-listserialsj.patch

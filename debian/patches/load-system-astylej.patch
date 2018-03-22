@@ -1,0 +1,16 @@
+Description: Loads the astylej library of the system
+Author: Ignacio Losiggio <iglosiggio@gmail.com>
+Bug-Debian: https://bugs.debian.org/780706
+Last-Update: 2018-03-21
+
+--- a/app/src/cc/arduino/packages/formatter/AStyleInterface.java
++++ b/app/src/cc/arduino/packages/formatter/AStyleInterface.java
+@@ -41,7 +41,7 @@
+       loadLib(Base.getContentFile(System.mapLibraryName("msvcp100")));
+       loadLib(Base.getContentFile(System.mapLibraryName("msvcr100")));
+     }
+-    loadLib(new File(Base.getContentFile("lib"), System.mapLibraryName("astylej")));
++    System.loadLibrary("astylej");
+   }
+ 
+   private static void loadLib(File lib) {
