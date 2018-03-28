@@ -1,14 +1,13 @@
-Description: arduino reference seperated
-  Patch which prevents some downloads during build.
-  .
-  How to include the "deleted" data again
-  is another question.
-  See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=864567 for
-  status of 'arduino-reference' in a seperate package.
-Author: Geert Stappers <stappers@debian.org>
-Forwarded: not needed
-Last-Updated: 2017-05-27
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:22 -0300
+Subject: seperate_reference
 
+---
+ build/build.xml | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
+
+diff --git a/build/build.xml b/build/build.xml
+index d31d1bd..2f1dbc6 100644
 --- a/build/build.xml
 +++ b/build/build.xml
 @@ -197,29 +197,9 @@

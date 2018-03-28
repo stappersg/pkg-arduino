@@ -1,11 +1,16 @@
-Author: Peter Oliver (mavit on github), edited by
- showard@debian
-Description: Uses pkexec to add user to groups dailout and tty
-Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=652523
-Index: arduino/build/linux/dist/arduino
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:22 -0300
+Subject: permission_fix
+
 ===================================================================
---- arduino.orig/build/linux/dist/arduino
-+++ arduino/build/linux/dist/arduino
+---
+ build/linux/dist/arduino | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/build/linux/dist/arduino b/build/linux/dist/arduino
+index 3f94265..60c4176 100755
+--- a/build/linux/dist/arduino
++++ b/build/linux/dist/arduino
 @@ -1,5 +1,18 @@
  #!/usr/bin/env bash
  

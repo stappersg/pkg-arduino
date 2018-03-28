@@ -1,13 +1,16 @@
-Description: Prevents ant from following symlinks and including library jars
- in debian package
-Author: Scott Howard <showard314@gmail.com>
-Last-Update: 2017-05-21
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:21 -0300
+Subject: install_jar_links
 
-Index: arduino/build/build.xml
-===================================================================
---- arduino.orig/build/build.xml
-+++ arduino/build/build.xml
-@@ -92,7 +92,7 @@
+---
+ build/build.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build/build.xml b/build/build.xml
+index 8fa118d..3977e89 100644
+--- a/build/build.xml
++++ b/build/build.xml
+@@ -94,7 +94,7 @@
    <property name="arduinoOTA-VERSION" value="1.1.1" />
  
    <!-- Libraries required for running arduino -->

@@ -1,36 +1,17 @@
-Description: Use the debian packaged version of rsyntaxtextarea
- Debian ships an old version of rsyntaxtextarea that is usable if the
- arduino code is slightly patched.
- .
- arduino (2:1.8.5+dfsg-1) UNRELEASED; urgency=medium
- .
-   [ Geert Stappers ]
-   * Non-maintainer upload.
-   * New upstream version (Closes: #780706)
-   * watch file revisited, s/google code/git hub/
-   * README.source:  new file, to document some how our workflow
-   * Documented '+dfsg' in README.source
-   * raised compat version from 8 to 9
-   * control:
-     - build depend on libastyle-dev
-     - build depends for .jar files that upstream has in their tarball
-     - build depend on unzip
-   * Various patches refreshed
-   * New patches:
-     - Libastyle is packaged
-     - No Mac OS X  Think Different
-     - Seperate reference
- .
-   [ Ignacio Losiggio ]
-   * New upstream version
-   * Various patches refreshed
-Author: Ignacio Losiggio <iglosiggio@gmail.com>
-Bug-Debian: https://bugs.debian.org/780706
-Last-Update: 2018-01-02
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:22 -0300
+Subject: use_old_rsyntaxtextarea
 
---- arduino-1.8.5+dfsg.orig/app/src/processing/app/EditorTab.java
-+++ arduino-1.8.5+dfsg/app/src/processing/app/EditorTab.java
-@@ -137,7 +137,7 @@ public class EditorTab extends JPanel im
+---
+ app/src/processing/app/EditorTab.java                      | 7 +++++--
+ app/src/processing/app/syntax/SketchTextAreaEditorKit.java | 2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/app/src/processing/app/EditorTab.java b/app/src/processing/app/EditorTab.java
+index 33dabdb..40dbb75 100644
+--- a/app/src/processing/app/EditorTab.java
++++ b/app/src/processing/app/EditorTab.java
+@@ -137,7 +137,7 @@ public class EditorTab extends JPanel implements SketchFile.TextStorage, MouseWh
      Gutter gutter = scrollPane.getGutter();
      gutter.setBookmarkingEnabled(false);
      //gutter.setBookmarkIcon(CompletionsRenderer.getIcon(CompletionType.TEMPLATE));
@@ -39,7 +20,7 @@ Last-Update: 2018-01-02
  
      return scrollPane;
    }
-@@ -269,7 +269,10 @@ public class EditorTab extends JPanel im
+@@ -269,7 +269,10 @@ public class EditorTab extends JPanel implements SketchFile.TextStorage, MouseWh
              referenceItem.setEnabled(referenceFile != null);
      
              int offset = textarea.getCaretPosition();
@@ -51,9 +32,11 @@ Last-Update: 2018-01-02
              if (token != null && token.isHyperlink()) {
                openURLItem.setEnabled(true);
                openURLItem.setActionCommand(token.getLexeme());
---- arduino-1.8.5+dfsg.orig/app/src/processing/app/syntax/SketchTextAreaEditorKit.java
-+++ arduino-1.8.5+dfsg/app/src/processing/app/syntax/SketchTextAreaEditorKit.java
-@@ -189,7 +189,7 @@ public class SketchTextAreaEditorKit ext
+diff --git a/app/src/processing/app/syntax/SketchTextAreaEditorKit.java b/app/src/processing/app/syntax/SketchTextAreaEditorKit.java
+index 35574b1..b6df869 100644
+--- a/app/src/processing/app/syntax/SketchTextAreaEditorKit.java
++++ b/app/src/processing/app/syntax/SketchTextAreaEditorKit.java
+@@ -189,7 +189,7 @@ public class SketchTextAreaEditorKit extends RSyntaxTextAreaEditorKit {
  
        org.fife.ui.rsyntaxtextarea.Token t = doc.getTokenListForLine(start);
        int languageIndex = t != null ? t.getLanguageIndex() : 0;

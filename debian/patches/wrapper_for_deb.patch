@@ -1,11 +1,15 @@
-Description: Tells the wrapper where to look for things in debian.
-Author: Scott Howard <showard314@gmail.com>
-Last-Update: 2017-05-21
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:21 -0300
+Subject: wrapper_for_deb
 
-Index: arduino/build/linux/dist/arduino
-===================================================================
---- arduino.orig/build/linux/dist/arduino
-+++ arduino/build/linux/dist/arduino
+---
+ build/linux/dist/arduino | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/build/linux/dist/arduino b/build/linux/dist/arduino
+index ad97c91..3f94265 100755
+--- a/build/linux/dist/arduino
++++ b/build/linux/dist/arduino
 @@ -1,6 +1,6 @@
  #!/usr/bin/env bash
  

@@ -1,13 +1,16 @@
-Description: Arduino copies precompiled binaries into the build tree,
- stop that
-Author: Scott Howard <showard@debian.org>
-Last-Update: 2017-05-21
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:21 -0300
+Subject: remove_copying_binaries
 
-Index: arduino/build/build.xml
-===================================================================
---- arduino.orig/build/build.xml
-+++ arduino/build/build.xml
-@@ -717,39 +717,9 @@
+---
+ build/build.xml | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+diff --git a/build/build.xml b/build/build.xml
+index 3977e89..d31d1bd 100644
+--- a/build/build.xml
++++ b/build/build.xml
+@@ -720,39 +720,9 @@
    </target>
  
    <target name="linux32-build" depends="linux-libastyle-x86" description="Build linux (32-bit) version">

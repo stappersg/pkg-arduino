@@ -1,19 +1,13 @@
-Description: prevent build time downloads
- upstream build system does several download during build time
- this patch prevents those downloads
- todo:
-   * include again the "deleted data" somehow
-   * discuss this with upstream
-Author: Geert Stappers <stappers@debian.org>
- Origin: <upstream|backport|vendor|other>, <URL, required except if Author is present>
- Bug: <URL to the upstream bug report if any, implies patch has been forwarded, optional>
- Bug-<Vendor>: <URL to the vendor bug report if any, optional>
-Forwarded: no
- Applied-Upstream: <version|URL|commit, identifies patches merged upstream, optional>
- Reviewed-by: <name and email of a reviewer, optional>
-Last-Update: 2017-06-11
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:22 -0300
+Subject: prevent_build_time_downloads
 
+---
+ build/build.xml | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
+diff --git a/build/build.xml b/build/build.xml
+index 2f1dbc6..b2516a3 100644
 --- a/build/build.xml
 +++ b/build/build.xml
 @@ -187,13 +187,13 @@

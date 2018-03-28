@@ -1,13 +1,16 @@
-Description: Remove the notification if a new upstream version is available
-Author: Scott Howard <showard314@gmail.com>
-Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=603818
-Last-Update: 2017-05-21
+From: Scott Howard <showard@debian.org>
+Date: Wed, 28 Mar 2018 15:52:21 -0300
+Subject: remove_update_warning
 
-Index: arduino/app/src/processing/app/UpdateCheck.java
-===================================================================
---- arduino.orig/app/src/processing/app/UpdateCheck.java
-+++ arduino/app/src/processing/app/UpdateCheck.java
-@@ -100,26 +100,6 @@ public class UpdateCheck implements Runn
+---
+ app/src/processing/app/UpdateCheck.java | 20 --------------------
+ 1 file changed, 20 deletions(-)
+
+diff --git a/app/src/processing/app/UpdateCheck.java b/app/src/processing/app/UpdateCheck.java
+index 39c5550..96c59af 100644
+--- a/app/src/processing/app/UpdateCheck.java
++++ b/app/src/processing/app/UpdateCheck.java
+@@ -100,26 +100,6 @@ public class UpdateCheck implements Runnable {
        }
        PreferencesData.set("update.last", String.valueOf(now));
  
