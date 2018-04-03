@@ -13,3 +13,4 @@ load-system-astylej.patch
 load-system-listserialsj.patch
 0014-Use-system-libraries-in-the-start-script.patch
 0015-Use-system-wide-arduino-builder.patch
+0016-Load-platform.keys.rewrite.txt-from-arduino-builder.patch
