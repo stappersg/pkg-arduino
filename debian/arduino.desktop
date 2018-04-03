@@ -2,7 +2,7 @@
 Type=Application
 Name=Arduino IDE
 GenericName=Create physical computing projects
-Exec=arduino
+Exec=arduino %f
 Icon=arduino
 Terminal=false
 Categories=Development;Engineering;Electronics;

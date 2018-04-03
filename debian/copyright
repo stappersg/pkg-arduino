@@ -5,16 +5,30 @@ Source: www.arduino.cc
 Files-Excluded:
   *.jar
   *.class
-  *.tgz
+  *.elf
+  *.hex
+  *.a
   *.so
-  *.cvsignore
+  *.tgz
   *.bz2
+  *.sha
+  *.gitignore
+  *.classpath
+  *.classpath_macosx
+  *.project
+  *.editorconfig
+  *.settings/*
   build/linux/dist/tools
-  hardware/arduino/firmwares/wifishield
   app/src/processing/app/macosx/*
   arduino-core/src/processing/app/macosx/*
   arduino-core/src/processing/app/windows/*
   arduino-core/src/cc/arduino/os/windows/*
+  app/lib/*.txt
+  arduino-core/lib/*.txt
+  build/windows/*
+  build/macosx/*
+  build/shared/*.sha
+  build/linux/*.sha
 
 Files: core/src/processing/xml
 Copyright: 2000-2002, Marc De Scheemaecker
@@ -53,17 +67,17 @@ Copyright: 2009-2012, Arduino (TM)
 License: LGPL-2.1+
 
 Files: hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.c
- hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.h
- hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.c
- hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.h
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
- hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
- hardware/arduino/bootloaders/caterina/Caterina.c
- hardware/arduino/bootloaders/caterina/Caterina.h
- hardware/arduino/bootloaders/caterina/Descriptors.c
- hardware/arduino/bootloaders/caterina/Descriptors.h
+       hardware/arduino/bootloaders/caterina-Arduino_Robot/Caterina.h
+       hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.c
+       hardware/arduino/bootloaders/caterina-Arduino_Robot/Descriptors.h
+       hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.c
+       hardware/arduino/bootloaders/caterina-LilyPadUSB/Caterina.h
+       hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.c
+       hardware/arduino/bootloaders/caterina-LilyPadUSB/Descriptors.h
+       hardware/arduino/bootloaders/caterina/Caterina.c
+       hardware/arduino/bootloaders/caterina/Caterina.h
+       hardware/arduino/bootloaders/caterina/Descriptors.c
+       hardware/arduino/bootloaders/caterina/Descriptors.h
 Copyright: Dean Camera, 2010-2011
 License:
   Permission to use, copy, modify, distribute, and sell this 
@@ -157,16 +171,16 @@ Copyright: 2012, D. Cuartielles, N. de la Riva, I. Gallego, E. Gallego
 License: LGPL-2.1+
 
 Files: hardware/arduino/cores/arduino/CDC.cpp
- hardware/arduino/cores/arduino/HID.cpp
- hardware/arduino/cores/arduino/USBCore.cpp
- hardware/arduino/cores/arduino/USBCore.h
- hardware/arduino/cores/arduino/USBDesc.h
- hardware/arduino/cores/robot/CDC.cpp
- hardware/arduino/cores/robot/HID.cpp
- hardware/arduino/cores/robot/USBCore.cpp
- hardware/arduino/cores/robot/USBCore.h
- hardware/arduino/cores/robot/USBDesc.h
- hardware/arduino/bootloaders/diskloader/src/USB*
+       hardware/arduino/cores/arduino/HID.cpp
+       hardware/arduino/cores/arduino/USBCore.cpp
+       hardware/arduino/cores/arduino/USBCore.h
+       hardware/arduino/cores/arduino/USBDesc.h
+       hardware/arduino/cores/robot/CDC.cpp
+       hardware/arduino/cores/robot/HID.cpp
+       hardware/arduino/cores/robot/USBCore.cpp
+       hardware/arduino/cores/robot/USBCore.h
+       hardware/arduino/cores/robot/USBDesc.h
+       hardware/arduino/bootloaders/diskloader/src/USB*
 Copyright: 2010-2011, Peter Barrett
 License: ISC
  Permission to use, copy, modify, and/or distribute this software for  
@@ -244,7 +258,8 @@ License: other
  redistribute the Software for such purposes.
 
 Files: debian/*
-Copyright: 2010, Scott Howard <showard314@gmail.com>
+Copyright: 2018, Ignacio Losiggio <iglosiggio@dc.uba.ar>
+           2010, Scott Howard <showard314@gmail.com>
            2010, Philip Hands <phil@hands.com>
            2009, Arduino Ubuntu Team <arduino-ubuntu-team@lists.launchpad.net>
 License: GPL-2+
@@ -257,7 +272,8 @@ Files: tools/Mangler/src/*
 Copyright: 2008 Ben Fry and Casey Reas
 License: GPL-2+
 
-Files: app/src/processing/app/* app/src/processing/app/syntax/PdeKeywords.java
+Files: app/src/processing/app/*
+       app/src/processing/app/syntax/PdeKeywords.java
        app/src/processing/app/syntax/PdeTextAreaDefaults.java
 Copyright: 2004-09, Ben Fry and Casey Reas
            2001-04, Massachusetts Institute of Technology
@@ -364,7 +380,8 @@ License: GPL-3
  A copy of the license is available on Debian systems at
  /usr/share/common-licenses/GPL-3
 
-Files: hardware/arduino/cores/arduino/Udp.h libraries/Ethernet/EthernetUdp.*
+Files: hardware/arduino/cores/arduino/Udp.h
+       libraries/Ethernet/EthernetUdp.*
 Copyright: 2008 Bjoern Hartmann
 License: MIT
 

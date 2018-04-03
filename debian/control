@@ -34,7 +34,7 @@ Description: AVR development board IDE and built-in libraries
  objects or environments.
  .
  This package will install the integrated development environment that
- allows for program writing, code verfication, compiling, and uploading
+ allows for program writing, code verification, compiling, and uploading
  to the Arduino development board. Libraries and example code will also
  be installed.
 
