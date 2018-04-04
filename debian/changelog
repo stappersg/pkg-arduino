@@ -1,6 +1,7 @@
-arduino (2:1.8.5+dfsg.2-1) UNRELEASED; urgency=medium
+arduino (2:1.8.5+dfsg.3-1) UNRELEASED; urgency=medium
 
   [ Ignacio Losiggio ]
+  * New upstream version (Closes: #780706)
   * Generated a new tarball without platform-specific windows/mac code
 
  -- Ignacio Losiggio <iglosiggio@gmail.com>  Wed, 28 Mar 2018 14:48:49 -0300
