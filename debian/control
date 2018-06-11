@@ -17,8 +17,8 @@ Build-Depends: debhelper (>= 8), javahelper, default-jdk,
  unzip 
 Standards-Version: 3.9.5
 Homepage: http://www.arduino.cc
-Vcs-Git: git://anonscm.debian.org/collab-maint/arduino.git
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/arduino.git
+Vcs-Browser: https://salsa.debian.org/electronics-team/arduino/arduino
+Vcs-Git: https://salsa.debian.org/electronics-team/arduino/arduino.git
 
 
 Package: arduino
