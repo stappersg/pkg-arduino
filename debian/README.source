@@ -27,11 +27,11 @@ Then "git stuff"
   git commit -m "Imported Upstream version X.Y.Z+dfsg"
   git tag
   git tag upstream/X.Y.Z+dfsg
-  git push ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
-  git push --tag ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
+  git push https://${LOGNAME}@salsa.debian.org/electronics-team/arduino/arduino.git
+  git push --tag https://${LOGNAME}@salsa.debian.org/electronics-team/arduino/arduino.git
   git checkout pristine-tar
   pristine-tar commit ../arduino-X.Y.Z+dfsg.orig.tar.xz upstream/X.Y.Z+dfsg
-  git push ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
+  git push https://${LOGNAME}@salsa.debian.org/electronics-team/arduino/arduino.git
   git checkout master
 
 Import by
@@ -54,8 +54,8 @@ Tooling like "git-buildpackage" might work here.
 Currently, May 2017, not verified. TODO: can gbp be used?
 
 
-  git push ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
-  git push --tags ssh://${LOGNAME}@git.debian.org/git/collab-maint/arduino.git
+  git push https://${LOGNAME}@salsa.debian.org/electronics-team/arduino/arduino.git
+  git push --tags https://${LOGNAME}@salsa.debian.org/electronics-team/arduino/arduino.git
 
 
 Please keep this file in shape
